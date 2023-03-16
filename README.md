@@ -11,8 +11,5 @@ Editando Mundos es una editorial ficticia, la cual se dedica a editar publicacio
 - [X] [Considerando los requerimientos y funcionalidades, especificar que niveles y tipos de prueba son la mejor opción para el proyecto.](./01_Requirements/Niveles_Tipos_Prueba.md)
 
 - [ ] Considerando el punto anterior, que técnicas para el desarrollo de casos de prueba consideran que se adaptan mejor.
-
 - [ ] Empezar a desarrollar el diseño arquitectónico (estructura lógica) del sistema que planean 
 desarrollar.
-- [ ] Considerando los requerimientos y funcionalidades, especificar que niveles y tipos de prueba son la mejor opción para el proyecto.
-- [ ] Considerando el punto anterior, que técnicas para el desarrollo de casos de prueba consideran que se adaptan mejor.
