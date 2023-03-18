@@ -3,9 +3,9 @@
 ```mermaid
 classDiagram
 
-    Publicacion *-- Autor
-    Publicacion <|-- PublicacionDigital
-    Publicacion <|-- PublicacionFisica
+    IPublicacion *-- Autor
+    IPublicacion <|-- PublicacionDigital
+    IPublicacion <|-- PublicacionFisica
 
     class Autor
     Autor : -String nombre
@@ -24,23 +24,23 @@ classDiagram
     Autor : +agregarPublicaciones() void
 
 
-    class Publicacion
-    Publicacion : -String titulo
-    Publicacion : -Integer costoProd
-    Publicacion : -Integer costoVenta
-    Publicacion : -Autor autor
+    class IPublicacion
+    IPublicacion : -String titulo
+    IPublicacion : -Integer costoProd
+    IPublicacion : -Integer costoVenta
+    IPublicacion : -Autor autor
 
-    Publicacion : +getTitulo() string
-    Publicacion : +setTitulo() void
-    Publicacion : +getCostoProd() Integer
-    Publicacion : +setCostoProd() void
-    Publicacion : +getCostoVenta() Integer
-    Publicacion : +setCostoVenta() void
-    Publicacion : +getAutor() Autor
-    Publicacion : +setAutor() void
+    IPublicacion : +getTitulo() string
+    IPublicacion : +setTitulo() void
+    IPublicacion : +getCostoProd() Integer
+    IPublicacion : +setCostoProd() void
+    IPublicacion : +getCostoVenta() Integer
+    IPublicacion : +setCostoVenta() void
+    IPublicacion : +getAutor() Autor
+    IPublicacion : +setAutor() void
 
-    Publicacion : -calcularCostoProd() void
-    Publicacion : -calcularCostoVenta() void
+    IPublicacion : -calcularCostoProd() void
+    IPublicacion : -calcularCostoVenta() void
 
     class PublicacionFisica
     PublicacionFisica : -int paginaInicial
