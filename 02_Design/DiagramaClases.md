@@ -39,26 +39,33 @@ classDiagram
     IPublicacion : +getAutor() Autor
     IPublicacion : +setAutor() void
 
-    IPublicacion : -calcularCostoProd() void
-    IPublicacion : -calcularCostoVenta() void
+    IPublicacion : +calcularCostoProd() void
+    IPublicacion : +calcularCostoVenta() void
 
     class PublicacionFisica
     PublicacionFisica : -int paginaInicial
 
-    PublicacionFisica : -getPaginaInicial() int
-    PublicacionFisica : -setPaginaInicial() void
-    PublicacionFisica : -calcularCostoVenta() void
+    PublicacionFisica : +getPaginaInicial() int
+    PublicacionFisica : +setPaginaInicial() void
 
     class PublicacionDigital
     PublicacionDigital : -boolean isDensa
     PublicacionDigital : -Integer tamanhoMegas
     
-    PublicacionDigital : -getIsDensa() boolean
-    PublicacionDigital : -setIsDensa() void
-    PublicacionDigital : -calcularCostoVenta() void
+    PublicacionDigital : +getIsDensa() boolean
+    PublicacionDigital : +setIsDensa() void
 
 
     class Cotizacion
-    Cotizacion : +calcularCostoVenta() Integer
+    Cotizacion : +calcularCostoVenta(int noPaginas) Integer
+
+    class Usuario
+    Usuario : -String username
+    Usuario : -String password
+
+    Usuario : +getUsername() String
+    Usuario : +setUsername() void
+    Usuario : +getPassword() String
+    Usuario : +setPassword() void
 ```
 
