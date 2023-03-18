@@ -7,7 +7,7 @@ Editando Mundos es una editorial ficticia, la cual se dedica a editar publicacio
 - [X] [Especificación de aspectos no funcionales que ustedes consideren que influyen en la entrega del programa.](./01_Requirements/Requerimientos.md#aspectos-no-funcionales)
 - [X] [Diagrama que modele el comportamiento de la aplicación, es decir, como ustedes creen que será utilizada. Pueden crear mas de un diagrama si lo requieren (suele ser uno por rol).](./02_Design/CasoDeUso.drawio)
 - [X] [Propuesta de modificaciones en el proyecto, según su perspectiva, que mejoras, cambios,adaptaciones podrían incluir en beneficio del cliente y/o usuarios finales.](./01_Requirements/Mejoras_Cambios.md)
-- [X] [Realizar una primera propuesta del proyecto (un prototipo de baja fidelidad).](./02_Design/DisenosInterfaces/)
+- [X] [Realizar una primera propuesta del proyecto (un prototipo de baja fidelidad).](https://www.figma.com/file/id3WzRAK7xC6GWRYyCmXBE/EditandoMundos?node-id=0%3A1&t=KEZEgZMe732bymDr-1)
 - [X] [Considerando los requerimientos y funcionalidades, especificar que niveles y tipos de prueba son la mejor opción para el proyecto.](./01_Requirements/Niveles_Tipos_Prueba.md)
 
 - [ ] Considerando el punto anterior, que técnicas para el desarrollo de casos de prueba consideran que se adaptan mejor.
