@@ -6,6 +6,7 @@ package org.itson.dominio;
 
 import java.io.Serializable;
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
@@ -14,10 +15,10 @@ import javax.persistence.Table;
  * @author Toled
  */
 @Entity
-@Table(name = "publicacion_fisica")
-public class PublicacionFisica extends Publicacion implements Serializable {
+@DiscriminatorValue("fisica")
+public class PublicacionFisica extends Publicacion {
 
-    @Column(name = "paginaInicial", nullable = false)
+    @Column(name = "paginaInicial", nullable = true)
     private int paginaInicial;
 
     public PublicacionFisica() {

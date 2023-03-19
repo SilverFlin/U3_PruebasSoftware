@@ -6,19 +6,25 @@ package org.itson.dominio;
 
 import java.io.Serializable;
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 /**
  *
  * @author Toled
  */
 @Entity
-public abstract class Publicacion implements Serializable {
+@Inheritance
+@DiscriminatorColumn(name = "pub_type")
+@Table(name = "publicacion")
+public class Publicacion implements Serializable {
 
     @Id
     @Column(name = "id")
@@ -122,9 +128,7 @@ public abstract class Publicacion implements Serializable {
 
     @Override
     public String toString() {
-        return  "id=" + id + ", titulo=" + titulo + ", costoProd=" + costoProd + ", costoVenta=" + costoVenta + ", autor=" + autor ;
+        return "id=" + id + ", titulo=" + titulo + ", costoProd=" + costoProd + ", costoVenta=" + costoVenta + ", autor=" + autor;
     }
-    
-    
 
 }
