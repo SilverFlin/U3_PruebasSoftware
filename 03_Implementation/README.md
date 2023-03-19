@@ -23,8 +23,8 @@ git clone https://github.com/SilverFlin/U3_PruebasSoftware.git
     ```
 
 4. Actualizar variables de entorno para la conexión con la base de datos
-    - Abrir la ventana para registrar una nueva variable de entorno, siguiendo [este link](https://stackoverflow.com/questions/33484550/how-to-set-environment-variables-in-netbeans-8-0-2)
-    - Registrar `Env.passSQL=<password>`
+    - Crear Persistence Unit (Que genera el persistence.xml)
+    - Asegurarse de que todas las entidades están registradas
 
 5. Darle Build adentro de Netbeans
 
