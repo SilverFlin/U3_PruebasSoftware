@@ -7,6 +7,8 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import org.itson.dominio.Autor;
+import org.itson.dominio.Nacionalidad;
 import org.itson.dominio.PublicacionDigital;
 import org.itson.presentacion.IniciarSesionForm;
 import org.itson.presentacion.UnitOfWork;
@@ -18,6 +20,7 @@ import org.itson.presentacion.UnitOfWork;
 public class Main {
 
     public static void main(String[] args) {
+        probarAgregar();
         probarListasUnitOfWork();
     }
 
@@ -29,10 +32,23 @@ public class Main {
     public static void probarListasUnitOfWork() {
         UnitOfWork unitOfWork = new UnitOfWork();
 
-        List<PublicacionDigital> publicacionesDigitalesLista = unitOfWork.publicacionesDigitalesRepository().lista();
+        List<Autor> autoresLista = unitOfWork.autoresRepository().lista();
 
-        for (PublicacionDigital publicacionesDigitales : publicacionesDigitalesLista) {
-            System.out.println(publicacionesDigitales);
+        for (Autor autores : autoresLista) {
+            System.out.println(autores);
         }
+    }
+
+    public static void probarAgregar() {
+        UnitOfWork unitOfWork = new UnitOfWork();
+
+        Autor autor = new Autor();
+        autor.setApellidoMaterno("Russo");
+        autor.setApellidoPaterno("Toledo");
+        autor.setEdad(5);
+        autor.setNacionalidad(Nacionalidad.MEXICANA);
+        autor.setNombre("Luis Angel");
+
+        unitOfWork.autoresRepository().agregar(autor);
     }
 }

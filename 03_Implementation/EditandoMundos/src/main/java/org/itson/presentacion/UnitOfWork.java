@@ -6,6 +6,7 @@ package org.itson.presentacion;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
+import org.itson.repositories.AutoresRepository;
 import org.itson.repositories.PublicacionesDigitalesRepository;
 import org.itson.repositories.PublicacionesFisicasRepository;
 
@@ -18,8 +19,10 @@ public class UnitOfWork {
     private EntityManager entityManager;
 
     private PublicacionesFisicasRepository _publicacionesFisicasRepository;
-    
+
     private PublicacionesDigitalesRepository _publicacionesDigitalesRepository;
+
+    private AutoresRepository _autoresRepository;
 
     public UnitOfWork() {
 
@@ -36,11 +39,17 @@ public class UnitOfWork {
                 ? _publicacionesFisicasRepository
                 : (_publicacionesFisicasRepository = new PublicacionesFisicasRepository(getEntityManager()));
     }
-    
+
     public PublicacionesDigitalesRepository publicacionesDigitalesRepository() {
         return (_publicacionesDigitalesRepository != null)
                 ? _publicacionesDigitalesRepository
                 : (_publicacionesDigitalesRepository = new PublicacionesDigitalesRepository(getEntityManager()));
+    }
+
+    public AutoresRepository autoresRepository() {
+        return (_autoresRepository != null)
+                ? _autoresRepository
+                : (_autoresRepository = new AutoresRepository(getEntityManager()));
     }
 
 }

@@ -39,7 +39,7 @@ public abstract class Publicacion implements Serializable {
     //Desde este momento ya se considera como una columna al hacer el JoinColumn
     //Se agregan los gets y sets con este igual
     // TODO cambiar nullable a false
-    @JoinColumn(name = "idAutor", nullable = true)//LLAVE FORÁNEA
+    @JoinColumn(name = "idAutor", nullable = false)//LLAVE FORÁNEA
     private Autor autor;
 
     public Publicacion(Long id, String titulo, Integer costoProd, Integer costoVenta, Autor autor) {
