@@ -70,12 +70,6 @@ classDiagram
         +setSizeMegas(Double sizeMegas) void
     }
 
-
-    class Cotizacion{
-        +calcularCostoVenta(int noPaginas) Integer
-    }
-    
-
     class Usuario{
         -String username
         -String password
