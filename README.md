@@ -9,6 +9,11 @@ Editando Mundos es una editorial ficticia, la cual se dedica a editar publicacio
 - [X] [Propuesta de modificaciones en el proyecto, según su perspectiva, que mejoras, cambios,adaptaciones podrían incluir en beneficio del cliente y/o usuarios finales.](./01_Requirements/Mejoras_Cambios.md)
 - [X] [Realizar una primera propuesta del proyecto (un prototipo de baja fidelidad).](https://www.figma.com/file/id3WzRAK7xC6GWRYyCmXBE/EditandoMundos?node-id=0%3A1&t=KEZEgZMe732bymDr-1)
 - [X] [Considerando los requerimientos y funcionalidades, especificar que niveles y tipos de prueba son la mejor opción para el proyecto.](./01_Requirements/Niveles_Tipos_Prueba.md)
+- [ ] Considerando el punto anterior, que técnicas para el desarrollo de casos de prueba consideran que se adaptan mejor.
 - [X] [Empezar a desarrollar el diseño arquitectónico (estructura lógica) del sistema que planean desarrollar.](./02_Design/)
 
-- [ ] Considerando el punto anterior, que técnicas para el desarrollo de casos de prueba consideran que se adaptan mejor.
+
+## Progreso
+
+[Link para el kanban board en Trello](https://trello.com/b/lZgug9Sy/editandomundosst-u3)
+
