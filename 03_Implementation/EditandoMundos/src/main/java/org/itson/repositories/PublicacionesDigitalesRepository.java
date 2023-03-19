@@ -11,9 +11,9 @@ import org.itson.dominio.PublicacionDigital;
  *
  * @author mig_2
  */
-public class PublicacionDigitalRepository extends RepositoryBase<PublicacionDigital>{
+public class PublicacionesDigitalesRepository extends RepositoryBase<PublicacionDigital>{
     
-    public PublicacionDigitalRepository(EntityManager entityManager) {
+    public PublicacionesDigitalesRepository(EntityManager entityManager) {
         super(entityManager);
     }
     
