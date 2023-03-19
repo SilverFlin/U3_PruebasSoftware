@@ -7,6 +7,7 @@ package org.itson.dominio;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Table;
 
 
 /**
@@ -14,6 +15,7 @@ import javax.persistence.Entity;
  * @author Toled
  */
 @Entity
+@Table(name = "publicacion_digital")
 public class PublicacionDigital extends Publicacion implements Serializable {
 
     @Column(name = "isDensa", nullable = false, length = 100)
