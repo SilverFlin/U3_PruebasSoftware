@@ -7,7 +7,7 @@ classDiagram
 
 
 
-class GenericDAO ~T, PK extends Serializable~{
+class GenericDAO ~T, PK extends Serializable~ {
     create(T newInstance) PK
     read(PK id) T
     update(T transientObject) void
@@ -27,5 +27,5 @@ GenericDAO  <|-- UsuariosDAO
 GenericDAO  <|-- AutoresDAO
 GenericDAO  <|-- PublicacionesDigitalesDAO 
 GenericDAO  <|-- PublicacionesFisicasDAO 
-
+<<interface>> GenericDAO
 ```
