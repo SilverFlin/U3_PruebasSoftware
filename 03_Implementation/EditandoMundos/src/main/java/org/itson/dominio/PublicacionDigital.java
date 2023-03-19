@@ -48,6 +48,11 @@ public class PublicacionDigital extends Publicacion implements Serializable {
     public void setSizeMegas(Double sizeMegas) {
         this.sizeMegas = sizeMegas;
     }
+
+    @Override
+    public String toString() {
+        return "PublicacionDigital{" + super.toString() + "isDensa=" + isDensa + ", sizeMegas=" + sizeMegas + '}';
+    }
     
 
 }

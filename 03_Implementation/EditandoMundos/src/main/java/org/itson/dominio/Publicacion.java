@@ -24,23 +24,23 @@ public abstract class Publicacion implements Serializable {
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
+
     //No puede ser nulo, tamaño maximo de 100 caracteres
     @Column(name = "titulo", nullable = false, length = 100)
     private String titulo;
-    
+
     @Column(name = "costoProd", nullable = true)
     private Integer costoProd;
-    
+
     @Column(name = "costoVenta", nullable = true)
     private Integer costoVenta;
-    
+
     @ManyToOne
     //Desde este momento ya se considera como una columna al hacer el JoinColumn
     //Se agregan los gets y sets con este igual
     // TODO cambiar nullable a false
     @JoinColumn(name = "idAuto", nullable = true)//LLAVE FORÁNEA
-    private Autor autor;  
+    private Autor autor;
 
     public Publicacion(Long id, String titulo, Integer costoProd, Integer costoVenta, Autor autor) {
         this.id = id;
@@ -56,13 +56,9 @@ public abstract class Publicacion implements Serializable {
         this.costoVenta = costoVenta;
         this.autor = autor;
     }
-    
-    
 
     public Publicacion() {
     }
-    
-    
 
     public Long getId() {
         return id;
@@ -104,8 +100,6 @@ public abstract class Publicacion implements Serializable {
         this.autor = autor;
     }
 
-    
-    
     @Override
     public int hashCode() {
         int hash = 0;
@@ -124,6 +118,13 @@ public abstract class Publicacion implements Serializable {
             return false;
         }
         return true;
-    }   
+    }
+
+    @Override
+    public String toString() {
+        return  "id=" + id + ", titulo=" + titulo + ", costoProd=" + costoProd + ", costoVenta=" + costoVenta + ", autor=" + autor ;
+    }
     
+    
+
 }
