@@ -43,7 +43,10 @@ public class Cotizador {
         
     public static float calcularCostoProduccion(int numPaginas){
         float costoProd;
-        if (numPaginas>300) {
+        if (numPaginas<0){
+            throw new IllegalArgumentException("Número de páginas invalido.");
+        }
+        else if (numPaginas>300) {
             costoProd = numPaginas * 200;
         }
         else{
