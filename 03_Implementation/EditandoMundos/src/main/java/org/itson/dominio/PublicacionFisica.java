@@ -20,6 +20,9 @@ public class PublicacionFisica extends Publicacion {
 
     @Column(name = "paginaInicial", nullable = true)
     private int paginaInicial;
+    
+    @Column(name = "nombreLibro", nullable = true)
+    private String nombreLibro;
 
     public PublicacionFisica() {
     }
@@ -29,9 +32,10 @@ public class PublicacionFisica extends Publicacion {
         this.paginaInicial = paginaInicial;
     }
 
-    public PublicacionFisica(int paginaInicial, Long id, String titulo, Integer costoProd, Integer costoVenta, Autor autor) {
+    public PublicacionFisica(String nombreLibro, int paginaInicial, Long id, String titulo, Integer costoProd, Integer costoVenta, Autor autor) {
         super(id, titulo, costoProd, costoVenta, autor);
         this.paginaInicial = paginaInicial;
+        this.nombreLibro = nombreLibro;
     }
 
     public int getPaginaInicial() {
@@ -40,6 +44,14 @@ public class PublicacionFisica extends Publicacion {
 
     public void setPaginaInicial(int paginaInicial) {
         this.paginaInicial = paginaInicial;
+    }
+
+    public String getNombreLibro() {
+        return nombreLibro;
+    }
+
+    public void setNombreLibro(String nombreLibro) {
+        this.nombreLibro = nombreLibro;
     }
 
     @Override
