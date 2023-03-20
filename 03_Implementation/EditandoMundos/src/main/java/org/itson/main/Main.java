@@ -7,10 +7,12 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import org.itson.dominio.Administrador;
 import org.itson.dominio.Autor;
 import org.itson.dominio.Nacionalidad;
 import org.itson.dominio.PublicacionDigital;
 import org.itson.dominio.PublicacionFisica;
+import org.itson.dominio.Usuario;
 import org.itson.presentacion.IniciarSesionForm;
 import org.itson.presentacion.UnitOfWork;
 
@@ -21,7 +23,8 @@ import org.itson.presentacion.UnitOfWork;
 public class Main {
 
     public static void main(String[] args) {
-        agregarAutorYPublicaciones();
+//        agregarAutorYPublicaciones();
+        agregarAdministrador();
     }
 
     public static void cargarForm() {
@@ -62,7 +65,6 @@ public class Main {
     }
 
     private static Autor agregarAutor() {
-        UnitOfWork unitOfWork = new UnitOfWork();
         Autor autor = new Autor();
         autor.setApellidoMaterno("Russo");
         autor.setApellidoPaterno("Toledo");
@@ -70,7 +72,20 @@ public class Main {
         autor.setNacionalidad(Nacionalidad.MEXICANA);
         autor.setNombre("Luis Angel");
 
+        UnitOfWork unitOfWork = new UnitOfWork();
         return unitOfWork.autoresRepository().agregar(autor);
+    }
+
+    public static Usuario agregarAdministrador() {
+
+        UnitOfWork unitOfWork = new UnitOfWork();
+
+        Administrador administrador = new Administrador("Luis", "123");
+
+        administrador = unitOfWork.administradoresRepository().agregar(administrador);
+        
+        imprimirEntidades(administrador);
+        return administrador;
     }
 
     private static void imprimirEntidades(Object... entidades) {

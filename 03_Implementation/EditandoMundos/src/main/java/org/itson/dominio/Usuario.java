@@ -92,7 +92,7 @@ public class Usuario implements Serializable {
 
     @Override
     public String toString() {
-        return "org.itson.dominio.Usuario[ id=" + id + " ]";
+        return "Usuario{" + "id=" + id + ", username=" + username + ", password=" + password + '}';
     }
 
 }
