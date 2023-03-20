@@ -32,13 +32,18 @@ Para los componentes relacionados con calcular precios se estaría aplicando pru
 ### Estructurales
 
 ## Integracion
-Una vez desarrollados las pruebas de componentes de podría decidir el tipo de estrategia de integración.
+-Una vez que se hayan realizado las pruebas de componentes, se sugiere realizar pruebas de integración, para la estrategia de integración, se podría optar por una estrategia incremental donde se vayan integrando los componentes por etapas.
 
 ## Sistema
-
-- Se necesitará realizar pruebas integrando ya la base de datos.
-- 
+-Para el nivel de prueba del sistema, se necesitará realizar pruebas integrando ya la base de datos, se sugiere aplicar pruebas de rendimiento y estrés para asegurar que el sistema pueda manejar una carga de usuarios.
 
 ## Aceptacion
-- El sistema se da para poder publicar una versión alfa
-- 
+-Para el nivel de prueba de aceptación, se podría realizar una revisión de requisitos y una prueba beta donde se invite a un grupo de usuarios a probar el sistema y proporcionar comentarios.
+
+## Tecnincas 
+-Pruebas de caja negra: Para asegurar que el sistema cumpla con los requisitos funcionales especificados.
+-Pruebas de caja blanca: Para asegurar que el sistema cumpla con los requisitos no funcionales y la calidad del código.
+-Pruebas de flujo de control: Para asegurar que todas las posibles rutas de código hayan sido cubiertas.
+-Pruebas de regresión: Para asegurar que los cambios realizados no hayan afectado la funcionalidad existente.
+-Pruebas de rendimiento y estrés: Para asegurar que el sistema pueda manejar una carga de usuarios.
+-Pruebas de seguridad: Para asegurar que el sistema sea seguro y no existan vulnerabilidades de seguridad.
