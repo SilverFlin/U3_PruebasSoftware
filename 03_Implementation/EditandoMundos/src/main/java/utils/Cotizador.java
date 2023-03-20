@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package org.itson.controladores;
+package utils;
 
 import org.itson.dominio.Autor;
 import org.itson.dominio.Publicacion;
@@ -13,14 +13,9 @@ import org.itson.dominio.PublicacionFisica;
  *
  * @author mig_2
  */
-public class Cotizacion {
-    private Publicacion publicacion;
-
-    public Cotizacion(Publicacion publicacion) {
-        this.publicacion = publicacion;
-    }
-
-    public float calcularCostoVenta() {
+public class Cotizador {
+    
+    public static float calcularCostoVenta(Publicacion publicacion) {
         float costoProd = publicacion.getCostoProd();
         float costoVenta = 0;
         
@@ -45,7 +40,16 @@ public class Cotizacion {
         }
         return costoVenta;
     }
-    
-    
-}    
-
+        
+    public static float calcularCostoProduccion(int numPaginas){
+        float costoProd;
+        if (numPaginas>300) {
+            costoProd = numPaginas * 200;
+        }
+        else{
+            costoProd = numPaginas * 300;
+        }
+        return costoProd;
+    }
+        
+}
