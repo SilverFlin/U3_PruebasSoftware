@@ -11,17 +11,17 @@ classDiagram
     Usuario <|-- Administrador
     Usuario <|-- Cliente
 
-    %% Annotations
-    <<interface>> Publicacion
-    <<interface>> Usuario
 
     %% Classes
     class Autor{
+     -Long id   
      -String nombre
      -int edad
      -Nacionalidad nacionalidad
      -List~Publicacion~ publicaciones
 
+     +getId() Long
+     +setId(Long id): void
      +getNombre() String
      +setNombre(String nombre) void
      +getEdad() int
@@ -34,11 +34,14 @@ classDiagram
     }
 
     class  Publicacion{
+        -Long id 
         -String titulo
         -Integer costoProd
         -Integer costoVenta
         -Autor autor
 
+        +getId() Long
+        +setId(Long id): void
         +getTitulo() string
         +setTitulo(String titulo) void
         +getCostoProd() Integer
@@ -47,9 +50,6 @@ classDiagram
         +setCostoVenta(Integer costoVenta) void
         +getAutor() Autor
         +setAutor(Autor autor) void
-
-        +calcularCostoProd() void
-        +calcularCostoVenta() void
     }
    
 
@@ -71,9 +71,12 @@ classDiagram
     }
 
     class Usuario{
+        -Long id
         -String username
         -String password
 
+        +getId() Long
+        +setId(Long id): void
         +getUsername() String
         +setUsername(String username) void
         +getPassword() String
