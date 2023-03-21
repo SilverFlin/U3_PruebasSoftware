@@ -12,6 +12,7 @@ import org.itson.dominio.Publicacion;
 import org.itson.dominio.PublicacionDigital;
 import org.itson.dominio.PublicacionFisica;
 import org.itson.utils.Cotizador;
+import org.itson.utils.Dialogs;
 
 /**
  *
@@ -280,7 +281,6 @@ public class PublicacionForm extends javax.swing.JFrame {
 
     private void cotizar() {
         if (!this.validarCampos()) {
-            // TODO dialog
             return;
         }
 
@@ -317,18 +317,17 @@ public class PublicacionForm extends javax.swing.JFrame {
         String rawNoPaginas = txtNoPaginas.getText();
 
         if (titulo.isBlank()) {
-            //TODO dialog
-            System.out.println("titulo");
+            Dialogs.mostrarMensajeError(rootPane, "Se debe seleccionar un título");
             return false;
         }
 
         if (autor.isBlank()) {
-            //TODO dialog
+            Dialogs.mostrarMensajeError(rootPane, "Se debe seleccionar un autor");
             return false;
         }
 
         if (!rawNoPaginas.isBlank()) {
-            //TODO dialog
+            Dialogs.mostrarMensajeError(rootPane, "Se debe seleccionar el número de páginas");
             try {
                 Integer noPaginas = Integer.valueOf(rawNoPaginas);
             } catch (NumberFormatException e) {
@@ -340,8 +339,8 @@ public class PublicacionForm extends javax.swing.JFrame {
         if (this.publicacionSeleccionada == RADIO_PUBLICACION_DIGITAL) {
             String rawSizeMegas = txtSizeMegas.getText();
             if (rawSizeMegas.isBlank()) {
-                //TODO dialog
-                System.out.println("rawSizeMegas");
+                Dialogs.mostrarMensajeError(rootPane, "Formato de MB inválido");
+
                 return false;
             }
             // TODO mover utils
@@ -356,8 +355,7 @@ public class PublicacionForm extends javax.swing.JFrame {
         if (this.publicacionSeleccionada == RADIO_PUBLICACION_FISICA) {
             String rawPaginaInicial = txtPaginaInicial.getText();
             if (rawPaginaInicial.isBlank()) {
-                //TODO dialog
-                System.out.println("pagPrincipal");
+                Dialogs.mostrarMensajeError(rootPane, "Formato de página inicial inválido");
                 return false;
             }
             // TODO mover utils
