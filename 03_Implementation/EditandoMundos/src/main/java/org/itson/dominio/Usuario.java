@@ -7,11 +7,14 @@ package org.itson.dominio;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 /**
@@ -20,8 +23,14 @@ import javax.persistence.Table;
  */
 @Entity
 @Inheritance
-@DiscriminatorColumn(name = "user_type")
+@DiscriminatorColumn(name = "user_type", discriminatorType = DiscriminatorType.STRING)
 @Table(name = "usuario")
+@NamedQueries({
+    @NamedQuery(
+        name = "Usuario.findByUsernameAndPassword",
+        query = "SELECT u FROM Usuario u WHERE u.username = :username AND u.password = :password"
+    )
+})    
 public class Usuario implements Serializable {
 
     @Id
@@ -34,6 +43,9 @@ public class Usuario implements Serializable {
 
     @Column(name = "password", nullable = false, length = 100)
     private String password;
+    
+    @Column(name = "user_type", insertable = false, updatable = false)
+    private String tipo;
 
     public Usuario() {
     }
@@ -48,6 +60,13 @@ public class Usuario implements Serializable {
         this.username = username;
         this.password = password;
     }
+        
+    public Usuario(Long id, String username, String password, String tipo) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.tipo = tipo;
+    }        
 
     public Long getId() {
         return id;
@@ -72,6 +91,15 @@ public class Usuario implements Serializable {
     public void setPassword(String password) {
         this.password = password;
     }
+    
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
+
 
     @Override
     public int hashCode() {
@@ -92,7 +120,7 @@ public class Usuario implements Serializable {
 
     @Override
     public String toString() {
-        return "Usuario{" + "id=" + id + ", username=" + username + ", password=" + password + '}';
+        return "Usuario{" + "id=" + id + ", username=" + username + ", password=" + password + ", tipo=" + tipo +'}';
     }
 
 }
