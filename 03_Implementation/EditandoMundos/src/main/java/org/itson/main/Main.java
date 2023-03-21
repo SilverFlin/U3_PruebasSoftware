@@ -14,6 +14,7 @@ import org.itson.dominio.PublicacionDigital;
 import org.itson.dominio.PublicacionFisica;
 import org.itson.dominio.Usuario;
 import org.itson.presentacion.IniciarSesionForm;
+import org.itson.presentacion.PublicacionForm;
 import org.itson.presentacion.UnitOfWork;
 
 /**
@@ -23,12 +24,17 @@ import org.itson.presentacion.UnitOfWork;
 public class Main {
 
     public static void main(String[] args) {
-//        agregarAutorYPublicaciones();
-        agregarAdministrador();
+
     }
 
     public static void cargarForm() {
         IniciarSesionForm clienteForm = new IniciarSesionForm();
+        clienteForm.setVisible(true);
+    }
+
+    public static void cargarPublicacionForm() {
+        // TODO borrar
+        PublicacionForm clienteForm = new PublicacionForm();
         clienteForm.setVisible(true);
     }
 
@@ -83,7 +89,7 @@ public class Main {
         Administrador administrador = new Administrador("Luis", "123");
 
         administrador = unitOfWork.administradoresRepository().agregar(administrador);
-        
+
         imprimirEntidades(administrador);
         return administrador;
     }
