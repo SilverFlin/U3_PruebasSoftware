@@ -10,7 +10,6 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
-
 /**
  *
  * @author Toled
@@ -28,8 +27,14 @@ public class PublicacionDigital extends Publicacion {
     public PublicacionDigital() {
     }
 
-    public PublicacionDigital(boolean isDensa, Double sizeMegas, Long id, String titulo, Integer costoProd, Integer costoVenta, Autor autor) {
-        super(titulo, costoProd, costoVenta, autor);
+    public PublicacionDigital(boolean isDensa, Double sizeMegas, Long id, String titulo, Integer costoProd, Integer costoVenta, Integer noPaginas, Autor autor) {
+        super(id, titulo, costoProd, costoVenta, noPaginas, autor);
+        this.isDensa = isDensa;
+        this.sizeMegas = sizeMegas;
+    }
+
+    public PublicacionDigital(boolean isDensa, Double sizeMegas, String titulo, Integer costoProd, Integer costoVenta, Integer noPaginas, Autor autor) {
+        super(titulo, costoProd, costoVenta, noPaginas, autor);
         this.isDensa = isDensa;
         this.sizeMegas = sizeMegas;
     }
@@ -54,6 +59,5 @@ public class PublicacionDigital extends Publicacion {
     public String toString() {
         return "PublicacionDigital{" + super.toString() + "isDensa=" + isDensa + ", sizeMegas=" + sizeMegas + '}';
     }
-    
 
 }

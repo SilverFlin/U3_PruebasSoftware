@@ -27,16 +27,19 @@ public class PublicacionFisica extends Publicacion {
     public PublicacionFisica() {
     }
 
-    public PublicacionFisica(int paginaInicial, String titulo, Integer costoProd, Integer costoVenta, Autor autor) {
-        super(titulo, costoProd, costoVenta, autor);
-        this.paginaInicial = paginaInicial;
-    }
-
-    public PublicacionFisica(String nombreLibro, int paginaInicial, Long id, String titulo, Integer costoProd, Integer costoVenta, Autor autor) {
-        super(id, titulo, costoProd, costoVenta, autor);
+    public PublicacionFisica(int paginaInicial, String nombreLibro, Long id, String titulo, Integer costoProd, Integer costoVenta, Integer noPaginas, Autor autor) {
+        super(id, titulo, costoProd, costoVenta, noPaginas, autor);
         this.paginaInicial = paginaInicial;
         this.nombreLibro = nombreLibro;
     }
+
+    public PublicacionFisica(int paginaInicial, String nombreLibro, String titulo, Integer costoProd, Integer costoVenta, Integer noPaginas, Autor autor) {
+        super(titulo, costoProd, costoVenta, noPaginas, autor);
+        this.paginaInicial = paginaInicial;
+        this.nombreLibro = nombreLibro;
+    }
+
+    
 
     public int getPaginaInicial() {
         return paginaInicial;

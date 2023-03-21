@@ -41,6 +41,9 @@ public class Publicacion implements Serializable {
     @Column(name = "costoVenta", nullable = true)
     private Integer costoVenta;
 
+    @Column(name = "noPaginas", nullable = false)
+    private Integer noPaginas;
+
     @ManyToOne
     //Desde este momento ya se considera como una columna al hacer el JoinColumn
     //Se agregan los gets y sets con este igual
@@ -48,18 +51,20 @@ public class Publicacion implements Serializable {
     @JoinColumn(name = "idAutor", nullable = false)//LLAVE FORÁNEA
     private Autor autor;
 
-    public Publicacion(Long id, String titulo, Integer costoProd, Integer costoVenta, Autor autor) {
+    public Publicacion(Long id, String titulo, Integer costoProd, Integer costoVenta, Integer noPaginas, Autor autor) {
         this.id = id;
         this.titulo = titulo;
         this.costoProd = costoProd;
         this.costoVenta = costoVenta;
+        this.noPaginas = noPaginas;
         this.autor = autor;
     }
 
-    public Publicacion(String titulo, Integer costoProd, Integer costoVenta, Autor autor) {
+    public Publicacion(String titulo, Integer costoProd, Integer costoVenta, Integer noPaginas, Autor autor) {
         this.titulo = titulo;
         this.costoProd = costoProd;
         this.costoVenta = costoVenta;
+        this.noPaginas = noPaginas;
         this.autor = autor;
     }
 
@@ -104,6 +109,14 @@ public class Publicacion implements Serializable {
 
     public void setAutor(Autor autor) {
         this.autor = autor;
+    }
+
+    public Integer getNoPaginas() {
+        return noPaginas;
+    }
+
+    public void setNoPaginas(Integer noPaginas) {
+        this.noPaginas = noPaginas;
     }
 
     @Override
