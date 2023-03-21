@@ -14,6 +14,8 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -23,6 +25,9 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "autor")
+@NamedQueries({
+    @NamedQuery(name = "autoresBuscarNombres", query = "select a from Autor a where a.nombres like :nombres and a.apellidoPaterno like :apellidopaterno")
+})
 public class Autor implements Serializable {
 
     @Id
@@ -31,7 +36,7 @@ public class Autor implements Serializable {
     private Long id;
 
     @Column(name = "nombres", nullable = false, length = 100)
-    private String nombre;
+    private String nombres;
 
     @Column(name = "apellidoPaterno", nullable = false, length = 100)
     private String apellidoPaterno;
@@ -46,7 +51,6 @@ public class Autor implements Serializable {
     @Enumerated(EnumType.STRING)
     private Nacionalidad nacionalidad;
 
-    
     @OneToMany(mappedBy = "autor", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     private List<Publicacion> publicaciones;
 
@@ -55,7 +59,7 @@ public class Autor implements Serializable {
 
     public Autor(Long id, String nombre, String apellidoPaterno, String apellidoMaterno, int edad, Nacionalidad nacionalidad, List<Publicacion> publicaciones) {
         this.id = id;
-        this.nombre = nombre;
+        this.nombres = nombre;
         this.apellidoPaterno = apellidoPaterno;
         this.apellidoMaterno = apellidoMaterno;
         this.edad = edad;
@@ -64,7 +68,7 @@ public class Autor implements Serializable {
     }
 
     public Autor(String nombre, String apellidoPaterno, String apellidoMaterno, int edad, Nacionalidad nacionalidad, List<Publicacion> publicaciones) {
-        this.nombre = nombre;
+        this.nombres = nombre;
         this.apellidoPaterno = apellidoPaterno;
         this.apellidoMaterno = apellidoMaterno;
         this.edad = edad;
@@ -81,11 +85,11 @@ public class Autor implements Serializable {
     }
 
     public String getNombre() {
-        return nombre;
+        return nombres;
     }
 
     public void setNombre(String nombre) {
-        this.nombre = nombre;
+        this.nombres = nombre;
     }
 
     public String getApellidoPaterno() {
@@ -150,7 +154,7 @@ public class Autor implements Serializable {
 
     @Override
     public String toString() {
-        return "Autor{" + "id=" + id + ", nombre=" + nombre + ", apellidoPaterno=" + apellidoPaterno + ", apellidoMaterno=" + apellidoMaterno + ", edad=" + edad + ", nacionalidad=" + nacionalidad + ", publicaciones=" + publicaciones + '}';
+        return "Autor{" + "id=" + id + ", nombre=" + nombres + ", apellidoPaterno=" + apellidoPaterno + ", apellidoMaterno=" + apellidoMaterno + ", edad=" + edad + ", nacionalidad=" + nacionalidad + ", publicaciones=" + publicaciones + '}';
     }
 
 }
