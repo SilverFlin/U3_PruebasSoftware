@@ -1,13 +1,20 @@
 package org.itson.presentacion;
 
+import java.util.Arrays;
+import javax.swing.JOptionPane;
+import org.itson.dominio.Usuario;
+
 /**
  *
  * @author Toled
  */
 public class IniciarSesionForm extends javax.swing.JFrame {
 
+    private UnitOfWork uw;
+    
     public IniciarSesionForm() {
         initComponents();
+        uw = new UnitOfWork();
     }
 
     @SuppressWarnings("unchecked")
@@ -18,12 +25,12 @@ public class IniciarSesionForm extends javax.swing.JFrame {
         Background = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         lblBienvenido = new javax.swing.JLabel();
-        txtCorreo = new javax.swing.JTextField();
+        campoTextoUsuario = new javax.swing.JTextField();
         jSeparator1 = new javax.swing.JSeparator();
         lblCorreo = new javax.swing.JLabel();
         jSeparator2 = new javax.swing.JSeparator();
         lblContraseña = new javax.swing.JLabel();
-        txtContraseña = new javax.swing.JPasswordField();
+        campoTextoContraseña = new javax.swing.JPasswordField();
         btnIngresar = new javax.swing.JButton();
         txtIniciarSesion = new javax.swing.JLabel();
 
@@ -62,14 +69,19 @@ public class IniciarSesionForm extends javax.swing.JFrame {
 
         Background.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 600, 90));
 
-        txtCorreo.setForeground(new java.awt.Color(51, 51, 51));
-        txtCorreo.setToolTipText("");
-        txtCorreo.setBorder(null);
-        Background.add(txtCorreo, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 180, 190, 20));
+        campoTextoUsuario.setForeground(new java.awt.Color(51, 51, 51));
+        campoTextoUsuario.setToolTipText("");
+        campoTextoUsuario.setBorder(null);
+        campoTextoUsuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                campoTextoUsuarioActionPerformed(evt);
+            }
+        });
+        Background.add(campoTextoUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 180, 190, 20));
         Background.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 200, 190, 10));
 
         lblCorreo.setFont(new java.awt.Font("Nirmala UI Semilight", 0, 14)); // NOI18N
-        lblCorreo.setText("Correo");
+        lblCorreo.setText("Usuario");
         Background.add(lblCorreo, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 160, 180, 20));
         Background.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 280, 190, 10));
 
@@ -77,8 +89,8 @@ public class IniciarSesionForm extends javax.swing.JFrame {
         lblContraseña.setText("Contraseña");
         Background.add(lblContraseña, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 240, -1, -1));
 
-        txtContraseña.setBorder(null);
-        Background.add(txtContraseña, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 260, 190, 20));
+        campoTextoContraseña.setBorder(null);
+        Background.add(campoTextoContraseña, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 260, 190, 20));
 
         btnIngresar.setBackground(new java.awt.Color(0, 102, 204));
         btnIngresar.setFont(new java.awt.Font("Nirmala UI Semilight", 1, 12)); // NOI18N
@@ -119,13 +131,25 @@ public class IniciarSesionForm extends javax.swing.JFrame {
      * @param evt Evento que lo acciona
      */
     private void btnIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarActionPerformed
-        // TODO
+       Usuario usuario = uw.usuariosRepository().obtenPorUsuarioContraseña(campoTextoUsuario.getText(), Arrays.toString(campoTextoContraseña.getPassword()));
+        if (usuario != null) {
+            
+        }
+        else{
+            JOptionPane.showMessageDialog(this, "No se encontró el usuario", "Error!", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btnIngresarActionPerformed
+
+    private void campoTextoUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoTextoUsuarioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_campoTextoUsuarioActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Background;
     private javax.swing.JButton btnIngresar;
+    private javax.swing.JPasswordField campoTextoContraseña;
+    private javax.swing.JTextField campoTextoUsuario;
     private javax.swing.JButton jButton2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JSeparator jSeparator1;
@@ -133,8 +157,6 @@ public class IniciarSesionForm extends javax.swing.JFrame {
     private javax.swing.JLabel lblBienvenido;
     private javax.swing.JLabel lblContraseña;
     private javax.swing.JLabel lblCorreo;
-    private javax.swing.JPasswordField txtContraseña;
-    private javax.swing.JTextField txtCorreo;
     private javax.swing.JLabel txtIniciarSesion;
     // End of variables declaration//GEN-END:variables
 }

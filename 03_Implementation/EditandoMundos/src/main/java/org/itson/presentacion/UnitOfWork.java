@@ -11,6 +11,7 @@ import org.itson.repositories.AutoresRepository;
 import org.itson.repositories.PublicacionesDigitalesRepository;
 import org.itson.repositories.PublicacionesFisicasRepository;
 import org.itson.repositories.ClientesRepository;
+import org.itson.repositories.UsuariosRepository;
 
 /**
  *
@@ -29,6 +30,8 @@ public class UnitOfWork {
     private ClientesRepository _clientesRepository;
 
     private AdministradoresRepository _administradoresRepository;
+    
+    private UsuariosRepository _usuariosRepository;
     
     public UnitOfWork() {
 
@@ -68,6 +71,12 @@ public class UnitOfWork {
         return (_administradoresRepository != null)
                 ? _administradoresRepository
                 : (_administradoresRepository = new AdministradoresRepository(getEntityManager()));
+    }
+    
+    public UsuariosRepository usuariosRepository(){
+                return (_usuariosRepository != null)
+                ? _usuariosRepository
+                : (_usuariosRepository = new UsuariosRepository(getEntityManager()));
     }
         
 }
