@@ -1,7 +1,9 @@
 package org.itson.presentacion;
 
 import java.util.Arrays;
+import javax.persistence.NoResultException;
 import javax.swing.JOptionPane;
+import org.itson.dominio.Cliente;
 import org.itson.dominio.Usuario;
 
 /**
@@ -131,11 +133,15 @@ public class IniciarSesionForm extends javax.swing.JFrame {
      * @param evt Evento que lo acciona
      */
     private void btnIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarActionPerformed
-       Usuario usuario = uw.usuariosRepository().obtenPorUsuarioContraseña(campoTextoUsuario.getText(), Arrays.toString(campoTextoContraseña.getPassword()));
-        if (usuario != null) {
-            
-        }
-        else{
+        try {
+            Usuario usuario = uw.usuariosRepository().obtenPorUsuarioContraseña(campoTextoUsuario.getText(), new String(campoTextoContraseña.getPassword()));
+            if (usuario instanceof Cliente) {
+                System.out.println("Cliente!");
+            }
+            else{
+                System.out.println("Administrador!");
+            }
+        } catch (NoResultException e){
             JOptionPane.showMessageDialog(this, "No se encontró el usuario", "Error!", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnIngresarActionPerformed
