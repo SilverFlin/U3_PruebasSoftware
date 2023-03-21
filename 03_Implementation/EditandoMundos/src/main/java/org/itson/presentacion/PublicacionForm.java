@@ -13,6 +13,7 @@ import org.itson.dominio.PublicacionDigital;
 import org.itson.dominio.PublicacionFisica;
 import org.itson.utils.Cotizador;
 import org.itson.utils.Dialogs;
+import org.itson.utils.Validaciones;
 
 /**
  *
@@ -328,9 +329,8 @@ public class PublicacionForm extends javax.swing.JFrame {
 
         if (!rawNoPaginas.isBlank()) {
             Dialogs.mostrarMensajeError(rootPane, "Se debe seleccionar el número de páginas");
-            try {
-                Integer noPaginas = Integer.valueOf(rawNoPaginas);
-            } catch (NumberFormatException e) {
+            if (!Validaciones.isInteger(rawNoPaginas)) {
+                Dialogs.mostrarMensajeError(rootPane, "Formato de No. Paginas inválido");
                 return false;
             }
 
@@ -339,14 +339,11 @@ public class PublicacionForm extends javax.swing.JFrame {
         if (this.publicacionSeleccionada == RADIO_PUBLICACION_DIGITAL) {
             String rawSizeMegas = txtSizeMegas.getText();
             if (rawSizeMegas.isBlank()) {
-                Dialogs.mostrarMensajeError(rootPane, "Formato de MB inválido");
-
+                Dialogs.mostrarMensajeError(rootPane, "Se debe seleccionar el tamaño");
                 return false;
             }
-            // TODO mover utils
-            try {
-                Double sizeMegas = Double.valueOf(rawSizeMegas);
-            } catch (NumberFormatException e) {
+            if (!Validaciones.isDouble(rawSizeMegas)) {
+                Dialogs.mostrarMensajeError(rootPane, "Formato de MB inválido");
                 return false;
             }
 
