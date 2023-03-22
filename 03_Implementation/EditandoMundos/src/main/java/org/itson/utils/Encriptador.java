@@ -16,6 +16,11 @@ public class Encriptador {
         return bcryptHashString;
     }
     
+    public static String encriptarPassword(char[] password){
+        String bcryptHashString  = BCrypt.withDefaults().hashToString(12, password);
+        return bcryptHashString;
+    }
+    
     public static boolean verificarPasswordConHash(String password, String hashedPassword){
         BCrypt.Result result = BCrypt.verifyer().verify(password.toCharArray(), hashedPassword);
         return result.verified;
