@@ -7,6 +7,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
+import org.itson.controladores.ControladorPublicacion;
 import org.itson.dominio.Autor;
 import org.itson.dominio.Publicacion;
 import org.itson.dominio.PublicacionDigital;
@@ -300,11 +301,11 @@ public class PublicacionForm extends javax.swing.JFrame {
             return;
         }
         if (respuesta == JOptionPane.OK_OPTION) {
-            publicacion.setCostoProd(Math.round(costoProduccion));
-            int costoVenta = Math.round(Cotizador.calcularCostoVenta(publicacion));
-            publicacion.setCostoVenta(costoVenta);
+            Publicacion publicacionGuardada = ControladorPublicacion.guardarPublicacion(publicacion, costoProduccion);
+
             JOptionPane.showMessageDialog(rootPane, "Publicacion guardada \n "
-                    + "costo venta: " + costoVenta);
+                    + "costo venta: " + publicacionGuardada.getCostoVenta());
+
             // Regresar form
             return;
         }
