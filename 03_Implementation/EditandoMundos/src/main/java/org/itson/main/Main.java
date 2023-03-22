@@ -17,6 +17,8 @@ import org.itson.presentacion.IniciarSesionForm;
 import org.itson.presentacion.PublicacionForm;
 import org.itson.presentacion.PublicacionesForm;
 import org.itson.presentacion.UnitOfWork;
+import org.itson.utils.Dialogs;
+import org.itson.utils.Encriptador;
 
 /**
  *
@@ -25,6 +27,8 @@ import org.itson.presentacion.UnitOfWork;
 public class Main {
 
     public static void main(String[] args) {
+        iniciarApp();
+//        System.out.println(Encriptador.verificarPasswordConHash("admin", "$2a$12$MicEpmWz9CK8fL3r7b28a.anep7.ijrXiballv12WAr3cYAVs4BPy"));
     }
 
     public static void cargarForm() {
@@ -43,7 +47,7 @@ public class Main {
         PublicacionFisica pubFisica = agregarPubFisica(autor);
         PublicacionDigital pubDigital = agregarPubDigital(autor);
 
-        imprimirEntidades(pubDigital, pubFisica,autor);
+        imprimirEntidades(pubDigital, pubFisica, autor);
 
     }
 
@@ -84,13 +88,21 @@ public class Main {
         return unitOfWork.autoresRepository().agregar(autor);
     }
 
-    public static Usuario agregarAdministrador() {
+    public static Usuario agregarAdminPrueba() {
 
         UnitOfWork unitOfWork = new UnitOfWork();
 
-        Administrador administrador = new Administrador("Luis", "123");
+        Administrador administrador = new Administrador();
+        administrador.setUsername("admin");
 
-        administrador = unitOfWork.administradoresRepository().agregar(administrador);
+        // TODO Esto se debe efectuar en otra parte
+        String passwordEncriptada = Encriptador.encriptarPassword("admin");
+        administrador.setPassword(passwordEncriptada);
+        try {
+            administrador = unitOfWork.administradoresRepository().agregar(administrador);
+        } catch (Exception e) {
+            System.out.println("Admin prueba ya agregado");
+        }
 
         imprimirEntidades(administrador);
         return administrador;
@@ -101,5 +113,16 @@ public class Main {
         for (Object entidad : entidades) {
             System.out.println(entidad);
         }
+    }
+
+    private static void iniciarApp() {
+        agregarAdminPrueba();
+        IniciarSesionForm iniciarSesionForm = new IniciarSesionForm();
+        iniciarSesionForm.setVisible(true);
+        Dialogs.mostrarMensajeExito(iniciarSesionForm, """
+                                                       Admin Prueba:
+                                                       usuario: admin
+                                                       password: admin
+                                                       """);
     }
 }

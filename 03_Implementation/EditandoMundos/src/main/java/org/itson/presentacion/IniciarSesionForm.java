@@ -3,8 +3,12 @@ package org.itson.presentacion;
 import java.util.Arrays;
 import javax.persistence.NoResultException;
 import javax.swing.JOptionPane;
+import org.itson.dominio.Administrador;
 import org.itson.dominio.Cliente;
 import org.itson.dominio.Usuario;
+import org.itson.repositories.UsuariosRepository;
+import org.itson.utils.Dialogs;
+import org.itson.utils.Encriptador;
 
 /**
  *
@@ -12,11 +16,11 @@ import org.itson.dominio.Usuario;
  */
 public class IniciarSesionForm extends javax.swing.JFrame {
 
-    private UnitOfWork uw;
-    
+    private UnitOfWork unitOfWork;
+
     public IniciarSesionForm() {
         initComponents();
-        uw = new UnitOfWork();
+        unitOfWork = new UnitOfWork();
     }
 
     @SuppressWarnings("unchecked")
@@ -133,21 +137,7 @@ public class IniciarSesionForm extends javax.swing.JFrame {
      * @param evt Evento que lo acciona
      */
     private void btnIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarActionPerformed
-        try {
-            Usuario usuario = uw.usuariosRepository().obtenPorUsuarioContraseña(campoTextoUsuario.getText(), new String(campoTextoContraseña.getPassword()));
-            if (usuario instanceof Cliente) {
-                MenuPrincipalForm menuPrincipal = new MenuPrincipalForm(false);
-                menuPrincipal.setVisible(true);
-                this.dispose();
-            }
-            else{
-                MenuPrincipalForm menuPrincipal = new MenuPrincipalForm(true);
-                menuPrincipal.setVisible(true);
-                this.dispose();
-            }
-        } catch (NoResultException e){
-            JOptionPane.showMessageDialog(this, "No se encontró el usuario", "Error!", JOptionPane.ERROR_MESSAGE);
-        }
+        this.iniciarSesion();
     }//GEN-LAST:event_btnIngresarActionPerformed
 
     private void campoTextoUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoTextoUsuarioActionPerformed
@@ -169,4 +159,25 @@ public class IniciarSesionForm extends javax.swing.JFrame {
     private javax.swing.JLabel lblCorreo;
     private javax.swing.JLabel txtIniciarSesion;
     // End of variables declaration//GEN-END:variables
+
+    private void iniciarSesion() {
+        try {
+            UsuariosRepository usuariosRepository = unitOfWork.usuariosRepository();
+            String intentoPassword = new String(this.campoTextoContraseña.getPassword());
+            Usuario usuario = usuariosRepository.obtenPorUsername(campoTextoUsuario.getText());
+            System.out.println(intentoPassword + "\n" + usuario.getPassword());
+            if (!Encriptador.verificarPasswordConHash(intentoPassword, usuario.getPassword())) {
+                Dialogs.mostrarMensajeError(rootPane, "Credenciales inválidas");
+                return;
+            }
+
+            MenuPrincipalForm menuPrincipal = new MenuPrincipalForm(false);
+            menuPrincipal.setVisible(true);
+            this.dispose();
+
+        } catch (NoResultException e) {
+            Dialogs.mostrarMensajeError(rootPane, "No se encontró el usuario");
+            System.out.println(e);
+        }
+    }
 }
