@@ -24,12 +24,13 @@ import javax.persistence.Table;
  */
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "tipo_usuario")
 @NamedQueries({
     @NamedQuery(
-        name = "Usuario.findByUsernameAndPassword",
-        query = "SELECT u FROM Usuario u WHERE u.username = :username AND u.password = :password"
+            name = "Usuario.findByUsernameAndPassword",
+            query = "SELECT u FROM Usuario u WHERE u.username = :username AND u.password = :password"
     )
-})    
+})
 public class Usuario implements Serializable {
 
     @Id
@@ -42,9 +43,6 @@ public class Usuario implements Serializable {
 
     @Column(name = "password", nullable = false, length = 100)
     private String password;
-    
-    @Column(name = "user_type", insertable = false, updatable = false)
-    private String tipo;
 
     public Usuario() {
     }
@@ -59,13 +57,6 @@ public class Usuario implements Serializable {
         this.username = username;
         this.password = password;
     }
-        
-    public Usuario(Long id, String username, String password, String tipo) {
-        this.id = id;
-        this.username = username;
-        this.password = password;
-        this.tipo = tipo;
-    }        
 
     public Long getId() {
         return id;
@@ -90,15 +81,6 @@ public class Usuario implements Serializable {
     public void setPassword(String password) {
         this.password = password;
     }
-    
-    public String getTipo() {
-        return tipo;
-    }
-
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
-    }
-
 
     @Override
     public int hashCode() {
@@ -119,7 +101,7 @@ public class Usuario implements Serializable {
 
     @Override
     public String toString() {
-        return "Usuario{" + "id=" + id + ", username=" + username + ", password=" + password + ", tipo=" + tipo +'}';
+        return "Usuario{" + "id=" + id + ", username=" + username + ", password=" + password +'}';
     }
 
 }
