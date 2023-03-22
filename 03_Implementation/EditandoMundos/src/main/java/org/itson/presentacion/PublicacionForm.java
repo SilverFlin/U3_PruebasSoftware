@@ -12,6 +12,7 @@ import org.itson.dominio.Autor;
 import org.itson.dominio.Publicacion;
 import org.itson.dominio.PublicacionDigital;
 import org.itson.dominio.PublicacionFisica;
+import org.itson.dominio.Usuario;
 import org.itson.utils.Cotizador;
 import org.itson.utils.Dialogs;
 import org.itson.utils.Validaciones;
@@ -33,11 +34,14 @@ public class PublicacionForm extends javax.swing.JFrame {
     private String nombreLibroPub;
     private Integer noPaginasPub;
     private Double sizeMegasPub;
+    
+    private Usuario usuarioLoggeado;
 
-    public PublicacionForm() {
+    public PublicacionForm(Usuario usuarioLoggeado) {
         initComponents();
         this.llenarComboBoxAutores();
         this.actualizarPublicacionSeleccionada();
+        this.usuarioLoggeado = usuarioLoggeado;
     }
 
     @SuppressWarnings("unchecked")

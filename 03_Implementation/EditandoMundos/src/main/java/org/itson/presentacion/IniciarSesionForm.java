@@ -17,6 +17,7 @@ import org.itson.utils.Encriptador;
 public class IniciarSesionForm extends javax.swing.JFrame {
 
     private UnitOfWork unitOfWork;
+    private Usuario usuarioLoggeado;
 
     public IniciarSesionForm() {
         initComponents();
@@ -170,14 +171,19 @@ public class IniciarSesionForm extends javax.swing.JFrame {
                 Dialogs.mostrarMensajeError(rootPane, "Credenciales inválidas");
                 return;
             }
+            this.usuarioLoggeado = usuario;
 
-            MenuPrincipalForm menuPrincipal = new MenuPrincipalForm(false);
-            menuPrincipal.setVisible(true);
-            this.dispose();
+            this.cargarMenuPrincipal();
 
         } catch (NoResultException e) {
             Dialogs.mostrarMensajeError(rootPane, "No se encontró el usuario");
             System.out.println(e);
         }
+    }
+
+    private void cargarMenuPrincipal() {
+        MenuPrincipalForm menuPrincipal = new MenuPrincipalForm(usuarioLoggeado);
+        menuPrincipal.setVisible(true);
+        this.dispose();
     }
 }

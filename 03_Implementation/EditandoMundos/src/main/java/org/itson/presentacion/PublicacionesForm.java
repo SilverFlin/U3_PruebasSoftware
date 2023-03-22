@@ -5,9 +5,11 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
+import org.itson.dominio.Cliente;
 import org.itson.dominio.Publicacion;
 import org.itson.dominio.PublicacionDigital;
 import org.itson.dominio.PublicacionFisica;
+import org.itson.dominio.Usuario;
 
 /**
  *
@@ -16,13 +18,16 @@ import org.itson.dominio.PublicacionFisica;
 public class PublicacionesForm extends javax.swing.JFrame {
 
     private static final Logger LOG = Logger.getLogger(PublicacionesForm.class.getName());
+    private Usuario clienteLoggeado;
 
     /**
      * Cuenta bancaria a mostrar
+     * @param clienteLoggeado
      */
-    public PublicacionesForm() {
+    public PublicacionesForm(Usuario clienteLoggeado) {
         initComponents();
         cargarTablaOperaciones();
+        this.clienteLoggeado = clienteLoggeado;
     }
 
     /**
