@@ -15,6 +15,7 @@ import org.itson.dominio.PublicacionFisica;
 import org.itson.dominio.Usuario;
 import org.itson.presentacion.IniciarSesionForm;
 import org.itson.presentacion.PublicacionForm;
+import org.itson.presentacion.PublicacionesForm;
 import org.itson.presentacion.UnitOfWork;
 
 /**
@@ -24,11 +25,10 @@ import org.itson.presentacion.UnitOfWork;
 public class Main {
 
     public static void main(String[] args) {
-
     }
 
     public static void cargarForm() {
-        IniciarSesionForm clienteForm = new IniciarSesionForm();
+        PublicacionesForm clienteForm = new PublicacionesForm();
         clienteForm.setVisible(true);
     }
 
@@ -43,7 +43,7 @@ public class Main {
         PublicacionFisica pubFisica = agregarPubFisica(autor);
         PublicacionDigital pubDigital = agregarPubDigital(autor);
 
-        imprimirEntidades(autor, pubDigital, pubFisica);
+        imprimirEntidades(pubDigital, pubFisica,autor);
 
     }
 
@@ -53,7 +53,8 @@ public class Main {
         PublicacionFisica pubFisica = new PublicacionFisica();
         pubFisica.setTitulo("Mistborn");
         pubFisica.setAutor(autor);
-        pubFisica.setPaginaInicial(0);
+        pubFisica.setPaginaInicial(1);
+        pubFisica.setNoPaginas(100);
 
         return unitOfWork.publicacionesFisicasRepository().agregar(pubFisica);
     }
@@ -66,6 +67,7 @@ public class Main {
         pubDigital.setAutor(autor);
         pubDigital.setIsDensa(true);
         pubDigital.setSizeMegas(7.7);
+        pubDigital.setNoPaginas(100);
 
         return unitOfWork.publicacionesDigitalesRepository().agregar(pubDigital);
     }
