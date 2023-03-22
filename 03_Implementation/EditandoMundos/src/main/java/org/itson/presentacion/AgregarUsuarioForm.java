@@ -10,11 +10,11 @@ import org.itson.dominio.Usuario;
  *
  * @author Toled
  */
-public class IniciarSesionForm extends javax.swing.JFrame {
+public class AgregarUsuarioForm extends javax.swing.JFrame {
 
     private UnitOfWork uw;
     
-    public IniciarSesionForm() {
+    public AgregarUsuarioForm() {
         initComponents();
         uw = new UnitOfWork();
     }
@@ -33,8 +33,8 @@ public class IniciarSesionForm extends javax.swing.JFrame {
         jSeparator2 = new javax.swing.JSeparator();
         lblContraseña = new javax.swing.JLabel();
         campoTextoContraseña = new javax.swing.JPasswordField();
-        btnIngresar = new javax.swing.JButton();
-        txtIniciarSesion = new javax.swing.JLabel();
+        btnRegresar = new javax.swing.JButton();
+        btnAgregar1 = new javax.swing.JButton();
 
         jButton2.setText("jButton2");
 
@@ -50,23 +50,23 @@ public class IniciarSesionForm extends javax.swing.JFrame {
 
         lblBienvenido.setFont(new java.awt.Font("Nirmala UI Semilight", 0, 24)); // NOI18N
         lblBienvenido.setForeground(new java.awt.Color(255, 255, 255));
-        lblBienvenido.setText("Bienvenido");
+        lblBienvenido.setText("Agregar Usuario");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(245, Short.MAX_VALUE)
+                .addContainerGap(221, Short.MAX_VALUE)
                 .addComponent(lblBienvenido)
-                .addGap(243, 243, 243))
+                .addGap(211, 211, 211))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(28, 28, 28)
+                .addGap(25, 25, 25)
                 .addComponent(lblBienvenido)
-                .addContainerGap(30, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         Background.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 600, 90));
@@ -94,23 +94,33 @@ public class IniciarSesionForm extends javax.swing.JFrame {
         campoTextoContraseña.setBorder(null);
         Background.add(campoTextoContraseña, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 260, 190, 20));
 
-        btnIngresar.setBackground(new java.awt.Color(0, 102, 204));
-        btnIngresar.setFont(new java.awt.Font("Nirmala UI Semilight", 1, 12)); // NOI18N
-        btnIngresar.setForeground(new java.awt.Color(255, 255, 255));
-        btnIngresar.setText("Ingresar");
-        btnIngresar.setBorder(null);
-        btnIngresar.setBorderPainted(false);
-        btnIngresar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        btnIngresar.addActionListener(new java.awt.event.ActionListener() {
+        btnRegresar.setBackground(new java.awt.Color(0, 102, 204));
+        btnRegresar.setFont(new java.awt.Font("Nirmala UI Semilight", 1, 12)); // NOI18N
+        btnRegresar.setForeground(new java.awt.Color(255, 255, 255));
+        btnRegresar.setText("Regresar");
+        btnRegresar.setBorder(null);
+        btnRegresar.setBorderPainted(false);
+        btnRegresar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        btnRegresar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnIngresarActionPerformed(evt);
+                btnRegresarActionPerformed(evt);
             }
         });
-        Background.add(btnIngresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 310, 70, 30));
+        Background.add(btnRegresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 100, 70, 30));
 
-        txtIniciarSesion.setFont(new java.awt.Font("Nirmala UI Semilight", 0, 16)); // NOI18N
-        txtIniciarSesion.setText("Iniciar sesion");
-        Background.add(txtIniciarSesion, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 110, -1, -1));
+        btnAgregar1.setBackground(new java.awt.Color(0, 102, 204));
+        btnAgregar1.setFont(new java.awt.Font("Nirmala UI Semilight", 1, 12)); // NOI18N
+        btnAgregar1.setForeground(new java.awt.Color(255, 255, 255));
+        btnAgregar1.setText("Agregar");
+        btnAgregar1.setBorder(null);
+        btnAgregar1.setBorderPainted(false);
+        btnAgregar1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        btnAgregar1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregar1ActionPerformed(evt);
+            }
+        });
+        Background.add(btnAgregar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 310, 70, 30));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -132,7 +142,7 @@ public class IniciarSesionForm extends javax.swing.JFrame {
      *
      * @param evt Evento que lo acciona
      */
-    private void btnIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarActionPerformed
+    private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
         try {
             Usuario usuario = uw.usuariosRepository().obtenPorUsuarioContraseña(campoTextoUsuario.getText(), new String(campoTextoContraseña.getPassword()));
             if (usuario instanceof Cliente) {
@@ -148,16 +158,21 @@ public class IniciarSesionForm extends javax.swing.JFrame {
         } catch (NoResultException e){
             JOptionPane.showMessageDialog(this, "No se encontró el usuario", "Error!", JOptionPane.ERROR_MESSAGE);
         }
-    }//GEN-LAST:event_btnIngresarActionPerformed
+    }//GEN-LAST:event_btnRegresarActionPerformed
 
     private void campoTextoUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoTextoUsuarioActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_campoTextoUsuarioActionPerformed
 
+    private void btnAgregar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregar1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnAgregar1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Background;
-    private javax.swing.JButton btnIngresar;
+    private javax.swing.JButton btnAgregar1;
+    private javax.swing.JButton btnRegresar;
     private javax.swing.JPasswordField campoTextoContraseña;
     private javax.swing.JTextField campoTextoUsuario;
     private javax.swing.JButton jButton2;
@@ -167,6 +182,5 @@ public class IniciarSesionForm extends javax.swing.JFrame {
     private javax.swing.JLabel lblBienvenido;
     private javax.swing.JLabel lblContraseña;
     private javax.swing.JLabel lblCorreo;
-    private javax.swing.JLabel txtIniciarSesion;
     // End of variables declaration//GEN-END:variables
 }

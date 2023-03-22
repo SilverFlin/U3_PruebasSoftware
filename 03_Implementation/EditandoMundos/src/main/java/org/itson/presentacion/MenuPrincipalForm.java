@@ -19,7 +19,12 @@ public class MenuPrincipalForm extends javax.swing.JFrame {
     public MenuPrincipalForm(boolean isAdmin) {
         initComponents();
 //        cargarImagen();
+        if (!isAdmin) {
+            btnAgregarUsuario.setVisible(false);
+        }    
     }
+    
+    
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -29,11 +34,11 @@ public class MenuPrincipalForm extends javax.swing.JFrame {
         head3 = new javax.swing.JPanel();
         txtBienvenida = new javax.swing.JLabel();
         btnCerrarSesion = new javax.swing.JButton();
-        btnTransferencia = new javax.swing.JButton();
+        btnAgregarAutor = new javax.swing.JButton();
         btnCotizar = new javax.swing.JButton();
         imgMenuPrincipal = new javax.swing.JLabel();
         btnConsultarPublicaciones = new javax.swing.JButton();
-        btnTransferencia1 = new javax.swing.JButton();
+        btnAgregarUsuario = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("BancoTransacciones");
@@ -86,18 +91,18 @@ public class MenuPrincipalForm extends javax.swing.JFrame {
 
         background3.add(head3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 600, 90));
 
-        btnTransferencia.setBackground(new java.awt.Color(0, 102, 255));
-        btnTransferencia.setFont(new java.awt.Font("Nirmala UI Semilight", 1, 14)); // NOI18N
-        btnTransferencia.setForeground(new java.awt.Color(255, 255, 255));
-        btnTransferencia.setText("Agregar Autor");
-        btnTransferencia.setBorder(null);
-        btnTransferencia.setBorderPainted(false);
-        btnTransferencia.addActionListener(new java.awt.event.ActionListener() {
+        btnAgregarAutor.setBackground(new java.awt.Color(0, 102, 255));
+        btnAgregarAutor.setFont(new java.awt.Font("Nirmala UI Semilight", 1, 14)); // NOI18N
+        btnAgregarAutor.setForeground(new java.awt.Color(255, 255, 255));
+        btnAgregarAutor.setText("Agregar Autor");
+        btnAgregarAutor.setBorder(null);
+        btnAgregarAutor.setBorderPainted(false);
+        btnAgregarAutor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnTransferenciaActionPerformed(evt);
+                btnAgregarAutorActionPerformed(evt);
             }
         });
-        background3.add(btnTransferencia, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 240, 180, 40));
+        background3.add(btnAgregarAutor, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 240, 180, 40));
 
         btnCotizar.setBackground(new java.awt.Color(0, 102, 255));
         btnCotizar.setFont(new java.awt.Font("Nirmala UI Semilight", 1, 14)); // NOI18N
@@ -129,18 +134,18 @@ public class MenuPrincipalForm extends javax.swing.JFrame {
         });
         background3.add(btnConsultarPublicaciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 120, 180, 40));
 
-        btnTransferencia1.setBackground(new java.awt.Color(0, 102, 255));
-        btnTransferencia1.setFont(new java.awt.Font("Nirmala UI Semilight", 1, 14)); // NOI18N
-        btnTransferencia1.setForeground(new java.awt.Color(255, 255, 255));
-        btnTransferencia1.setText("Agregar Usuario");
-        btnTransferencia1.setBorder(null);
-        btnTransferencia1.setBorderPainted(false);
-        btnTransferencia1.addActionListener(new java.awt.event.ActionListener() {
+        btnAgregarUsuario.setBackground(new java.awt.Color(0, 102, 255));
+        btnAgregarUsuario.setFont(new java.awt.Font("Nirmala UI Semilight", 1, 14)); // NOI18N
+        btnAgregarUsuario.setForeground(new java.awt.Color(255, 255, 255));
+        btnAgregarUsuario.setText("Agregar Usuario");
+        btnAgregarUsuario.setBorder(null);
+        btnAgregarUsuario.setBorderPainted(false);
+        btnAgregarUsuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnTransferencia1ActionPerformed(evt);
+                btnAgregarUsuarioActionPerformed(evt);
             }
         });
-        background3.add(btnTransferencia1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 300, 180, 40));
+        background3.add(btnAgregarUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 300, 180, 40));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -165,27 +170,27 @@ public class MenuPrincipalForm extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCerrarSesionActionPerformed
 
 
-    private void btnTransferenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTransferenciaActionPerformed
+    private void btnAgregarAutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarAutorActionPerformed
 
-    }//GEN-LAST:event_btnTransferenciaActionPerformed
+    }//GEN-LAST:event_btnAgregarAutorActionPerformed
 
 
     private void btnConsultarPublicacionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarPublicacionesActionPerformed
     }//GEN-LAST:event_btnConsultarPublicacionesActionPerformed
 
-    private void btnTransferencia1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTransferencia1ActionPerformed
+    private void btnAgregarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarUsuarioActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnTransferencia1ActionPerformed
+    }//GEN-LAST:event_btnAgregarUsuarioActionPerformed
 
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel background3;
+    private javax.swing.JButton btnAgregarAutor;
+    private javax.swing.JButton btnAgregarUsuario;
     private javax.swing.JButton btnCerrarSesion;
     private javax.swing.JButton btnConsultarPublicaciones;
     private javax.swing.JButton btnCotizar;
-    private javax.swing.JButton btnTransferencia;
-    private javax.swing.JButton btnTransferencia1;
     private javax.swing.JPanel head3;
     private javax.swing.JLabel imgMenuPrincipal;
     private javax.swing.JLabel txtBienvenida;
