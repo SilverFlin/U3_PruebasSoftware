@@ -19,10 +19,9 @@ public class UsuariosRepository extends RepositoryBase<Usuario>{
         super(entityManager);
     }
     
-    public Usuario obtenPorUsuarioContraseña(String username, String password){
-        TypedQuery<Usuario> query = entityManager.createNamedQuery("Usuario.findByUsernameAndPassword", Usuario.class);
+    public Usuario obtenPorUsername(String username){
+        TypedQuery<Usuario> query = entityManager.createNamedQuery("Usuario.findByUsername", Usuario.class);
         query.setParameter("username", username);
-        query.setParameter("password", password);
         Usuario usuario = query.getSingleResult();
         return usuario;
     }

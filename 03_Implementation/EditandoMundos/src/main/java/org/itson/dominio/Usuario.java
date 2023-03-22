@@ -27,8 +27,8 @@ import javax.persistence.Table;
 @DiscriminatorColumn(name = "tipo_usuario")
 @NamedQueries({
     @NamedQuery(
-            name = "Usuario.findByUsernameAndPassword",
-            query = "SELECT u FROM Usuario u WHERE u.username = :username AND u.password = :password"
+            name = "Usuario.findByUsername",
+            query = "SELECT u FROM Usuario u WHERE u.username like :username"
     )
 })
 public class Usuario implements Serializable {
@@ -38,7 +38,7 @@ public class Usuario implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "username", nullable = false, length = 100)
+    @Column(name = "username", unique = true, nullable = false, length = 100)
     private String username;
 
     @Column(name = "password", nullable = false, length = 100)
