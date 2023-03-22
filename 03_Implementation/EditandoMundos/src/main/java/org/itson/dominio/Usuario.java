@@ -23,7 +23,7 @@ import javax.persistence.Table;
  * @author Toled
  */
 @Entity
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @NamedQueries({
     @NamedQuery(
         name = "Usuario.findByUsernameAndPassword",
