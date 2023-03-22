@@ -14,11 +14,13 @@ public class AgregarUsuarioForm extends javax.swing.JFrame {
 
     private UnitOfWork uw;
     private Usuario usuarioLoggeado;
-    
+    private MenuPrincipalForm menuPrincipalForm;
+
     public AgregarUsuarioForm(Usuario usuarioLoggeado) {
         initComponents();
         uw = new UnitOfWork();
         this.usuarioLoggeado = usuarioLoggeado;
+        this.menuPrincipalForm = new MenuPrincipalForm(this.usuarioLoggeado);
     }
 
     @SuppressWarnings("unchecked")
@@ -145,21 +147,7 @@ public class AgregarUsuarioForm extends javax.swing.JFrame {
      * @param evt Evento que lo acciona
      */
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
-//        try {
-//            Usuario usuario = uw.usuariosRepository().obtenPorUsuarioContraseña(campoTextoUsuario.getText(), new String(campoTextoContraseña.getPassword()));
-//            if (usuario instanceof Cliente) {
-//                MenuPrincipalForm menuPrincipal = new MenuPrincipalForm(false);
-//                menuPrincipal.setVisible(true);
-//                this.dispose();
-//            }
-//            else{
-//                MenuPrincipalForm menuPrincipal = new MenuPrincipalForm(true);
-//                menuPrincipal.setVisible(true);
-//                this.dispose();
-//            }
-//        } catch (NoResultException e){
-//            JOptionPane.showMessageDialog(this, "No se encontró el usuario", "Error!", JOptionPane.ERROR_MESSAGE);
-//        }
+        this.regresar();
     }//GEN-LAST:event_btnRegresarActionPerformed
 
     private void campoTextoUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoTextoUsuarioActionPerformed
@@ -185,4 +173,9 @@ public class AgregarUsuarioForm extends javax.swing.JFrame {
     private javax.swing.JLabel lblContraseña;
     private javax.swing.JLabel lblCorreo;
     // End of variables declaration//GEN-END:variables
+
+    private void regresar() {
+        menuPrincipalForm.setVisible(true);
+        this.setVisible(false);
+    }
 }

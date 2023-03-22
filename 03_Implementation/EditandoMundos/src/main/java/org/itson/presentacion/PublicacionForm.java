@@ -34,14 +34,16 @@ public class PublicacionForm extends javax.swing.JFrame {
     private String nombreLibroPub;
     private Integer noPaginasPub;
     private Double sizeMegasPub;
-    
+
     private Usuario usuarioLoggeado;
+    private MenuPrincipalForm menuPrincipalForm;
 
     public PublicacionForm(Usuario usuarioLoggeado) {
         initComponents();
         this.llenarComboBoxAutores();
         this.actualizarPublicacionSeleccionada();
         this.usuarioLoggeado = usuarioLoggeado;
+        this.menuPrincipalForm = new MenuPrincipalForm(this.usuarioLoggeado);
     }
 
     @SuppressWarnings("unchecked")
@@ -237,6 +239,7 @@ public class PublicacionForm extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
+        this.regresar();
     }//GEN-LAST:event_btnRegresarActionPerformed
 
     private void btnCotizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCotizarActionPerformed
@@ -488,6 +491,11 @@ public class PublicacionForm extends javax.swing.JFrame {
             this.pagInicialPub = Integer.valueOf(txtPaginaInicial.getText());
             this.nombreLibroPub = txtNombreLibro.getText();
         }
+    }
+
+    private void regresar() {
+        menuPrincipalForm.setVisible(true);
+        this.setVisible(false);
     }
 
 }

@@ -16,36 +16,39 @@ import org.itson.dominio.Usuario;
  * @author Elkur
  */
 public class PublicacionesForm extends javax.swing.JFrame {
-
+    
     private static final Logger LOG = Logger.getLogger(PublicacionesForm.class.getName());
     private Usuario clienteLoggeado;
+    private MenuPrincipalForm menuPrincipalForm;
 
     /**
      * Cuenta bancaria a mostrar
+     *
      * @param clienteLoggeado
      */
     public PublicacionesForm(Usuario clienteLoggeado) {
         initComponents();
         cargarTablaOperaciones();
         this.clienteLoggeado = clienteLoggeado;
+        this.menuPrincipalForm = new MenuPrincipalForm(this.clienteLoggeado);
     }
 
     /**
      * Consulta las operaciones asociadas a la cuenta y las carga en la tabla
      */
     private void cargarTablaOperaciones() {
-
+        
         List<Publicacion> listaPublicaciones = this.conseguirListaPublicaciones();
-
+        
         DefaultTableModel modeloTabla = (DefaultTableModel) this.tblPublicaciones.getModel();
         modeloTabla.setRowCount(0);
         for (Publicacion publicacion : listaPublicaciones) {
             Object[] fila = {publicacion.getTitulo(), publicacion.getAutor().getNombre() + " " + publicacion.getAutor().getApellidoPaterno(), publicacion.getNoPaginas()};
             modeloTabla.addRow(fila);
         }
-
+        
     }
-
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -192,7 +195,7 @@ public class PublicacionesForm extends javax.swing.JFrame {
      * @param evt Evento que lo acciono
      */
     private void btnAtrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtrasActionPerformed
-
+        this.regresar();
     }//GEN-LAST:event_btnAtrasActionPerformed
     /**
      * Avanza en la pagina de operaciones
@@ -235,5 +238,10 @@ public class PublicacionesForm extends javax.swing.JFrame {
         publicaciones.addAll(digitales);
         publicaciones.addAll(fisicas);
         return publicaciones;
+    }
+    
+    private void regresar() {
+        menuPrincipalForm.setVisible(true);
+        this.setVisible(false);
     }
 }
