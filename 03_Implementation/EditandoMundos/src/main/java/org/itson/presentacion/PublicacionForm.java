@@ -292,9 +292,9 @@ public class PublicacionForm extends javax.swing.JFrame {
         float costoProduccion = Cotizador.calcularCostoProduccion(this.noPaginasPub); // parsear blabla    
 
         // Mover Utils
-        System.out.println(costoProduccion);
-        int respuesta = JOptionPane.showConfirmDialog(rootPane, "El costo de producción es de: \n"
-                + costoProduccion, "Costo Produccion", JOptionPane.YES_NO_OPTION);
+        int respuesta = Dialogs.mostrarMensajeYesNoOption(rootPane,
+                "El costo de producción es de: \n" + costoProduccion,
+                "Costo Produccion");
 
         if (respuesta == JOptionPane.NO_OPTION) {
             return;

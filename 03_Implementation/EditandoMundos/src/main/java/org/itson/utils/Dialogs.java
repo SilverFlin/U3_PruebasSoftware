@@ -20,4 +20,9 @@ public class Dialogs {
     public static void mostrarMensajeExito(Component componente, String msg) {
         JOptionPane.showMessageDialog(componente, msg, "Exito", JOptionPane.PLAIN_MESSAGE);
     }
+
+    public static int mostrarMensajeYesNoOption(Component componente, String msg, String titulo) {
+        return JOptionPane.showConfirmDialog(componente, msg, titulo, JOptionPane.YES_NO_OPTION);
+
+    }
 }
