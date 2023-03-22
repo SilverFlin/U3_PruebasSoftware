@@ -170,6 +170,8 @@ public class MenuPrincipalForm extends javax.swing.JFrame {
 
 
     private void btnCerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarSesionActionPerformed
+        this.cerrarSesion();
+        
     }//GEN-LAST:event_btnCerrarSesionActionPerformed
 
 
@@ -249,6 +251,13 @@ public class MenuPrincipalForm extends javax.swing.JFrame {
             this.agregarUsuarioForm = new AgregarUsuarioForm(this.usuarioLoggeado);
             this.cargarCrearUsuarioForm();
         }
+    }
+
+    private void cerrarSesion() {
+        IniciarSesionForm iniciarSesionForm = new IniciarSesionForm();
+        this.usuarioLoggeado = null;
+        iniciarSesionForm.setVisible(true);
+        this.dispose();
     }
 
 }
