@@ -5,6 +5,10 @@ import javax.persistence.NoResultException;
 import javax.swing.JOptionPane;
 import org.itson.dominio.Cliente;
 import org.itson.dominio.Usuario;
+import org.itson.repositories.UsuariosRepository;
+import org.itson.utils.Dialogs;
+import org.itson.utils.Encriptador;
+import org.itson.utils.ValidacionesForms;
 
 /**
  *
@@ -38,7 +42,7 @@ public class AgregarUsuarioForm extends javax.swing.JFrame {
         lblContraseña = new javax.swing.JLabel();
         campoTextoContraseña = new javax.swing.JPasswordField();
         btnRegresar = new javax.swing.JButton();
-        btnAgregar1 = new javax.swing.JButton();
+        btnAgregar = new javax.swing.JButton();
 
         jButton2.setText("jButton2");
 
@@ -112,19 +116,19 @@ public class AgregarUsuarioForm extends javax.swing.JFrame {
         });
         Background.add(btnRegresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 100, 70, 30));
 
-        btnAgregar1.setBackground(new java.awt.Color(0, 102, 204));
-        btnAgregar1.setFont(new java.awt.Font("Nirmala UI Semilight", 1, 12)); // NOI18N
-        btnAgregar1.setForeground(new java.awt.Color(255, 255, 255));
-        btnAgregar1.setText("Agregar");
-        btnAgregar1.setBorder(null);
-        btnAgregar1.setBorderPainted(false);
-        btnAgregar1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        btnAgregar1.addActionListener(new java.awt.event.ActionListener() {
+        btnAgregar.setBackground(new java.awt.Color(0, 102, 204));
+        btnAgregar.setFont(new java.awt.Font("Nirmala UI Semilight", 1, 12)); // NOI18N
+        btnAgregar.setForeground(new java.awt.Color(255, 255, 255));
+        btnAgregar.setText("Agregar");
+        btnAgregar.setBorder(null);
+        btnAgregar.setBorderPainted(false);
+        btnAgregar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        btnAgregar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAgregar1ActionPerformed(evt);
+                btnAgregarActionPerformed(evt);
             }
         });
-        Background.add(btnAgregar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 310, 70, 30));
+        Background.add(btnAgregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 310, 70, 30));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -154,14 +158,22 @@ public class AgregarUsuarioForm extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_campoTextoUsuarioActionPerformed
 
-    private void btnAgregar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregar1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnAgregar1ActionPerformed
+    private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
+        if(!ValidacionesForms.isValidText(campoTextoUsuario.getText())){
+            Dialogs.mostrarMensajeError(this, "Ingrese un nombre de usuario valido!");
+        }
+        else if (!ValidacionesForms.isValidText(new String(campoTextoContraseña.getPassword()))) {
+            Dialogs.mostrarMensajeError(this, "Ingrese una contraseña valida!");
+        }
+        else{
+
+        } 
+    }//GEN-LAST:event_btnAgregarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Background;
-    private javax.swing.JButton btnAgregar1;
+    private javax.swing.JButton btnAgregar;
     private javax.swing.JButton btnRegresar;
     private javax.swing.JPasswordField campoTextoContraseña;
     private javax.swing.JTextField campoTextoUsuario;
