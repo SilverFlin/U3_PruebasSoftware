@@ -216,6 +216,11 @@ public class PublicacionForm extends javax.swing.JFrame {
         txtNoPaginas.setForeground(new java.awt.Color(51, 51, 51));
         txtNoPaginas.setToolTipText("");
         txtNoPaginas.setBorder(null);
+        txtNoPaginas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtNoPaginasActionPerformed(evt);
+            }
+        });
         Background.add(txtNoPaginas, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 280, 190, 20));
         Background.add(separadorNoPaginas, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 300, 190, 10));
 
@@ -257,6 +262,10 @@ public class PublicacionForm extends javax.swing.JFrame {
     private void radioPublicacionFisicaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioPublicacionFisicaActionPerformed
         this.actualizarPublicacionSeleccionada();
     }//GEN-LAST:event_radioPublicacionFisicaActionPerformed
+
+    private void txtNoPaginasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNoPaginasActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNoPaginasActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

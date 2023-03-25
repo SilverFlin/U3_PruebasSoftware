@@ -9,6 +9,7 @@ import org.itson.dominio.Usuario;
 import org.itson.repositories.UsuariosRepository;
 import org.itson.utils.Dialogs;
 import org.itson.utils.Encriptador;
+import org.itson.utils.ValidacionesForms;
 
 /**
  *
@@ -161,24 +162,32 @@ public class IniciarSesionForm extends javax.swing.JFrame {
     private javax.swing.JLabel txtIniciarSesion;
     // End of variables declaration//GEN-END:variables
 
-    private void iniciarSesion() {
-        try {
-            UsuariosRepository usuariosRepository = unitOfWork.usuariosRepository();
-            String intentoPassword = new String(this.campoTextoContraseña.getPassword());
-            Usuario usuario = usuariosRepository.obtenPorUsername(campoTextoUsuario.getText());
-            System.out.println(intentoPassword + "\n" + usuario.getPassword());
-            if (!Encriptador.verificarPasswordConHash(intentoPassword, usuario.getPassword())) {
-                Dialogs.mostrarMensajeError(rootPane, "Credenciales inválidas");
-                return;
-            }
-            this.usuarioLoggeado = usuario;
-
-            this.cargarMenuPrincipal();
-
-        } catch (NoResultException e) {
-            Dialogs.mostrarMensajeError(rootPane, "No se encontró el usuario");
-            System.out.println(e);
+    private void iniciarSesion(){ 
+        if(!ValidacionesForms.isValidText(campoTextoUsuario.getText())){
+            Dialogs.mostrarMensajeError(this, "Ingrese un nombre de usuario valido!");
         }
+        else if (!ValidacionesForms.isValidText(new String(campoTextoContraseña.getPassword()))) {
+            Dialogs.mostrarMensajeError(this, "Ingrese una contraseña valida!");
+        }
+        else{
+            try {
+                UsuariosRepository usuariosRepository = unitOfWork.usuariosRepository();
+                String intentoPassword = new String(this.campoTextoContraseña.getPassword());
+                Usuario usuario = usuariosRepository.obtenPorUsername(campoTextoUsuario.getText());
+                System.out.println(intentoPassword + "\n" + usuario.getPassword());
+                if (!Encriptador.verificarPasswordConHash(intentoPassword, usuario.getPassword())) {
+                    Dialogs.mostrarMensajeError(rootPane, "Credenciales inválidas");
+                    return;
+                }
+                this.usuarioLoggeado = usuario;
+
+                this.cargarMenuPrincipal();
+
+            } catch (NoResultException e) {
+                Dialogs.mostrarMensajeError(rootPane, "No se encontró el usuario");
+                System.out.println(e);
+            }
+        }    
     }
 
     private void cargarMenuPrincipal() {

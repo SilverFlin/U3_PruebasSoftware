@@ -1,11 +1,10 @@
 package org.itson.presentacion;
 
-import java.util.Arrays;
-import javax.persistence.NoResultException;
-import javax.swing.JOptionPane;
-import org.itson.dominio.Cliente;
-import org.itson.dominio.Usuario;
 
+import org.itson.dominio.Usuario;
+import org.itson.utils.Dialogs;
+import org.itson.utils.ValidacionesForms;
+import org.itson.utils.Validaciones;
 /**
  *
  * @author Toled
@@ -35,12 +34,12 @@ public class AgregarAutorForm extends javax.swing.JFrame {
         jSeparator1 = new javax.swing.JSeparator();
         lblNombre = new javax.swing.JLabel();
         lblNacionalidad = new javax.swing.JLabel();
-        campoTextoEdad = new javax.swing.JPasswordField();
         btnRegresar = new javax.swing.JButton();
         btnAgregar = new javax.swing.JButton();
         lblEdad = new javax.swing.JLabel();
         comboBoxNacionalidad = new javax.swing.JComboBox<>();
         jSeparator3 = new javax.swing.JSeparator();
+        campoTextoEdad = new javax.swing.JTextField();
 
         jButton2.setText("jButton2");
 
@@ -96,9 +95,6 @@ public class AgregarAutorForm extends javax.swing.JFrame {
         lblNacionalidad.setText("Nacionalidad");
         Background.add(lblNacionalidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 240, -1, -1));
 
-        campoTextoEdad.setBorder(null);
-        Background.add(campoTextoEdad, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 200, 190, 20));
-
         btnRegresar.setBackground(new java.awt.Color(0, 102, 204));
         btnRegresar.setFont(new java.awt.Font("Nirmala UI Semilight", 1, 12)); // NOI18N
         btnRegresar.setForeground(new java.awt.Color(255, 255, 255));
@@ -139,6 +135,16 @@ public class AgregarAutorForm extends javax.swing.JFrame {
         Background.add(comboBoxNacionalidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 260, 190, -1));
         Background.add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 220, 190, 10));
 
+        campoTextoEdad.setForeground(new java.awt.Color(51, 51, 51));
+        campoTextoEdad.setToolTipText("");
+        campoTextoEdad.setBorder(null);
+        campoTextoEdad.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                campoTextoEdadActionPerformed(evt);
+            }
+        });
+        Background.add(campoTextoEdad, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 200, 190, 20));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -168,19 +174,31 @@ public class AgregarAutorForm extends javax.swing.JFrame {
     }//GEN-LAST:event_campoTextoNombreActionPerformed
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
-        // TODO add your handling code here:
+        if (!ValidacionesForms.isValidText(campoTextoNombre.getText())) {
+            Dialogs.mostrarMensajeError(this, "Ingrese un nombre valido!");
+        }
+        else if (!Validaciones.isInteger(campoTextoEdad.getText())) {
+            Dialogs.mostrarMensajeError(this, "Ingrese una edad valida!");
+        }
+        else{
+            
+        }
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void comboBoxNacionalidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboBoxNacionalidadActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_comboBoxNacionalidadActionPerformed
 
+    private void campoTextoEdadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoTextoEdadActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_campoTextoEdadActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Background;
     private javax.swing.JButton btnAgregar;
     private javax.swing.JButton btnRegresar;
-    private javax.swing.JPasswordField campoTextoEdad;
+    private javax.swing.JTextField campoTextoEdad;
     private javax.swing.JTextField campoTextoNombre;
     private javax.swing.JComboBox<String> comboBoxNacionalidad;
     private javax.swing.JButton jButton2;
