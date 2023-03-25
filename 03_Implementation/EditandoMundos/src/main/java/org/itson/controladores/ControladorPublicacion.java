@@ -33,5 +33,9 @@ public class ControladorPublicacion {
             throw new IllegalArgumentException("Publicacion invalida");
         }
     }
+    
+    private static boolean isDensa(int numPaginas, float tamaño){
+        return numPaginas > 10 && tamaño > 5.5;
+    }
 
 }
