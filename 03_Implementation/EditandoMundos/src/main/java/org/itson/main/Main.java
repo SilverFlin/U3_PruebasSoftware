@@ -28,18 +28,6 @@ public class Main {
 
     public static void main(String[] args) {
         iniciarApp();
-//        System.out.println(Encriptador.verificarPasswordConHash("admin", "$2a$12$MicEpmWz9CK8fL3r7b28a.anep7.ijrXiballv12WAr3cYAVs4BPy"));
-    }
-
-    public static void cargarForm() {
-        PublicacionesForm clienteForm = new PublicacionesForm();
-        clienteForm.setVisible(true);
-    }
-
-    public static void cargarPublicacionForm() {
-        // TODO borrar
-        PublicacionForm clienteForm = new PublicacionForm();
-        clienteForm.setVisible(true);
     }
 
     public static void agregarAutorYPublicaciones() {

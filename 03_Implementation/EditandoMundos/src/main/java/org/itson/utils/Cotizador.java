@@ -3,7 +3,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package org.itson.utils;
+
 import org.itson.dominio.Autor;
+import org.itson.dominio.Nacionalidad;
 import org.itson.dominio.Publicacion;
 import org.itson.dominio.PublicacionDigital;
 import org.itson.dominio.PublicacionFisica;
@@ -13,45 +15,60 @@ import org.itson.dominio.PublicacionFisica;
  * @author mig_2
  */
 public class Cotizador {
-    
+
+    private static final int PRECIO_PAGINA_BASE = 300;
+    private static final int PRECIO_PAGINA_MAYOR_300 = 200;
+
+    private static final float AUMENTO_NACIONALIDAD_BASE = 1.25f;
+    private static final float AUMENTO_NACIONALIDAD_MEXICANA = 1.15f;
+
+    private static final float AUMENTO_DENSIDAD_BASE = 1.10f;
+    private static final float AUMENTO_DENSIDAD_DENSO = 1.15f;
+
     public static float calcularCostoVenta(Publicacion publicacion) {
-        float costoProd = publicacion.getCostoProd();
-        float costoVenta = 0;
-        
+        float costoProd = calcularCostoProduccion(publicacion.getNoPaginas());
 
-        if (publicacion instanceof PublicacionFisica) {
-            Autor autor = publicacion.getAutor();
-            if (autor.getNacionalidad().equals("mexicano")) {
-                costoVenta = costoProd * 1.15f;
-            } else {
-                costoVenta = costoProd * 1.25f;
-            }
-        }
+        float costoVenta = calcularCostoVentaPorPublicacion(costoProd, publicacion);
 
-        if (publicacion instanceof PublicacionDigital) {
-            PublicacionDigital pubDigital = (PublicacionDigital) publicacion;
-
-            if (pubDigital.getSizeMegas() <= 2.5f) {
-                costoVenta=  costoProd * 1.10f; // aplicar un 10% de incremento si el tamaño es menor o igual a 2.5MB
-            } else {
-                costoVenta=  costoProd * 1.15f; // aplicar un 15% de incremento si el tamaño es mayor a 2.5MB
-            }
-        }
         return costoVenta;
     }
-        
-    public static float calcularCostoProduccion(int numPaginas){
+
+    public static float calcularCostoProduccion(int numPaginas) {
         float costoProd;
-        if (numPaginas<0){
+
+        if (numPaginas < 0) {
             throw new IllegalArgumentException("Número de páginas invalido.");
+        } else if (numPaginas > 300) {
+            costoProd = numPaginas * PRECIO_PAGINA_MAYOR_300;
+        } else {
+            costoProd = numPaginas * PRECIO_PAGINA_BASE;
         }
-        else if (numPaginas>300) {
-            costoProd = numPaginas * 200;
-        }
-        else{
-            costoProd = numPaginas * 300;
-        }
+
         return costoProd;
     }
-        
+
+    private static float calcularCostoVentaPorPublicacion(float costoProd, Publicacion publicacion) {
+        float costoVenta = 0;
+
+        if (publicacion instanceof PublicacionFisica pubFisica) {
+            Autor autor = pubFisica.getAutor();
+            if (autor.getNacionalidad().equals(Nacionalidad.MEXICANA)) {
+                costoVenta = costoProd * AUMENTO_NACIONALIDAD_MEXICANA;
+            } else {
+                costoVenta = costoProd * AUMENTO_NACIONALIDAD_BASE;
+            }
+        }
+
+        if (publicacion instanceof PublicacionDigital pubDigital) {
+
+            if (pubDigital.getSizeMegas() <= 2.5f) {
+                costoVenta = costoProd * AUMENTO_DENSIDAD_BASE;
+            } else {
+                costoVenta = costoProd * AUMENTO_DENSIDAD_DENSO;
+            }
+        }
+
+        return costoVenta;
+    }
+
 }
