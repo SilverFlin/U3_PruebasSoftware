@@ -76,6 +76,14 @@ public class Autor implements Serializable {
         this.publicaciones = publicaciones;
     }
 
+    public Autor(String nombres, String apellidoPaterno, String apellidoMaterno, int edad, Nacionalidad nacionalidad) {
+        this.nombres = nombres;
+        this.apellidoPaterno = apellidoPaterno;
+        this.apellidoMaterno = apellidoMaterno;
+        this.edad = edad;
+        this.nacionalidad = nacionalidad;
+    }
+    
     public Long getId() {
         return id;
     }

@@ -1,6 +1,9 @@
 package org.itson.presentacion;
 
 
+import javax.swing.DefaultComboBoxModel;
+import org.itson.controladores.ControladorAutor;
+import org.itson.dominio.Nacionalidad;
 import org.itson.dominio.Usuario;
 import org.itson.utils.Dialogs;
 import org.itson.utils.ValidacionesForms;
@@ -30,16 +33,23 @@ public class AgregarAutorForm extends javax.swing.JFrame {
         Background = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         lblBienvenido = new javax.swing.JLabel();
-        campoTextoNombre = new javax.swing.JTextField();
+        campoTextoApellidoMaterno = new javax.swing.JTextField();
         jSeparator1 = new javax.swing.JSeparator();
-        lblNombre = new javax.swing.JLabel();
+        lblApellidoMaterno = new javax.swing.JLabel();
         lblNacionalidad = new javax.swing.JLabel();
         btnRegresar = new javax.swing.JButton();
         btnAgregar = new javax.swing.JButton();
         lblEdad = new javax.swing.JLabel();
-        comboBoxNacionalidad = new javax.swing.JComboBox<>();
+        comboBoxNacionalidad = comboBoxNacionalidad = new javax.swing.JComboBox<>();
+        comboBoxNacionalidad.setModel(new DefaultComboBoxModel<>(Nacionalidad.values()));
         jSeparator3 = new javax.swing.JSeparator();
         campoTextoEdad = new javax.swing.JTextField();
+        campoTextoNombres = new javax.swing.JTextField();
+        jSeparator2 = new javax.swing.JSeparator();
+        campoTextoApellidoPaterno = new javax.swing.JTextField();
+        jSeparator4 = new javax.swing.JSeparator();
+        lblNombres = new javax.swing.JLabel();
+        lblApellidoPaterno = new javax.swing.JLabel();
 
         jButton2.setText("jButton2");
 
@@ -76,24 +86,19 @@ public class AgregarAutorForm extends javax.swing.JFrame {
 
         Background.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 600, 90));
 
-        campoTextoNombre.setForeground(new java.awt.Color(51, 51, 51));
-        campoTextoNombre.setToolTipText("");
-        campoTextoNombre.setBorder(null);
-        campoTextoNombre.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                campoTextoNombreActionPerformed(evt);
-            }
-        });
-        Background.add(campoTextoNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 140, 190, 20));
-        Background.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 160, 190, 10));
+        campoTextoApellidoMaterno.setForeground(new java.awt.Color(51, 51, 51));
+        campoTextoApellidoMaterno.setToolTipText("");
+        campoTextoApellidoMaterno.setBorder(null);
+        Background.add(campoTextoApellidoMaterno, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 290, 190, 20));
+        Background.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 310, 190, 10));
 
-        lblNombre.setFont(new java.awt.Font("Nirmala UI Semilight", 0, 14)); // NOI18N
-        lblNombre.setText("Nombre");
-        Background.add(lblNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 120, 180, 20));
+        lblApellidoMaterno.setFont(new java.awt.Font("Nirmala UI Semilight", 0, 14)); // NOI18N
+        lblApellidoMaterno.setText("Apellido materno");
+        Background.add(lblApellidoMaterno, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 270, 180, 20));
 
         lblNacionalidad.setFont(new java.awt.Font("Nirmala UI Semilight", 0, 14)); // NOI18N
         lblNacionalidad.setText("Nacionalidad");
-        Background.add(lblNacionalidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 240, -1, -1));
+        Background.add(lblNacionalidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 210, -1, -1));
 
         btnRegresar.setBackground(new java.awt.Color(0, 102, 204));
         btnRegresar.setFont(new java.awt.Font("Nirmala UI Semilight", 1, 12)); // NOI18N
@@ -121,29 +126,39 @@ public class AgregarAutorForm extends javax.swing.JFrame {
                 btnAgregarActionPerformed(evt);
             }
         });
-        Background.add(btnAgregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 310, 70, 30));
+        Background.add(btnAgregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 340, 70, 30));
 
         lblEdad.setFont(new java.awt.Font("Nirmala UI Semilight", 0, 14)); // NOI18N
         lblEdad.setText("Edad");
-        Background.add(lblEdad, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 180, -1, -1));
+        Background.add(lblEdad, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 150, -1, -1));
 
-        comboBoxNacionalidad.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                comboBoxNacionalidadActionPerformed(evt);
-            }
-        });
-        Background.add(comboBoxNacionalidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 260, 190, -1));
-        Background.add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 220, 190, 10));
+        Background.add(comboBoxNacionalidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 230, 190, -1));
+        Background.add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 190, 190, 10));
 
         campoTextoEdad.setForeground(new java.awt.Color(51, 51, 51));
         campoTextoEdad.setToolTipText("");
         campoTextoEdad.setBorder(null);
-        campoTextoEdad.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                campoTextoEdadActionPerformed(evt);
-            }
-        });
-        Background.add(campoTextoEdad, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 200, 190, 20));
+        Background.add(campoTextoEdad, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 170, 190, 20));
+
+        campoTextoNombres.setForeground(new java.awt.Color(51, 51, 51));
+        campoTextoNombres.setToolTipText("");
+        campoTextoNombres.setBorder(null);
+        Background.add(campoTextoNombres, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 170, 190, 20));
+        Background.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 190, 190, 10));
+
+        campoTextoApellidoPaterno.setForeground(new java.awt.Color(51, 51, 51));
+        campoTextoApellidoPaterno.setToolTipText("");
+        campoTextoApellidoPaterno.setBorder(null);
+        Background.add(campoTextoApellidoPaterno, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 230, 190, 20));
+        Background.add(jSeparator4, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 250, 190, 10));
+
+        lblNombres.setFont(new java.awt.Font("Nirmala UI Semilight", 0, 14)); // NOI18N
+        lblNombres.setText("Nombres");
+        Background.add(lblNombres, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 150, 180, 20));
+
+        lblApellidoPaterno.setFont(new java.awt.Font("Nirmala UI Semilight", 0, 14)); // NOI18N
+        lblApellidoPaterno.setText("Apellido paterno");
+        Background.add(lblApellidoPaterno, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 210, 180, 20));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -169,46 +184,80 @@ public class AgregarAutorForm extends javax.swing.JFrame {
         this.regresar();
     }//GEN-LAST:event_btnRegresarActionPerformed
 
-    private void campoTextoNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoTextoNombreActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_campoTextoNombreActionPerformed
-
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
-        if (!ValidacionesForms.isValidText(campoTextoNombre.getText())) {
-            Dialogs.mostrarMensajeError(this, "Ingrese un nombre valido!");
+        if (!validarCampos()) {
+            return;
         }
-        else if (!Validaciones.isInteger(campoTextoEdad.getText())) {
-            Dialogs.mostrarMensajeError(this, "Ingrese una edad valida!");
+        String nombres = campoTextoNombres.getText();
+        String apellidoPaterno = campoTextoApellidoPaterno.getText();
+        String apellidoMaterno = campoTextoApellidoMaterno.getText();
+        String edad = campoTextoEdad.getText();
+        Nacionalidad nacionalidad = (Nacionalidad)comboBoxNacionalidad.getSelectedItem();
+        
+        try {
+            ControladorAutor.persistirAutor(nombres, apellidoPaterno, apellidoMaterno, edad, nacionalidad);
+            Dialogs.mostrarMensajeExito(this, "Autor guardado con exito.");
+        }catch(Exception e){
+            Dialogs.mostrarMensajeError(this, "No se pudo guardar el autor.");
+        } 
+        finally {
+            limpiarCampos();
         }
-        else{
-            
-        }
+        
     }//GEN-LAST:event_btnAgregarActionPerformed
 
-    private void comboBoxNacionalidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboBoxNacionalidadActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_comboBoxNacionalidadActionPerformed
 
-    private void campoTextoEdadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoTextoEdadActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_campoTextoEdadActionPerformed
+    private boolean validarCampos(){
+        String nombres = campoTextoNombres.getText();
+        String apellidoPaterno = campoTextoApellidoPaterno.getText();
+        String apellidoMaterno = campoTextoApellidoMaterno.getText();
+        String edad = campoTextoEdad.getText();
+        if (!ValidacionesForms.isValidText(nombres)) {
+            Dialogs.mostrarMensajeError(this, "Ingrese un nombre valido!");
+            return false;
+        }
+        else if (!ValidacionesForms.isValidText(apellidoPaterno)) {
+            return false;
+        }        
+        else if (!ValidacionesForms.isValidText(apellidoMaterno)) {
+            return false;
+        }        
+        else if (!Validaciones.isInteger(edad)) {
+            Dialogs.mostrarMensajeError(this, "Ingrese una edad valida!");
+            return false;
+        }
+        else{
+            return true;
+        }    
+    }
 
-
+    private void limpiarCampos(){
+        campoTextoApellidoMaterno.setText("");
+        campoTextoApellidoPaterno.setText("");
+        campoTextoNombres.setText("");
+        campoTextoEdad.setText("");
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Background;
     private javax.swing.JButton btnAgregar;
     private javax.swing.JButton btnRegresar;
+    private javax.swing.JTextField campoTextoApellidoMaterno;
+    private javax.swing.JTextField campoTextoApellidoPaterno;
     private javax.swing.JTextField campoTextoEdad;
-    private javax.swing.JTextField campoTextoNombre;
-    private javax.swing.JComboBox<String> comboBoxNacionalidad;
+    private javax.swing.JTextField campoTextoNombres;
+    private javax.swing.JComboBox<Nacionalidad> comboBoxNacionalidad;
     private javax.swing.JButton jButton2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
+    private javax.swing.JSeparator jSeparator4;
+    private javax.swing.JLabel lblApellidoMaterno;
+    private javax.swing.JLabel lblApellidoPaterno;
     private javax.swing.JLabel lblBienvenido;
     private javax.swing.JLabel lblEdad;
     private javax.swing.JLabel lblNacionalidad;
-    private javax.swing.JLabel lblNombre;
+    private javax.swing.JLabel lblNombres;
     // End of variables declaration//GEN-END:variables
 
     private void regresar() {
