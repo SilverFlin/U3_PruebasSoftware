@@ -25,16 +25,16 @@ public class Cotizador {
     private static final float AUMENTO_DENSIDAD_BASE = 1.10f;
     private static final float AUMENTO_DENSIDAD_DENSO = 1.15f;
 
-    public static float calcularCostoVenta(Publicacion publicacion) {
-        float costoProd = calcularCostoProduccion(publicacion.getNoPaginas());
+    public static int calcularCostoVenta(Publicacion publicacion) {
+        int costoProd = calcularCostoProduccion(publicacion.getNoPaginas());
 
-        float costoVenta = calcularCostoVentaPorPublicacion(costoProd, publicacion);
+        int costoVenta = calcularCostoVentaPorPublicacion(costoProd, publicacion);
 
         return costoVenta;
     }
 
-    public static float calcularCostoProduccion(int numPaginas) {
-        float costoProd;
+    public static int calcularCostoProduccion(int numPaginas) {
+        int costoProd;
 
         if (numPaginas < 0) {
             throw new IllegalArgumentException("Número de páginas invalido.");
@@ -47,27 +47,40 @@ public class Cotizador {
         return costoProd;
     }
 
-    private static float calcularCostoVentaPorPublicacion(float costoProd, Publicacion publicacion) {
-        float costoVenta = 0;
+    private static int calcularCostoVentaPorPublicacion(int costoProd, Publicacion publicacion) {
+        int costoVenta;
 
         if (publicacion instanceof PublicacionFisica pubFisica) {
-            Autor autor = pubFisica.getAutor();
-            if (autor.getNacionalidad().equals(Nacionalidad.MEXICANA)) {
-                costoVenta = costoProd * AUMENTO_NACIONALIDAD_MEXICANA;
-            } else {
-                costoVenta = costoProd * AUMENTO_NACIONALIDAD_BASE;
-            }
+            costoVenta = calcularCostoVentaFisica(costoProd, pubFisica);
+        } else if (publicacion instanceof PublicacionDigital pubDigital) {
+            costoVenta = calcularCostoVentaFisica(costoProd, pubDigital);
+
+        } else {
+            throw new IllegalArgumentException("Publicacion no conocida");
         }
 
-        if (publicacion instanceof PublicacionDigital pubDigital) {
+        return costoVenta;
+    }
 
-            if (pubDigital.getSizeMegas() <= 2.5f) {
-                costoVenta = costoProd * AUMENTO_DENSIDAD_BASE;
-            } else {
-                costoVenta = costoProd * AUMENTO_DENSIDAD_DENSO;
-            }
+    private static int calcularCostoVentaFisica(int costoProd, PublicacionFisica pubFisica) {
+        int costoVenta;
+        Autor autor = pubFisica.getAutor();
+        if (autor.getNacionalidad().equals(Nacionalidad.MEXICANA)) {
+            costoVenta = (int) (costoProd * AUMENTO_NACIONALIDAD_MEXICANA);
+        } else {
+            costoVenta = (int) (costoProd * AUMENTO_NACIONALIDAD_BASE);
         }
 
+        return costoVenta;
+    }
+
+    private static int calcularCostoVentaFisica(int costoProd, PublicacionDigital pubDigital) {
+        int costoVenta;
+        if (pubDigital.getSizeMegas() <= 2.5f) {
+            costoVenta = (int) (costoProd * AUMENTO_DENSIDAD_BASE);
+        } else {
+            costoVenta = (int) (costoProd * AUMENTO_DENSIDAD_DENSO);
+        }
         return costoVenta;
     }
 
