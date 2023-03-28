@@ -1,13 +1,9 @@
 package org.itson.presentacion;
 
-import java.util.Arrays;
-import javax.persistence.NoResultException;
-import javax.swing.JOptionPane;
-import org.itson.dominio.Cliente;
+import org.itson.controladores.ControladorAdministrador;
+import org.itson.controladores.ControladorCliente;
 import org.itson.dominio.Usuario;
-import org.itson.repositories.UsuariosRepository;
 import org.itson.utils.Dialogs;
-import org.itson.utils.Encriptador;
 import org.itson.utils.ValidacionesForms;
 
 /**
@@ -16,13 +12,13 @@ import org.itson.utils.ValidacionesForms;
  */
 public class AgregarUsuarioForm extends javax.swing.JFrame {
 
-    private UnitOfWork uw;
     private Usuario usuarioLoggeado;
     private MenuPrincipalForm menuPrincipalForm;
-
+    private final int RADIO_USUARIO_CLIENTE = 0;
+    private final int RADIO_USUARIO_ADMIN = 1;    
+    
     public AgregarUsuarioForm(Usuario usuarioLoggeado) {
         initComponents();
-        uw = new UnitOfWork();
         this.usuarioLoggeado = usuarioLoggeado;
         this.menuPrincipalForm = new MenuPrincipalForm(this.usuarioLoggeado);
     }
@@ -32,6 +28,7 @@ public class AgregarUsuarioForm extends javax.swing.JFrame {
     private void initComponents() {
 
         jButton2 = new javax.swing.JButton();
+        btnGroupTipoUsuario = new javax.swing.ButtonGroup();
         Background = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         lblBienvenido = new javax.swing.JLabel();
@@ -43,6 +40,8 @@ public class AgregarUsuarioForm extends javax.swing.JFrame {
         campoTextoContraseña = new javax.swing.JPasswordField();
         btnRegresar = new javax.swing.JButton();
         btnAgregar = new javax.swing.JButton();
+        radioUsuarioCliente = new javax.swing.JRadioButton();
+        radioUsuarioAdministrador = new javax.swing.JRadioButton();
 
         jButton2.setText("jButton2");
 
@@ -130,6 +129,27 @@ public class AgregarUsuarioForm extends javax.swing.JFrame {
         });
         Background.add(btnAgregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 310, 70, 30));
 
+        btnGroupTipoUsuario.add(radioUsuarioCliente);
+        radioUsuarioCliente.setMnemonic(RADIO_USUARIO_CLIENTE);
+        radioUsuarioCliente.setSelected(true);
+        radioUsuarioCliente.setText("Usuario Cliente");
+        radioUsuarioCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                radioUsuarioClienteActionPerformed(evt);
+            }
+        });
+        Background.add(radioUsuarioCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 110, -1, -1));
+
+        btnGroupTipoUsuario.add(radioUsuarioAdministrador);
+        radioUsuarioAdministrador.setMnemonic(RADIO_USUARIO_ADMIN);
+        radioUsuarioAdministrador.setText("Usuario Administrador");
+        radioUsuarioAdministrador.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                radioUsuarioAdministradorActionPerformed(evt);
+            }
+        });
+        Background.add(radioUsuarioAdministrador, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 110, -1, -1));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -155,25 +175,74 @@ public class AgregarUsuarioForm extends javax.swing.JFrame {
     }//GEN-LAST:event_btnRegresarActionPerformed
 
     private void campoTextoUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoTextoUsuarioActionPerformed
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_campoTextoUsuarioActionPerformed
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
-        if(!ValidacionesForms.isValidText(campoTextoUsuario.getText())){
-            Dialogs.mostrarMensajeError(this, "Ingrese un nombre de usuario valido!");
+        if (!validarCampos()) {
+            return;
+        }        
+        
+        String nombreUsuario = campoTextoUsuario.getText();
+        String contraseña = new String(campoTextoContraseña.getPassword());
+        
+        int tipoUsuario = btnGroupTipoUsuario.getSelection().getMnemonic();
+        
+        try{
+            switch (tipoUsuario) {
+                case RADIO_USUARIO_CLIENTE -> {
+                    ControladorCliente.persistirCliente(nombreUsuario, contraseña);
+                    Dialogs.mostrarMensajeExito(this, "Usuario guardado con exito");
+                    break;
+                }        
+                case RADIO_USUARIO_ADMIN -> {
+                    ControladorAdministrador.persistirAdministrador(nombreUsuario, contraseña);
+                    Dialogs.mostrarMensajeExito(this, "Usuario guardado con exito");
+                    break;
+                }
+                default -> throw new IllegalArgumentException();
+            }
+        }catch(Exception e){
+            Dialogs.mostrarMensajeError(this, "No se pudo guardar el usuario.");
+        }finally{
+            limpiarCampos();
         }
-        else if (!ValidacionesForms.isValidText(new String(campoTextoContraseña.getPassword()))) {
-            Dialogs.mostrarMensajeError(this, "Ingrese una contraseña valida!");
-        }
-        else{
-
-        } 
     }//GEN-LAST:event_btnAgregarActionPerformed
 
+    private void radioUsuarioClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioUsuarioClienteActionPerformed
+     
+    }//GEN-LAST:event_radioUsuarioClienteActionPerformed
+
+    private void radioUsuarioAdministradorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioUsuarioAdministradorActionPerformed
+
+    }//GEN-LAST:event_radioUsuarioAdministradorActionPerformed
+    
+    private boolean validarCampos(){
+        String nombreUsuario = campoTextoUsuario.getText();
+        String contraseña = new String(campoTextoContraseña.getPassword());
+        
+        if(!ValidacionesForms.isValidText(nombreUsuario)){
+            Dialogs.mostrarMensajeError(this, "Ingrese un nombre de usuario valido!");
+            return false;
+        }
+        else if (!ValidacionesForms.isValidText(contraseña)) {
+            Dialogs.mostrarMensajeError(this, "Ingrese una contraseña valida!");
+            return false;
+        }
+        else{
+            return true;
+        } 
+    }
+    
+    private void limpiarCampos(){
+        campoTextoContraseña.setText("");
+        campoTextoUsuario.setText("");
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Background;
     private javax.swing.JButton btnAgregar;
+    private javax.swing.ButtonGroup btnGroupTipoUsuario;
     private javax.swing.JButton btnRegresar;
     private javax.swing.JPasswordField campoTextoContraseña;
     private javax.swing.JTextField campoTextoUsuario;
@@ -184,6 +253,8 @@ public class AgregarUsuarioForm extends javax.swing.JFrame {
     private javax.swing.JLabel lblBienvenido;
     private javax.swing.JLabel lblContraseña;
     private javax.swing.JLabel lblCorreo;
+    private javax.swing.JRadioButton radioUsuarioAdministrador;
+    private javax.swing.JRadioButton radioUsuarioCliente;
     // End of variables declaration//GEN-END:variables
 
     private void regresar() {
