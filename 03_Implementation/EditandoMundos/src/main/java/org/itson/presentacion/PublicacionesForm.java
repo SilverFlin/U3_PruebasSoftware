@@ -22,14 +22,12 @@ public class PublicacionesForm extends JFrame {
     private Usuario clienteLoggeado;
     private final JFrame frmAnterior;
 
-
     public PublicacionesForm(JFrame frmAnterior, Usuario clienteLoggeado) {
         initComponents();
         cargarTablaPublicaciones();
         this.clienteLoggeado = clienteLoggeado;
         this.frmAnterior = frmAnterior;
     }
-
 
     private void cargarTablaPublicaciones() {
 
@@ -38,7 +36,13 @@ public class PublicacionesForm extends JFrame {
         DefaultTableModel modeloTabla = (DefaultTableModel) this.tblPublicaciones.getModel();
         modeloTabla.setRowCount(0);
         for (Publicacion publicacion : listaPublicaciones) {
-            Object[] fila = {publicacion.getTitulo(), publicacion.getAutor().getNombre() + " " + publicacion.getAutor().getApellidoPaterno(), publicacion.getNoPaginas()};
+            Object[] fila = {
+                publicacion.getTitulo(),
+                publicacion.getAutor().getNombre() + " " + publicacion.getAutor().getApellidoPaterno(),
+                publicacion.getNoPaginas(),
+                "$" + publicacion.getCostoProd(),
+                "$" + publicacion.getCostoVenta()};
+
             modeloTabla.addRow(fila);
         }
 
@@ -108,26 +112,26 @@ public class PublicacionesForm extends JFrame {
 
         tblPublicaciones.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Titulo", "Autor", "No. Paginas"
+                "Titulo", "Autor", "No. Paginas", "Producción", "Venta"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false
+                false, false, false, false, true
             };
 
             public Class getColumnClass(int columnIndex) {
