@@ -1,7 +1,6 @@
 package org.itson.presentacion;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -307,12 +306,9 @@ public class PublicacionForm extends javax.swing.JFrame {
 
         Publicacion publicacion = this.crearPublicacionDeCampos();
 
-        float costoProduccion = Cotizador.calcularCostoProduccion(this.noPaginasPub); // parsear blabla    
+        int costoProduccion = Cotizador.calcularCostoProduccion(this.noPaginasPub);
 
-        // Mover Utils
-        int respuesta = Dialogs.mostrarMensajeYesNoOption(rootPane,
-                "El costo de producción es de: \n" + costoProduccion,
-                "¿Guardar Publicación?");
+        int respuesta = this.dialogConfirmarGuardar(costoProduccion);
 
         if (respuesta == JOptionPane.NO_OPTION) {
             return;
@@ -320,14 +316,12 @@ public class PublicacionForm extends javax.swing.JFrame {
         if (respuesta == JOptionPane.OK_OPTION) {
             Publicacion publicacionGuardada = ControladorPublicacion.guardarPublicacion(publicacion, costoProduccion);
 
-            JOptionPane.showMessageDialog(rootPane, "Publicacion guardada \n "
-                    + "costo venta: " + publicacionGuardada.getCostoVenta());
+            this.dialogPublicacionGuardada(publicacionGuardada);
 
-            // Regresar form
+            this.regresar();
             return;
         }
 
-        // Mostrar precio venta con boton de Ok
     }
 
     private boolean validarCampos() {
@@ -369,14 +363,8 @@ public class PublicacionForm extends javax.swing.JFrame {
 
         if (this.publicacionSeleccionada == RADIO_PUBLICACION_FISICA) {
             String rawPaginaInicial = txtPaginaInicial.getText();
-            if (rawPaginaInicial.isBlank()) {
+            if (rawPaginaInicial.isBlank() || !Validaciones.isInteger(rawPaginaInicial)) {
                 Dialogs.mostrarMensajeError(rootPane, "Formato de página inicial inválido");
-                return false;
-            }
-            // TODO mover utils
-            try {
-                Integer paginaInicial = Integer.valueOf(rawPaginaInicial);
-            } catch (NumberFormatException e) {
                 return false;
             }
 
@@ -390,7 +378,7 @@ public class PublicacionForm extends javax.swing.JFrame {
             this.cBoxAutores.setModel(new DefaultComboBoxModel<>(nombreAutores.toArray(new String[0])));
         } catch (IllegalArgumentException ex) {
             LOG.log(Level.SEVERE, ex.getMessage());
-            // TODO dialog
+            Dialogs.mostrarMensajeError(rootPane, "Error al cargar autores");
 
         }
     }
@@ -509,4 +497,15 @@ public class PublicacionForm extends javax.swing.JFrame {
         this.setVisible(false);
     }
 
+    private int dialogConfirmarGuardar(int costoProduccion) {
+        return Dialogs.mostrarMensajeYesNoOption(rootPane,
+                "El costo de producción es de: \n" + costoProduccion,
+                "¿Guardar Publicación?");
+
+    }
+
+    private void dialogPublicacionGuardada(Publicacion publicacionGuardada) {
+        Dialogs.mostrarMensajeExito(rootPane, "Publicacion guardada \n "
+                + "costo venta: " + publicacionGuardada.getCostoVenta());
+    }
 }
