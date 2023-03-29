@@ -312,7 +312,7 @@ public class PublicacionForm extends javax.swing.JFrame {
         // Mover Utils
         int respuesta = Dialogs.mostrarMensajeYesNoOption(rootPane,
                 "El costo de producción es de: \n" + costoProduccion,
-                "Costo Produccion");
+                "¿Guardar Publicación?");
 
         if (respuesta == JOptionPane.NO_OPTION) {
             return;
@@ -345,7 +345,7 @@ public class PublicacionForm extends javax.swing.JFrame {
             return false;
         }
 
-        if (!rawNoPaginas.isBlank()) {
+        if (rawNoPaginas.isBlank()) {
             Dialogs.mostrarMensajeError(rootPane, "Se debe seleccionar el número de páginas");
             if (!Validaciones.isInteger(rawNoPaginas)) {
                 Dialogs.mostrarMensajeError(rootPane, "Formato de No. Paginas inválido");
@@ -466,6 +466,7 @@ public class PublicacionForm extends javax.swing.JFrame {
 
         publicacion.setAutor(this.autorPub);
         publicacion.setTitulo(this.tituloPub);
+        publicacion.setNoPaginas(noPaginasPub);
 
         if (publicacion instanceof PublicacionDigital publicacionDigital) {
             publicacionDigital.setSizeMegas(this.sizeMegasPub);
