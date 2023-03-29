@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import org.itson.controladores.ControladorPublicacion;
 import org.itson.dominio.Autor;
@@ -36,14 +37,14 @@ public class PublicacionForm extends javax.swing.JFrame {
     private Double sizeMegasPub;
 
     private Usuario usuarioLoggeado;
-    private MenuPrincipalForm menuPrincipalForm;
+    private final JFrame frmAnterior;
 
-    public PublicacionForm(Usuario usuarioLoggeado) {
+    public PublicacionForm(JFrame frmAnterior, Usuario usuarioLoggeado) {
         initComponents();
         this.llenarComboBoxAutores();
         this.actualizarPublicacionSeleccionada();
         this.usuarioLoggeado = usuarioLoggeado;
-        this.menuPrincipalForm = new MenuPrincipalForm(this.usuarioLoggeado);
+        this.frmAnterior = frmAnterior;
     }
 
     @SuppressWarnings("unchecked")
@@ -503,7 +504,7 @@ public class PublicacionForm extends javax.swing.JFrame {
     }
 
     private void regresar() {
-        menuPrincipalForm.setVisible(true);
+        frmAnterior.setVisible(true);
         this.setVisible(false);
     }
 

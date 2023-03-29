@@ -8,7 +8,7 @@ import org.itson.dominio.Usuario;
 
 /**
  *
- * @author Elkur
+ * @author Toled
  */
 public class MenuPrincipalForm extends javax.swing.JFrame {
 
@@ -25,9 +25,9 @@ public class MenuPrincipalForm extends javax.swing.JFrame {
     public MenuPrincipalForm(Usuario usuarioLoggeado) {
         initComponents();
 //        cargarImagen();
-        if (!(usuarioLoggeado instanceof Administrador)) {
-            btnAgregarUsuario.setVisible(false);
-        }
+        ajustarEntornoSegunUsuario(usuarioLoggeado);
+        System.out.println("Menu");
+
     }
 
     @SuppressWarnings("unchecked")
@@ -171,7 +171,7 @@ public class MenuPrincipalForm extends javax.swing.JFrame {
 
     private void btnCerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarSesionActionPerformed
         this.cerrarSesion();
-        
+
     }//GEN-LAST:event_btnCerrarSesionActionPerformed
 
 
@@ -205,7 +205,7 @@ public class MenuPrincipalForm extends javax.swing.JFrame {
             this.setVisible(false);
             this.listaPublicacionesForm.setVisible(true);
         } else {
-            this.listaPublicacionesForm = new PublicacionesForm(this.usuarioLoggeado);
+            this.listaPublicacionesForm = new PublicacionesForm(this, this.usuarioLoggeado);
             this.cargarFormListaPublicaciones();
         }
     }
@@ -215,10 +215,9 @@ public class MenuPrincipalForm extends javax.swing.JFrame {
             this.setVisible(false);
             this.cotizacionesForm.setVisible(true);
         } else {
-            this.cotizacionesForm = new PublicacionForm(this.usuarioLoggeado);
+            this.cotizacionesForm = new PublicacionForm(this, this.usuarioLoggeado);
             this.cargarFormCotizacion();
         }
-        this.dispose();
     }
 
     private void cargarFormAgregarAutor() {
@@ -226,7 +225,7 @@ public class MenuPrincipalForm extends javax.swing.JFrame {
             this.setVisible(false);
             this.agregarAutorForm.setVisible(true);
         } else {
-            this.agregarAutorForm = new AgregarAutorForm(this.usuarioLoggeado);
+            this.agregarAutorForm = new AgregarAutorForm(this, this.usuarioLoggeado);
             this.cargarFormAgregarAutor();
         }
     }
@@ -248,7 +247,7 @@ public class MenuPrincipalForm extends javax.swing.JFrame {
             this.setVisible(false);
             this.agregarUsuarioForm.setVisible(true);
         } else {
-            this.agregarUsuarioForm = new AgregarUsuarioForm(this.usuarioLoggeado);
+            this.agregarUsuarioForm = new AgregarUsuarioForm(this, this.usuarioLoggeado);
             this.cargarCrearUsuarioForm();
         }
     }
@@ -258,6 +257,13 @@ public class MenuPrincipalForm extends javax.swing.JFrame {
         this.usuarioLoggeado = null;
         iniciarSesionForm.setVisible(true);
         this.dispose();
+    }
+
+    private void ajustarEntornoSegunUsuario(Usuario usuarioLoggeado) {
+        System.out.println(usuarioLoggeado);
+        if (!(usuarioLoggeado instanceof Administrador)) {
+            btnAgregarUsuario.setVisible(false);
+        }
     }
 
 }

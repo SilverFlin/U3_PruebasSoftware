@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFrame;
 import javax.swing.table.DefaultTableModel;
 import org.itson.dominio.Cliente;
 import org.itson.dominio.Publicacion;
@@ -13,42 +14,36 @@ import org.itson.dominio.Usuario;
 
 /**
  *
- * @author Elkur
+ * @author Toled
  */
-public class PublicacionesForm extends javax.swing.JFrame {
-    
+public class PublicacionesForm extends JFrame {
+
     private static final Logger LOG = Logger.getLogger(PublicacionesForm.class.getName());
     private Usuario clienteLoggeado;
-    private MenuPrincipalForm menuPrincipalForm;
+    private final JFrame frmAnterior;
 
-    /**
-     * Cuenta bancaria a mostrar
-     *
-     * @param clienteLoggeado
-     */
-    public PublicacionesForm(Usuario clienteLoggeado) {
+
+    public PublicacionesForm(JFrame frmAnterior, Usuario clienteLoggeado) {
         initComponents();
-        cargarTablaOperaciones();
+        cargarTablaPublicaciones();
         this.clienteLoggeado = clienteLoggeado;
-        this.menuPrincipalForm = new MenuPrincipalForm(this.clienteLoggeado);
+        this.frmAnterior = frmAnterior;
     }
 
-    /**
-     * Consulta las operaciones asociadas a la cuenta y las carga en la tabla
-     */
-    private void cargarTablaOperaciones() {
-        
+
+    private void cargarTablaPublicaciones() {
+
         List<Publicacion> listaPublicaciones = this.conseguirListaPublicaciones();
-        
+
         DefaultTableModel modeloTabla = (DefaultTableModel) this.tblPublicaciones.getModel();
         modeloTabla.setRowCount(0);
         for (Publicacion publicacion : listaPublicaciones) {
             Object[] fila = {publicacion.getTitulo(), publicacion.getAutor().getNombre() + " " + publicacion.getAutor().getApellidoPaterno(), publicacion.getNoPaginas()};
             modeloTabla.addRow(fila);
         }
-        
+
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -205,7 +200,7 @@ public class PublicacionesForm extends javax.swing.JFrame {
     private void btnAdelanteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdelanteActionPerformed
         // TODO paginado
         // this.configPaginado.avanzarPag();
-        this.cargarTablaOperaciones();
+        this.cargarTablaPublicaciones();
     }//GEN-LAST:event_btnAdelanteActionPerformed
     /**
      * Retrocede en la pagina de operaciones
@@ -215,7 +210,7 @@ public class PublicacionesForm extends javax.swing.JFrame {
     private void btnRetrocederActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRetrocederActionPerformed
         // TODO paginado
         // this.configPaginado.retrocederPag();
-        this.cargarTablaOperaciones();
+        this.cargarTablaPublicaciones();
     }//GEN-LAST:event_btnRetrocederActionPerformed
 
 
@@ -239,9 +234,9 @@ public class PublicacionesForm extends javax.swing.JFrame {
         publicaciones.addAll(fisicas);
         return publicaciones;
     }
-    
+
     private void regresar() {
-        menuPrincipalForm.setVisible(true);
+        frmAnterior.setVisible(true);
         this.setVisible(false);
     }
 }

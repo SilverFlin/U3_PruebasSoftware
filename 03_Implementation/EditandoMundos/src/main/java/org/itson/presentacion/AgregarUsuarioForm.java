@@ -1,5 +1,6 @@
 package org.itson.presentacion;
 
+import javax.swing.JFrame;
 import org.itson.controladores.ControladorAdministrador;
 import org.itson.controladores.ControladorCliente;
 import org.itson.dominio.Usuario;
@@ -13,14 +14,14 @@ import org.itson.utils.ValidacionesForms;
 public class AgregarUsuarioForm extends javax.swing.JFrame {
 
     private Usuario usuarioLoggeado;
-    private MenuPrincipalForm menuPrincipalForm;
+    private JFrame frmAnterior;
     private final int RADIO_USUARIO_CLIENTE = 0;
-    private final int RADIO_USUARIO_ADMIN = 1;    
-    
-    public AgregarUsuarioForm(Usuario usuarioLoggeado) {
+    private final int RADIO_USUARIO_ADMIN = 1;
+
+    public AgregarUsuarioForm(JFrame frmAnterior, Usuario usuarioLoggeado) {
         initComponents();
         this.usuarioLoggeado = usuarioLoggeado;
-        this.menuPrincipalForm = new MenuPrincipalForm(this.usuarioLoggeado);
+        this.frmAnterior = frmAnterior;
     }
 
     @SuppressWarnings("unchecked")
@@ -181,60 +182,59 @@ public class AgregarUsuarioForm extends javax.swing.JFrame {
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
         if (!validarCampos()) {
             return;
-        }        
-        
+        }
+
         String nombreUsuario = campoTextoUsuario.getText();
         String contraseña = new String(campoTextoContraseña.getPassword());
-        
+
         int tipoUsuario = btnGroupTipoUsuario.getSelection().getMnemonic();
-        
-        try{
+
+        try {
             switch (tipoUsuario) {
                 case RADIO_USUARIO_CLIENTE -> {
                     ControladorCliente.persistirCliente(nombreUsuario, contraseña);
                     Dialogs.mostrarMensajeExito(this, "Usuario guardado con exito");
                     break;
-                }        
+                }
                 case RADIO_USUARIO_ADMIN -> {
                     ControladorAdministrador.persistirAdministrador(nombreUsuario, contraseña);
                     Dialogs.mostrarMensajeExito(this, "Usuario guardado con exito");
                     break;
                 }
-                default -> throw new IllegalArgumentException();
+                default ->
+                    throw new IllegalArgumentException();
             }
-        }catch(Exception e){
+        } catch (Exception e) {
             Dialogs.mostrarMensajeError(this, "No se pudo guardar el usuario.");
-        }finally{
+        } finally {
             limpiarCampos();
         }
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void radioUsuarioClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioUsuarioClienteActionPerformed
-     
+
     }//GEN-LAST:event_radioUsuarioClienteActionPerformed
 
     private void radioUsuarioAdministradorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioUsuarioAdministradorActionPerformed
 
     }//GEN-LAST:event_radioUsuarioAdministradorActionPerformed
-    
-    private boolean validarCampos(){
+
+    private boolean validarCampos() {
         String nombreUsuario = campoTextoUsuario.getText();
         String contraseña = new String(campoTextoContraseña.getPassword());
-        
-        if(!ValidacionesForms.isValidText(nombreUsuario)){
+
+        if (!ValidacionesForms.isValidText(nombreUsuario)) {
             Dialogs.mostrarMensajeError(this, "Ingrese un nombre de usuario valido!");
             return false;
-        }
-        else if (!ValidacionesForms.isValidText(contraseña)) {
+        } else if (!ValidacionesForms.isValidText(contraseña)) {
             Dialogs.mostrarMensajeError(this, "Ingrese una contraseña valida!");
             return false;
-        }
-        else{
+        } else {
             return true;
-        } 
+        }
     }
-    
-    private void limpiarCampos(){
+
+    private void limpiarCampos() {
         campoTextoContraseña.setText("");
         campoTextoUsuario.setText("");
     }
@@ -258,7 +258,7 @@ public class AgregarUsuarioForm extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     private void regresar() {
-        menuPrincipalForm.setVisible(true);
+        frmAnterior.setVisible(true);
         this.setVisible(false);
     }
 }

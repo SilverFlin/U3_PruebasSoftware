@@ -2,6 +2,7 @@ package org.itson.presentacion;
 
 
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JFrame;
 import org.itson.controladores.ControladorAutor;
 import org.itson.dominio.Nacionalidad;
 import org.itson.dominio.Usuario;
@@ -16,13 +17,13 @@ public class AgregarAutorForm extends javax.swing.JFrame {
 
     private UnitOfWork uw;
     private Usuario usuarioLoggeado;
-    private MenuPrincipalForm menuPrincipalForm;
+    private JFrame frmAnterior;
 
-    public AgregarAutorForm(Usuario usuarioLoggeado) {
+    public AgregarAutorForm(JFrame frmAnterior,Usuario usuarioLoggeado) {
         initComponents();
         uw = new UnitOfWork();
         this.usuarioLoggeado = usuarioLoggeado;
-        this.menuPrincipalForm = new MenuPrincipalForm(this.usuarioLoggeado);
+        this.frmAnterior = frmAnterior;
     }
 
     @SuppressWarnings("unchecked")
@@ -261,7 +262,7 @@ public class AgregarAutorForm extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     private void regresar() {
-        menuPrincipalForm.setVisible(true);
+        frmAnterior.setVisible(true);
         this.setVisible(false);
     }
 }
