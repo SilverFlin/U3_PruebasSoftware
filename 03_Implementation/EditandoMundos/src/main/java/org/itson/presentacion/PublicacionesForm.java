@@ -11,28 +11,29 @@ import org.itson.dominio.Publicacion;
 import org.itson.dominio.PublicacionDigital;
 import org.itson.dominio.PublicacionFisica;
 import org.itson.dominio.Usuario;
+import org.itson.utils.FormUtils;
 
 /**
  *
  * @author Toled
  */
 public class PublicacionesForm extends JFrame {
-
+    
     private static final Logger LOG = Logger.getLogger(PublicacionesForm.class.getName());
     private Usuario clienteLoggeado;
     private final JFrame frmAnterior;
-
+    
     public PublicacionesForm(JFrame frmAnterior, Usuario clienteLoggeado) {
         initComponents();
         cargarTablaPublicaciones();
         this.clienteLoggeado = clienteLoggeado;
         this.frmAnterior = frmAnterior;
     }
-
+    
     private void cargarTablaPublicaciones() {
-
+        
         List<Publicacion> listaPublicaciones = this.conseguirListaPublicaciones();
-
+        
         DefaultTableModel modeloTabla = (DefaultTableModel) this.tblPublicaciones.getModel();
         modeloTabla.setRowCount(0);
         for (Publicacion publicacion : listaPublicaciones) {
@@ -42,12 +43,12 @@ public class PublicacionesForm extends JFrame {
                 publicacion.getNoPaginas(),
                 "$" + publicacion.getCostoProd(),
                 "$" + publicacion.getCostoVenta()};
-
+            
             modeloTabla.addRow(fila);
         }
-
+        
     }
-
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -238,9 +239,8 @@ public class PublicacionesForm extends JFrame {
         publicaciones.addAll(fisicas);
         return publicaciones;
     }
-
+    
     private void regresar() {
-        frmAnterior.setVisible(true);
-        this.setVisible(false);
+        FormUtils.regresar(frmAnterior, this);
     }
 }

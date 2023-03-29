@@ -15,6 +15,7 @@ import org.itson.dominio.PublicacionFisica;
 import org.itson.dominio.Usuario;
 import org.itson.utils.Cotizador;
 import org.itson.utils.Dialogs;
+import org.itson.utils.FormUtils;
 import org.itson.utils.Validaciones;
 
 /**
@@ -493,19 +494,20 @@ public class PublicacionForm extends javax.swing.JFrame {
     }
 
     private void regresar() {
-        frmAnterior.setVisible(true);
-        this.setVisible(false);
+        FormUtils.regresar(frmAnterior, this);
     }
 
     private int dialogConfirmarGuardar(int costoProduccion) {
-        return Dialogs.mostrarMensajeYesNoOption(rootPane,
-                "El costo de producción es de: \n" + costoProduccion,
-                "¿Guardar Publicación?");
+        String mensaje = "El costo de producción es de: \n" + costoProduccion;
+        String titulo = "¿Guardar Publicación?";
+        return Dialogs.mostrarMensajeYesNoOption(rootPane, mensaje, titulo);
 
     }
 
     private void dialogPublicacionGuardada(Publicacion publicacionGuardada) {
-        Dialogs.mostrarMensajeExito(rootPane, "Publicacion guardada \n "
-                + "costo venta: " + publicacionGuardada.getCostoVenta());
+        String mensaje = """
+                         Publicacion guardada 
+                          costo venta: """ + publicacionGuardada.getCostoVenta();
+        Dialogs.mostrarMensajeExito(rootPane, mensaje);
     }
 }

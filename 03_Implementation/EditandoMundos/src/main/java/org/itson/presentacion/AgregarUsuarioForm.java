@@ -5,6 +5,7 @@ import org.itson.controladores.ControladorAdministrador;
 import org.itson.controladores.ControladorCliente;
 import org.itson.dominio.Usuario;
 import org.itson.utils.Dialogs;
+import org.itson.utils.FormUtils;
 import org.itson.utils.ValidacionesForms;
 
 /**
@@ -258,7 +259,6 @@ public class AgregarUsuarioForm extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     private void regresar() {
-        frmAnterior.setVisible(true);
-        this.setVisible(false);
+        FormUtils.regresar(frmAnterior, this);
     }
 }

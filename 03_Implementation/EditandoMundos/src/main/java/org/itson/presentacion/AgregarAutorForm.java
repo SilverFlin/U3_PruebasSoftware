@@ -7,6 +7,7 @@ import org.itson.controladores.ControladorAutor;
 import org.itson.dominio.Nacionalidad;
 import org.itson.dominio.Usuario;
 import org.itson.utils.Dialogs;
+import org.itson.utils.FormUtils;
 import org.itson.utils.ValidacionesForms;
 import org.itson.utils.Validaciones;
 /**
@@ -262,7 +263,6 @@ public class AgregarAutorForm extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     private void regresar() {
-        frmAnterior.setVisible(true);
-        this.setVisible(false);
+        FormUtils.regresar(frmAnterior, this);
     }
 }
