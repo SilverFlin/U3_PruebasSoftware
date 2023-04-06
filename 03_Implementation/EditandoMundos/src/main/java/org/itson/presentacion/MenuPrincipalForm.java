@@ -2,9 +2,9 @@ package org.itson.presentacion;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.ImageIcon;
 import org.itson.dominio.Administrador;
 import org.itson.dominio.Usuario;
+import org.itson.utils.FormUtils;
 
 /**
  *
@@ -21,12 +21,13 @@ public class MenuPrincipalForm extends javax.swing.JFrame {
     private PublicacionForm cotizacionesForm;
     private AgregarAutorForm agregarAutorForm;
     private AgregarUsuarioForm agregarUsuarioForm;
+    private GestionarAutoresForm gestionarAutoresForm;
 
     public MenuPrincipalForm(Usuario usuarioLoggeado) {
         initComponents();
 //        cargarImagen();
         ajustarEntornoSegunUsuario(usuarioLoggeado);
-        System.out.println("Menu");
+        initFormsConectados();
 
     }
 
@@ -38,9 +39,9 @@ public class MenuPrincipalForm extends javax.swing.JFrame {
         head3 = new javax.swing.JPanel();
         txtBienvenida = new javax.swing.JLabel();
         btnCerrarSesion = new javax.swing.JButton();
-        btnAgregarAutor = new javax.swing.JButton();
+        btnGestionarAutores = new javax.swing.JButton();
         btnCotizar = new javax.swing.JButton();
-        btnConsultarPublicaciones = new javax.swing.JButton();
+        btnGestionarPublicaciones = new javax.swing.JButton();
         btnAgregarUsuario = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -94,18 +95,18 @@ public class MenuPrincipalForm extends javax.swing.JFrame {
 
         background3.add(head3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 600, 90));
 
-        btnAgregarAutor.setBackground(new java.awt.Color(0, 102, 255));
-        btnAgregarAutor.setFont(new java.awt.Font("Nirmala UI Semilight", 1, 14)); // NOI18N
-        btnAgregarAutor.setForeground(new java.awt.Color(255, 255, 255));
-        btnAgregarAutor.setText("Agregar Autor");
-        btnAgregarAutor.setBorder(null);
-        btnAgregarAutor.setBorderPainted(false);
-        btnAgregarAutor.addActionListener(new java.awt.event.ActionListener() {
+        btnGestionarAutores.setBackground(new java.awt.Color(0, 102, 255));
+        btnGestionarAutores.setFont(new java.awt.Font("Nirmala UI Semilight", 1, 14)); // NOI18N
+        btnGestionarAutores.setForeground(new java.awt.Color(255, 255, 255));
+        btnGestionarAutores.setText("Gestionar Autores");
+        btnGestionarAutores.setBorder(null);
+        btnGestionarAutores.setBorderPainted(false);
+        btnGestionarAutores.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAgregarAutorActionPerformed(evt);
+                btnGestionarAutoresActionPerformed(evt);
             }
         });
-        background3.add(btnAgregarAutor, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 240, 180, 40));
+        background3.add(btnGestionarAutores, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 240, 180, 40));
 
         btnCotizar.setBackground(new java.awt.Color(0, 102, 255));
         btnCotizar.setFont(new java.awt.Font("Nirmala UI Semilight", 1, 14)); // NOI18N
@@ -123,18 +124,18 @@ public class MenuPrincipalForm extends javax.swing.JFrame {
         });
         background3.add(btnCotizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 180, 180, 40));
 
-        btnConsultarPublicaciones.setBackground(new java.awt.Color(0, 102, 255));
-        btnConsultarPublicaciones.setFont(new java.awt.Font("Nirmala UI Semilight", 1, 14)); // NOI18N
-        btnConsultarPublicaciones.setForeground(new java.awt.Color(255, 255, 255));
-        btnConsultarPublicaciones.setText("Consultar Publicaciones");
-        btnConsultarPublicaciones.setBorder(null);
-        btnConsultarPublicaciones.setBorderPainted(false);
-        btnConsultarPublicaciones.addActionListener(new java.awt.event.ActionListener() {
+        btnGestionarPublicaciones.setBackground(new java.awt.Color(0, 102, 255));
+        btnGestionarPublicaciones.setFont(new java.awt.Font("Nirmala UI Semilight", 1, 14)); // NOI18N
+        btnGestionarPublicaciones.setForeground(new java.awt.Color(255, 255, 255));
+        btnGestionarPublicaciones.setText("Gestionar Publicaciones");
+        btnGestionarPublicaciones.setBorder(null);
+        btnGestionarPublicaciones.setBorderPainted(false);
+        btnGestionarPublicaciones.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnConsultarPublicacionesActionPerformed(evt);
+                btnGestionarPublicacionesActionPerformed(evt);
             }
         });
-        background3.add(btnConsultarPublicaciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 120, 180, 40));
+        background3.add(btnGestionarPublicaciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 120, 180, 40));
 
         btnAgregarUsuario.setBackground(new java.awt.Color(0, 102, 255));
         btnAgregarUsuario.setFont(new java.awt.Font("Nirmala UI Semilight", 1, 14)); // NOI18N
@@ -165,7 +166,12 @@ public class MenuPrincipalForm extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCotizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCotizarActionPerformed
-        this.cargarFormCotizacion();
+        try{
+            this.cargarFormCotizacion();
+        }catch(Exception e){
+            LOG.log(Level.SEVERE, "Boton Cotizar Menu Principal");
+        }
+        
     }//GEN-LAST:event_btnCotizarActionPerformed
 
 
@@ -175,14 +181,14 @@ public class MenuPrincipalForm extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCerrarSesionActionPerformed
 
 
-    private void btnAgregarAutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarAutorActionPerformed
-        this.cargarFormAgregarAutor();
-    }//GEN-LAST:event_btnAgregarAutorActionPerformed
+    private void btnGestionarAutoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGestionarAutoresActionPerformed
+        this.cargarFormGestionarAutores();
+    }//GEN-LAST:event_btnGestionarAutoresActionPerformed
 
 
-    private void btnConsultarPublicacionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarPublicacionesActionPerformed
+    private void btnGestionarPublicacionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGestionarPublicacionesActionPerformed
         this.cargarFormListaPublicaciones();
-    }//GEN-LAST:event_btnConsultarPublicacionesActionPerformed
+    }//GEN-LAST:event_btnGestionarPublicacionesActionPerformed
 
     private void btnAgregarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarUsuarioActionPerformed
         this.cargarCrearUsuarioForm();
@@ -191,79 +197,46 @@ public class MenuPrincipalForm extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel background3;
-    private javax.swing.JButton btnAgregarAutor;
     private javax.swing.JButton btnAgregarUsuario;
     private javax.swing.JButton btnCerrarSesion;
-    private javax.swing.JButton btnConsultarPublicaciones;
     private javax.swing.JButton btnCotizar;
+    private javax.swing.JButton btnGestionarAutores;
+    private javax.swing.JButton btnGestionarPublicaciones;
     private javax.swing.JPanel head3;
     private javax.swing.JLabel txtBienvenida;
     // End of variables declaration//GEN-END:variables
 
     private void cargarFormListaPublicaciones() {
-        if (this.listaPublicacionesForm != null) {
-            this.setVisible(false);
-            this.listaPublicacionesForm.setVisible(true);
-        } else {
-            this.listaPublicacionesForm = new PublicacionesForm(this, this.usuarioLoggeado);
-            this.cargarFormListaPublicaciones();
-        }
+        FormUtils.cargarForm(this.listaPublicacionesForm, this);
     }
 
     private void cargarFormCotizacion() {
-        if (this.cotizacionesForm != null) {
-            this.setVisible(false);
-            this.cotizacionesForm.setVisible(true);
-        } else {
-            this.cotizacionesForm = new PublicacionForm(this, this.usuarioLoggeado);
-            this.cargarFormCotizacion();
-        }
+        FormUtils.cargarForm(this.cotizacionesForm, this);
     }
 
-    private void cargarFormAgregarAutor() {
-        if (this.agregarAutorForm != null) {
-            this.setVisible(false);
-            this.agregarAutorForm.setVisible(true);
-        } else {
-            this.agregarAutorForm = new AgregarAutorForm(this, this.usuarioLoggeado);
-            this.cargarFormAgregarAutor();
-        }
+    private void cargarFormGestionarAutores() {
+        FormUtils.cargarForm(this.gestionarAutoresForm, this);
     }
 
-    // TODO mover utils
-    // TODO Agregar Form Base que reciba usuario logeado
-//    private void cargarForm<T>(T extends  form){
-//        
-//        if(form != null){
-//            this.setVisible(false);
-//            form.setVisible(true);
-//        }else{
-//            form = new T(this.usuarioLoggeado);
-//        }
-//        this.dispose();
-//    }
     private void cargarCrearUsuarioForm() {
-        if (this.agregarUsuarioForm != null) {
-            this.setVisible(false);
-            this.agregarUsuarioForm.setVisible(true);
-        } else {
-            this.agregarUsuarioForm = new AgregarUsuarioForm(this, this.usuarioLoggeado);
-            this.cargarCrearUsuarioForm();
-        }
+        FormUtils.cargarForm(this.agregarUsuarioForm, this);
     }
 
     private void cerrarSesion() {
-        IniciarSesionForm iniciarSesionForm = new IniciarSesionForm();
-        this.usuarioLoggeado = null;
-        iniciarSesionForm.setVisible(true);
-        this.dispose();
+        FormUtils.cerrarSesion(this);
     }
 
     private void ajustarEntornoSegunUsuario(Usuario usuarioLoggeado) {
-        System.out.println(usuarioLoggeado);
         if (!(usuarioLoggeado instanceof Administrador)) {
             btnAgregarUsuario.setVisible(false);
         }
+    }
+
+    private void initFormsConectados() {
+        this.listaPublicacionesForm = new PublicacionesForm(this, this.usuarioLoggeado);
+        this.cotizacionesForm = new PublicacionForm(this, this.usuarioLoggeado);
+        this.gestionarAutoresForm = new GestionarAutoresForm(this, this.usuarioLoggeado);
+        this.agregarUsuarioForm = new AgregarUsuarioForm(this, this.usuarioLoggeado);
     }
 
 }
