@@ -5,6 +5,7 @@
 package org.itson.dominio;
 
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
@@ -16,6 +17,8 @@ import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  *
@@ -42,6 +45,14 @@ public class Publicacion implements Serializable {
 
     @Column(name = "noPaginas", nullable = false)
     private Integer noPaginas;
+    
+    @Temporal(TemporalType.DATE)
+    @Column(name = "fechaInicio", nullable = false)
+    private Date fechaInicio;
+
+    @Temporal(TemporalType.DATE)
+    @Column(name = "fechaEntrega", nullable = false)
+    private Date fechaEntrega;    
 
     @ManyToOne
     //Desde este momento ya se considera como una columna al hacer el JoinColumn
@@ -64,6 +75,16 @@ public class Publicacion implements Serializable {
         this.costoProd = costoProd;
         this.costoVenta = costoVenta;
         this.noPaginas = noPaginas;
+        this.autor = autor;
+    }
+
+    public Publicacion(String titulo, Integer costoProd, Integer costoVenta, Integer noPaginas, Date fechaInicio, Date fechaEntrega, Autor autor) {
+        this.titulo = titulo;
+        this.costoProd = costoProd;
+        this.costoVenta = costoVenta;
+        this.noPaginas = noPaginas;
+        this.fechaInicio = fechaInicio;
+        this.fechaEntrega = fechaEntrega;
         this.autor = autor;
     }
 
@@ -118,6 +139,23 @@ public class Publicacion implements Serializable {
         this.noPaginas = noPaginas;
     }
 
+    public Date getFechaInicio() {
+        return fechaInicio;
+    }
+
+    public void setFechaInicio(Date fechaInicio) {
+        this.fechaInicio = fechaInicio;
+    }
+
+    public Date getFechaEntrega() {
+        return fechaEntrega;
+    }
+
+    public void setFechaEntrega(Date fechaEntrega) {
+        this.fechaEntrega = fechaEntrega;
+    }
+    
+    
     @Override
     public int hashCode() {
         int hash = 0;
