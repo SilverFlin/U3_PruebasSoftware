@@ -21,11 +21,13 @@ public class GestionarAutoresForm extends javax.swing.JFrame {
     private static final Logger LOG = Logger.getLogger(GestionarAutoresForm.class.getName());
 
     private final JFrame frmAnterior;
+    private AutoresForm autoresForm;
+    private AgregarAutorForm agregarAutorForm;
 
     public GestionarAutoresForm(JFrame frmAnterior, Usuario usuarioLoggeado) {
         initComponents();
 //        cargarImagen();
-//        initFormsConectados();
+        initFormsConectados();
         this.frmAnterior = frmAnterior;
 
     }
@@ -194,9 +196,11 @@ public class GestionarAutoresForm extends javax.swing.JFrame {
 
 
     private void btnAgregarAutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarAutorActionPerformed
+        this.cargarAgregarAutorForm();
     }//GEN-LAST:event_btnAgregarAutorActionPerformed
 
     private void btnConsultarAutoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarAutoresActionPerformed
+        this.cargarConsularAutoresForm();
     }//GEN-LAST:event_btnConsultarAutoresActionPerformed
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
@@ -226,9 +230,18 @@ public class GestionarAutoresForm extends javax.swing.JFrame {
         FormUtils.regresar(this.frmAnterior, this);
         
     }
+    
+    private void cargarConsularAutoresForm(){
+        FormUtils.cargarForm(this.autoresForm, this);
+    }
 
+    private void cargarAgregarAutorForm(){
+        FormUtils.cargarForm(this.agregarAutorForm, this);
+    }
+    
     private void initFormsConectados() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        autoresForm = new AutoresForm(this, this.usuarioLoggeado);
+        agregarAutorForm = new AgregarAutorForm(this, this.usuarioLoggeado);
     }
 
 }

@@ -4,9 +4,11 @@
  */
 package org.itson.controladores;
 
+import java.util.List;
 import org.itson.dominio.Autor;
 import org.itson.dominio.Nacionalidad;
 import org.itson.presentacion.UnitOfWork;
+import org.itson.utils.ConfiguracionPaginado;
 
 /**
  *
@@ -17,6 +19,10 @@ public class ControladorAutor {
     public static Autor persistirAutor(String nombres, String apellidoPaterno, String apellidoMaterno, String edad, Nacionalidad nacionalidad){
         Autor autorPersistir = new Autor(nombres, apellidoPaterno, apellidoMaterno, Integer.parseInt(edad), nacionalidad);
         return new UnitOfWork().autoresRepository().agregar(autorPersistir);
+    }
+    
+    public static List<Autor> consultaPaginado(ConfiguracionPaginado configuracionPaginado){
+        return new UnitOfWork().autoresRepository().consultaPaginado(configuracionPaginado.getOffset(), configuracionPaginado.getLimite());
     }
     
 }
