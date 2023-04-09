@@ -25,5 +25,12 @@ public class AutoresRepository extends RepositoryBase<Autor> {
         query.setParameter("apellidopaterno", "%" + apellidoPaterno + "%");
         return query.getResultList();
     }
+    
+    public List<Autor> consultaPaginado(int offset, int limit) {
+        TypedQuery<Autor> query = entityManager.createNamedQuery("consultarTodos", Autor.class);
+        query.setFirstResult(offset);
+        query.setMaxResults(limit);
+        return query.getResultList();
+    }
 
 }
