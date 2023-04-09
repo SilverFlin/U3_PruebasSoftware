@@ -43,23 +43,23 @@ public class Usuario implements Serializable {
     @Column(name = "password", nullable = false, length = 100)
     private String password;
     
-    @Column(name = "nombres", nullable = false, length = 100)
+    @Column(name = "nombres", nullable = true, length = 100)
     private String nombres;
 
-    @Column(name = "apellidoPaterno", nullable = false, length = 100)
+    @Column(name = "apellidoPaterno", nullable = true, length = 100)
     private String apellidoPaterno;
 
     @Column(name = "apellidoMaterno", nullable = true, length = 100)
     private String apellidoMaterno;
 
-    @Column(name = "edad", nullable = false)
+    @Column(name = "edad", nullable = true)
     private int edad;
 
-    @Column(name = "nacionalidad", nullable = false)
+    @Column(name = "nacionalidad", nullable = true)
     @Enumerated(EnumType.STRING)
     private Nacionalidad nacionalidad;
 
-    @Column(name = "isAutor", nullable = false)
+    @Column(name = "isAutor", nullable = true)
     private boolean isAutor;
     
     @Column(name = "correoElectronico", nullable = true, length = 100)

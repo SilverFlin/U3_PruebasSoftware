@@ -19,6 +19,7 @@ public class MenuPrincipalForm extends javax.swing.JFrame {
     private static final Logger LOG = Logger.getLogger(MenuPrincipalForm.class.getName());
     private PublicacionesForm listaPublicacionesForm;
     private PublicacionForm cotizacionesForm;
+    private GestionarPublicacionesForm gestionarPublicacionesForm;
     private AgregarAutorForm agregarAutorForm;
     private AgregarUsuarioForm agregarUsuarioForm;
     private GestionarAutoresForm gestionarAutoresForm;
@@ -206,6 +207,11 @@ public class MenuPrincipalForm extends javax.swing.JFrame {
     private javax.swing.JLabel txtBienvenida;
     // End of variables declaration//GEN-END:variables
 
+    
+    private void cargarFormGestionarPublicaciones(){
+        FormUtils.cargarForm(this.gestionarPublicacionesForm, this);
+    }
+    
     private void cargarFormListaPublicaciones() {
         FormUtils.cargarForm(this.listaPublicacionesForm, this);
     }
