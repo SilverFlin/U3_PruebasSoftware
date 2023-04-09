@@ -25,4 +25,11 @@ public class ControladorAutor {
         return new UnitOfWork().autoresRepository().consultaPaginado(configuracionPaginado.getOffset(), configuracionPaginado.getLimite());
     }
     
+    public static void eliminarAutor(Autor autor){
+        new UnitOfWork().autoresRepository().eliminar(autor);
+    }
+    
+    public static void modificarAutor(Autor autor){
+        new UnitOfWork().autoresRepository().actualizar(autor);
+    }
 }
