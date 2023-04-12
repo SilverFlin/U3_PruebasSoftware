@@ -5,6 +5,7 @@ import org.itson.controladores.ControladorAdministrador;
 import org.itson.controladores.ControladorCliente;
 import org.itson.dominio.Usuario;
 import org.itson.utils.Dialogs;
+import static org.itson.utils.Dialogs.mostrarMensajeError;
 import org.itson.utils.FormUtils;
 import org.itson.utils.ValidacionesForms;
 
@@ -185,27 +186,10 @@ public class AgregarUsuarioForm extends javax.swing.JFrame {
             return;
         }
 
-        String nombreUsuario = campoTextoUsuario.getText();
-        String contraseña = new String(campoTextoContraseña.getPassword());
-
-        int tipoUsuario = btnGroupTipoUsuario.getSelection().getMnemonic();
-
         try {
-            switch (tipoUsuario) {
-                case RADIO_USUARIO_CLIENTE -> {
-                    ControladorCliente.persistirCliente(nombreUsuario, contraseña);
-                    Dialogs.mostrarMensajeExito(this, "Usuario guardado con exito");
-                    break;
-                }
-                case RADIO_USUARIO_ADMIN -> {
-                    ControladorAdministrador.persistirAdministrador(nombreUsuario, contraseña);
-                    Dialogs.mostrarMensajeExito(this, "Usuario guardado con exito");
-                    break;
-                }
-                default ->
-                    throw new IllegalArgumentException();
-            }
-        } catch (Exception e) {
+            this.persistirSegunSeleccion();
+
+        } catch (IllegalArgumentException e) {
             Dialogs.mostrarMensajeError(this, "No se pudo guardar el usuario.");
         } finally {
             limpiarCampos();
@@ -222,13 +206,13 @@ public class AgregarUsuarioForm extends javax.swing.JFrame {
 
     private boolean validarCampos() {
         String nombreUsuario = campoTextoUsuario.getText();
-        String contraseña = new String(campoTextoContraseña.getPassword());
+        String password = new String(campoTextoContraseña.getPassword());
 
         if (!ValidacionesForms.isValidText(nombreUsuario)) {
-            Dialogs.mostrarMensajeError(this, "Ingrese un nombre de usuario valido!");
+            mostrarMensajeError(this, "Ingrese un nombre de usuario valido!");
             return false;
-        } else if (!ValidacionesForms.isValidText(contraseña)) {
-            Dialogs.mostrarMensajeError(this, "Ingrese una contraseña valida!");
+        } else if (!ValidacionesForms.isValidText(password)) {
+            mostrarMensajeError(this, "Ingrese una contraseña valida!");
             return false;
         } else {
             return true;
@@ -260,5 +244,26 @@ public class AgregarUsuarioForm extends javax.swing.JFrame {
 
     private void regresar() {
         FormUtils.regresar(frmAnterior, this);
+    }
+
+    private void persistirSegunSeleccion() {
+        String nombreUsuario = campoTextoUsuario.getText();
+        String password = new String(campoTextoContraseña.getPassword());
+        int tipoUsuario = btnGroupTipoUsuario.getSelection().getMnemonic();
+
+        switch (tipoUsuario) {
+            case RADIO_USUARIO_CLIENTE -> {
+                ControladorCliente.persistirCliente(nombreUsuario, password);
+                Dialogs.mostrarMensajeExito(this, "Usuario guardado con exito");
+                break;
+            }
+            case RADIO_USUARIO_ADMIN -> {
+                ControladorAdministrador.persistirAdministrador(nombreUsuario, password);
+                Dialogs.mostrarMensajeExito(this, "Usuario guardado con exito");
+                break;
+            }
+            default ->
+                throw new IllegalArgumentException();
+        }
     }
 }

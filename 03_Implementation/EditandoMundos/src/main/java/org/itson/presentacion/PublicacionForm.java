@@ -320,7 +320,6 @@ public class PublicacionForm extends javax.swing.JFrame {
             this.dialogPublicacionGuardada(publicacionGuardada);
 
             this.regresar();
-            return;
         }
 
     }
@@ -472,8 +471,7 @@ public class PublicacionForm extends javax.swing.JFrame {
     private Autor buscarAutor(String nombres, String apellidoPaterno) {
         UnitOfWork unitOfWork = new UnitOfWork();
         List<Autor> autores = unitOfWork.autoresRepository().buscarPorNombreYApellido(nombres, apellidoPaterno);
-        Autor primerAutor = autores.get(0);
-        return primerAutor;
+        return autores.get(0);
     }
 
     private void colectarCampos() {
@@ -485,6 +483,7 @@ public class PublicacionForm extends javax.swing.JFrame {
         this.autorPub = buscarAutor(nombresAutor, apellidoPaternoAutor);
         this.tituloPub = this.txtTitulo.getText();
         this.noPaginasPub = Integer.valueOf(txtNoPaginas.getText());
+        
         if (this.publicacionSeleccionada == RADIO_PUBLICACION_DIGITAL) {
             this.sizeMegasPub = Double.valueOf(txtSizeMegas.getText());
         } else if (this.publicacionSeleccionada == RADIO_PUBLICACION_FISICA) {

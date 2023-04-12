@@ -26,7 +26,6 @@ public class MenuPrincipalForm extends javax.swing.JFrame {
 
     public MenuPrincipalForm(Usuario usuarioLoggeado) {
         initComponents();
-//        cargarImagen();
         ajustarEntornoSegunUsuario(usuarioLoggeado);
         initFormsConectados();
 

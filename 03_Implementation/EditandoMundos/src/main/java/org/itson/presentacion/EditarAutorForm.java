@@ -1,6 +1,5 @@
 package org.itson.presentacion;
 
-
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFrame;
 import org.itson.controladores.ControladorAutor;
@@ -8,9 +7,11 @@ import org.itson.dominio.Autor;
 import org.itson.dominio.Nacionalidad;
 import org.itson.dominio.Usuario;
 import org.itson.utils.Dialogs;
+import static org.itson.utils.Dialogs.mostrarMensajeError;
 import org.itson.utils.FormUtils;
-import org.itson.utils.ValidacionesForms;
-import org.itson.utils.Validaciones;
+import static org.itson.utils.Validaciones.isInteger;
+import static org.itson.utils.ValidacionesForms.isValidText;
+
 /**
  *
  * @author Toled
@@ -22,7 +23,7 @@ public class EditarAutorForm extends javax.swing.JFrame {
     private Autor autorModificar;
     private JFrame frmAnterior;
 
-    public EditarAutorForm(JFrame frmAnterior,Usuario usuarioLoggeado) {
+    public EditarAutorForm(JFrame frmAnterior, Usuario usuarioLoggeado) {
         initComponents();
         uw = new UnitOfWork();
         this.usuarioLoggeado = usuarioLoggeado;
@@ -192,58 +193,57 @@ public class EditarAutorForm extends javax.swing.JFrame {
         this.modificar();
     }//GEN-LAST:event_btnAgregarActionPerformed
 
-
-    private boolean validarCampos(){
+    private boolean validarCampos() {
         String nombres = campoTextoNombres.getText();
         String apellidoPaterno = campoTextoApellidoPaterno.getText();
         String apellidoMaterno = campoTextoApellidoMaterno.getText();
         String edad = campoTextoEdad.getText();
-        if (!ValidacionesForms.isValidText(nombres)) {
-            Dialogs.mostrarMensajeError(this, "Ingrese un nombre valido!");
-            return false;
-        }
-        else if (!ValidacionesForms.isValidText(apellidoPaterno)) {
-            Dialogs.mostrarMensajeError(this, "Ingrese un apellido paterno valido!");
-            return false;
-        }        
-        else if (!ValidacionesForms.isValidText(apellidoMaterno)) {
-            Dialogs.mostrarMensajeError(this, "Ingrese un apellido materno valido!");
-            return false;
-        }        
-        else if (!Validaciones.isInteger(edad)) {
-            Dialogs.mostrarMensajeError(this, "Ingrese una edad valida!");
-            return false;
-        }
-        else{
-            return true;
-        }    
-    }
-    
-    private void modificar(){
-        if (autorModificar == null) {
-            throw  new IllegalArgumentException("No hay un autor a editar!");
-        }
-        else if (validarCampos()) {
-            int eleccion = Dialogs.mostrarMensajeYesNoOption(this, "¿Seguro que desea modificar el autor?", "Confirmación");
-            if (eleccion == 0) {
-                autorModificar.setNombre(campoTextoNombres.getText());
-                autorModificar.setApellidoPaterno(campoTextoApellidoPaterno.getText());
-                autorModificar.setApellidoMaterno(campoTextoApellidoMaterno.getText());
-                autorModificar.setEdad(Integer.parseInt(campoTextoEdad.getText()));
-                autorModificar.setNacionalidad((Nacionalidad)comboBoxNacionalidad.getSelectedItem());
 
-                try {
-                    ControladorAutor.modificarAutor(autorModificar);
-                    Dialogs.mostrarMensajeExito(this, "Autor modificado con exito.");
-                }catch(Exception e){
-                    Dialogs.mostrarMensajeError(this, "No se pudo modificar el autor.");
-                } 
-                finally {
-                    this.dispose();
-                    this.regresar();
-                }
-            }
-        } 
+        if (!isValidText(nombres)) {
+            mostrarMensajeError(this, "Ingrese un nombre valido!");
+            return false;
+        }
+        if (!isValidText(apellidoPaterno)) {
+            mostrarMensajeError(this, "Ingrese un apellido paterno valido!");
+            return false;
+        }
+        if (!isValidText(apellidoMaterno)) {
+            mostrarMensajeError(this, "Ingrese un apellido materno valido!");
+            return false;
+        }
+        if (!isInteger(edad)) {
+            mostrarMensajeError(this, "Ingrese una edad valida!");
+            return false;
+        }
+
+        return true;
+    }
+
+    private void modificar() {
+        if (autorModificar == null) {
+            throw new IllegalArgumentException("No hay un autor a editar!");
+        }
+
+        if (!validarCampos()) {
+            return;
+        }
+
+        int eleccion = Dialogs.mostrarMensajeYesNoOption(this, "¿Seguro que desea modificar el autor?", "Confirmación");
+        if (eleccion == Dialogs.OPCION_NO) {
+            return;
+        }
+
+        this.actualizarAutorModificar();
+
+        try {
+            ControladorAutor.modificarAutor(autorModificar);
+            Dialogs.mostrarMensajeExito(this, "Autor modificado con exito.");
+        } catch (Exception e) {
+            Dialogs.mostrarMensajeError(this, "No se pudo modificar el autor.");
+        } finally {
+            this.dispose();
+            this.regresar();
+        }
     }
 
     public void setAutorModificar(Autor autorModificar) {
@@ -251,16 +251,16 @@ public class EditarAutorForm extends javax.swing.JFrame {
         llenarCampos();
     }
 
-    private void limpiarCampos(){
+    private void limpiarCampos() {
         campoTextoApellidoMaterno.setText("");
         campoTextoApellidoPaterno.setText("");
         campoTextoNombres.setText("");
         campoTextoEdad.setText("");
     }
-    
-    private void llenarCampos(){
+
+    private void llenarCampos() {
         if (autorModificar == null) {
-            throw  new IllegalArgumentException("No hay un autor a editar!");
+            throw new IllegalArgumentException("No hay un autor a editar!");
         }
         this.comboBoxNacionalidad.setSelectedItem(this.autorModificar.getNacionalidad());
         this.campoTextoEdad.setText(String.valueOf(this.autorModificar.getEdad()));
@@ -293,5 +293,13 @@ public class EditarAutorForm extends javax.swing.JFrame {
 
     private void regresar() {
         FormUtils.regresar(frmAnterior, this);
+    }
+
+    private void actualizarAutorModificar() {
+        autorModificar.setNombre(campoTextoNombres.getText());
+        autorModificar.setApellidoPaterno(campoTextoApellidoPaterno.getText());
+        autorModificar.setApellidoMaterno(campoTextoApellidoMaterno.getText());
+        autorModificar.setEdad(Integer.parseInt(campoTextoEdad.getText()));
+        autorModificar.setNacionalidad((Nacionalidad) comboBoxNacionalidad.getSelectedItem());
     }
 }

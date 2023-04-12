@@ -1,10 +1,7 @@
 package org.itson.presentacion;
 
-import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.ImageIcon;
 import javax.swing.JFrame;
-import org.itson.dominio.Administrador;
 import org.itson.dominio.Usuario;
 import org.itson.utils.FormUtils;
 
@@ -25,8 +22,6 @@ public class ConsultarPublicacionesForm extends javax.swing.JFrame {
 
     public ConsultarPublicacionesForm(JFrame frmAnterior, Usuario usuarioLoggeado) {
         initComponents();
-//        cargarImagen();
-//        initFormsConectados();
         this.consultarForm = new PublicacionesForm(this, this.usuarioLoggeado);
         this.frmAnterior = frmAnterior;
 
@@ -246,19 +241,17 @@ public class ConsultarPublicacionesForm extends javax.swing.JFrame {
     private javax.swing.JLabel txtBienvenida;
     // End of variables declaration//GEN-END:variables
 
-   
     private void cerrarSesion() {
         FormUtils.cerrarSesion(this);
     }
 
-    private void cargarConsultarTodasForm(){
+    private void cargarConsultarTodasForm() {
         FormUtils.cargarForm(this.consultarForm, this);
         this.consultarForm.cargarTablaPublicaciones();
     }
 
     private void regresar() {
         FormUtils.regresar(this.frmAnterior, this);
-        
     }
 
     private void initFormsConectados() {

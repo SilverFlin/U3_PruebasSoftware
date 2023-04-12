@@ -1,10 +1,7 @@
 package org.itson.presentacion;
 
-import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.ImageIcon;
 import javax.swing.JFrame;
-import org.itson.dominio.Administrador;
 import org.itson.dominio.Usuario;
 import org.itson.utils.FormUtils;
 
@@ -25,7 +22,6 @@ public class GestionarPublicacionesForm extends javax.swing.JFrame {
 
     public GestionarPublicacionesForm(JFrame frmAnterior, Usuario usuarioLoggeado) {
         initComponents();
-//        cargarImagen();
         initFormsConectados();
         this.frmAnterior = frmAnterior;
 

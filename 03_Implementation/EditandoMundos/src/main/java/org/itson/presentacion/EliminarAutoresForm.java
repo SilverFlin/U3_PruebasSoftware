@@ -1,35 +1,28 @@
 package org.itson.presentacion;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.table.DefaultTableModel;
 import org.itson.controladores.ControladorAutor;
 import org.itson.dominio.Autor;
-import org.itson.dominio.Cliente;
-import org.itson.dominio.Publicacion;
-import org.itson.dominio.PublicacionDigital;
-import org.itson.dominio.PublicacionFisica;
 import org.itson.dominio.Usuario;
 import org.itson.utils.ConfiguracionPaginado;
 import org.itson.utils.Dialogs;
 import org.itson.utils.FormUtils;
-import org.itson.utils.Validaciones;
 
 /**
  *
  * @author Toled
  */
 public class EliminarAutoresForm extends JFrame {
-    
+
     private static final Logger LOG = Logger.getLogger(EliminarAutoresForm.class.getName());
     private ConfiguracionPaginado configPaginado;
     private Usuario clienteLoggeado;
     private final JFrame frmAnterior;
     private List<Autor> autores;
-    
+
     public EliminarAutoresForm(JFrame frmAnterior, Usuario clienteLoggeado) {
         initComponents();
         this.configPaginado = new ConfiguracionPaginado(this.tblPublicaciones.getModel().getRowCount(), 0);
@@ -37,25 +30,26 @@ public class EliminarAutoresForm extends JFrame {
         this.frmAnterior = frmAnterior;
         cargarTablaPublicaciones();
     }
-    
+
     public final void cargarTablaPublicaciones() {
-        
+
         autores = this.conseguirListaAutores();
-        
+
         DefaultTableModel modeloTabla = (DefaultTableModel) this.tblPublicaciones.getModel();
         modeloTabla.setRowCount(0);
+        String nombreCompleto;
         for (Autor autor : autores) {
+            nombreCompleto = autor.getNombre() + " " + autor.getApellidoPaterno() + " " + autor.getApellidoMaterno();
             Object[] fila = {
-                autor.getNombre() + " " + autor.getApellidoPaterno() + " " + autor.getApellidoMaterno(),
+                nombreCompleto,
                 autor.getEdad(),
                 autor.getNacionalidad()
             };
-            
+
             modeloTabla.addRow(fila);
         }
-        
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -264,22 +258,22 @@ public class EliminarAutoresForm extends JFrame {
     private List<Autor> conseguirListaAutores() {
         return ControladorAutor.consultaPaginado(this.configPaginado);
     }
-    
+
     private void regresar() {
         FormUtils.regresar(frmAnterior, this);
     }
-    
-    private void eliminarElementoSeleccionado(){
+
+    private void eliminarElementoSeleccionado() {
         int index = tblPublicaciones.convertRowIndexToModel(tblPublicaciones.getSelectedRow());
-        if (index== -1) {
+        if (index == -1) {
             Dialogs.mostrarMensajeError(this, "No ha seleccionado ningun elemento de la tabla!");
+            return;
         }
-        else{
-            int eleccion = Dialogs.mostrarMensajeYesNoOption(this, "¿Seguro que desea eliminar el autor seleccionado?", "Confirmación");
-            if (eleccion == 0) {
-                Autor autorEliminar = autores.get(index);
-                ControladorAutor.eliminarAutor(autorEliminar);
-            }
+
+        int eleccion = Dialogs.mostrarMensajeYesNoOption(this, "¿Seguro que desea eliminar el autor seleccionado?", "Confirmación");
+        if (eleccion == Dialogs.OPCION_SI) {
+            Autor autorEliminar = autores.get(index);
+            ControladorAutor.eliminarAutor(autorEliminar);
         }
     }
 }

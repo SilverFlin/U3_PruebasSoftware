@@ -1,15 +1,12 @@
 package org.itson.presentacion;
 
-import java.util.Arrays;
 import javax.persistence.NoResultException;
-import javax.swing.JOptionPane;
-import org.itson.dominio.Administrador;
-import org.itson.dominio.Cliente;
 import org.itson.dominio.Usuario;
 import org.itson.repositories.UsuariosRepository;
 import org.itson.utils.Dialogs;
+import static org.itson.utils.Dialogs.mostrarMensajeError;
 import org.itson.utils.Encriptador;
-import org.itson.utils.ValidacionesForms;
+import static org.itson.utils.ValidacionesForms.isValidText;
 
 /**
  *
@@ -162,37 +159,47 @@ public class IniciarSesionForm extends javax.swing.JFrame {
     private javax.swing.JLabel txtIniciarSesion;
     // End of variables declaration//GEN-END:variables
 
-    private void iniciarSesion(){ 
-        if(!ValidacionesForms.isValidText(campoTextoUsuario.getText())){
-            Dialogs.mostrarMensajeError(this, "Ingrese un nombre de usuario valido!");
+    private void iniciarSesion() {
+        if (!this.validarCampos()) {
+            return;
         }
-        else if (!ValidacionesForms.isValidText(new String(campoTextoContraseña.getPassword()))) {
-            Dialogs.mostrarMensajeError(this, "Ingrese una contraseña valida!");
+
+        try {
+            this.intentarInicioSesion();
+        } catch (NoResultException e) {
+            mostrarMensajeError(rootPane, "No se encontró el usuario");
         }
-        else{
-            try {
-                UsuariosRepository usuariosRepository = unitOfWork.usuariosRepository();
-                String intentoPassword = new String(this.campoTextoContraseña.getPassword());
-                Usuario usuario = usuariosRepository.obtenPorUsername(campoTextoUsuario.getText());
-                System.out.println(intentoPassword + "\n" + usuario.getPassword());
-                if (!Encriptador.verificarPasswordConHash(intentoPassword, usuario.getPassword())) {
-                    Dialogs.mostrarMensajeError(rootPane, "Credenciales inválidas");
-                    return;
-                }
-                this.usuarioLoggeado = usuario;
-
-                this.cargarMenuPrincipal();
-
-            } catch (NoResultException e) {
-                Dialogs.mostrarMensajeError(rootPane, "No se encontró el usuario");
-                System.out.println(e);
-            }
-        }    
     }
 
     private void cargarMenuPrincipal() {
         MenuPrincipalForm menuPrincipal = new MenuPrincipalForm(usuarioLoggeado);
         menuPrincipal.setVisible(true);
         this.dispose();
+    }
+
+    private boolean validarCampos() {
+        if (!isValidText(campoTextoUsuario.getText())) {
+            mostrarMensajeError(this, "Ingrese un nombre de usuario valido!");
+            return false;
+        }
+
+        if (!isValidText(new String(campoTextoContraseña.getPassword()))) {
+            Dialogs.mostrarMensajeError(this, "Ingrese una contraseña valida!");
+            return false;
+        }
+        return true;
+    }
+
+    private void intentarInicioSesion() {
+        UsuariosRepository usuariosRepository = unitOfWork.usuariosRepository();
+        String intentoPassword = new String(this.campoTextoContraseña.getPassword());
+        Usuario usuario = usuariosRepository.obtenPorUsername(campoTextoUsuario.getText());
+        if (!Encriptador.verificarPasswordConHash(intentoPassword, usuario.getPassword())) {
+            Dialogs.mostrarMensajeError(rootPane, "Credenciales inválidas");
+            return;
+        }
+        this.usuarioLoggeado = usuario;
+
+        this.cargarMenuPrincipal();
     }
 }

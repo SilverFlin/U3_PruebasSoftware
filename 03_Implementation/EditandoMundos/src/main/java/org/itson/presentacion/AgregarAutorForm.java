@@ -7,9 +7,10 @@ import org.itson.dominio.Autor;
 import org.itson.dominio.Nacionalidad;
 import org.itson.dominio.Usuario;
 import org.itson.utils.Dialogs;
+import static org.itson.utils.Dialogs.mostrarMensajeError;
 import org.itson.utils.FormUtils;
-import org.itson.utils.ValidacionesForms;
-import org.itson.utils.Validaciones;
+import static org.itson.utils.Validaciones.isInteger;
+import static org.itson.utils.ValidacionesForms.isValidText;
 
 /**
  *
@@ -188,20 +189,7 @@ public class AgregarAutorForm extends javax.swing.JFrame {
     }//GEN-LAST:event_btnRegresarActionPerformed
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
-        if (!validarCampos()) {
-            return;
-        }
-
-        try {
-            Autor autor = crearAutorDeCampos();
-            ControladorAutor.persistirAutor(autor);
-            Dialogs.mostrarMensajeExito(this, "Autor guardado con exito.");
-        } catch (Exception e) {
-            Dialogs.mostrarMensajeError(this, "No se pudo guardar el autor.");
-        } finally {
-            limpiarCampos();
-        }
-
+        this.agregarAutor();
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private boolean validarCampos() {
@@ -209,21 +197,29 @@ public class AgregarAutorForm extends javax.swing.JFrame {
         String apellidoPaterno = campoTextoApellidoPaterno.getText();
         String apellidoMaterno = campoTextoApellidoMaterno.getText();
         String edad = campoTextoEdad.getText();
-        if (!ValidacionesForms.isValidText(nombres)) {
-            Dialogs.mostrarMensajeError(this, "Ingrese un nombre valido!");
+
+        if (!isValidText(nombres)) {
+            mostrarMensajeError(this, "Ingrese un nombre valido!");
             return false;
-        } else if (!ValidacionesForms.isValidText(apellidoPaterno)) {
-            Dialogs.mostrarMensajeError(this, "Ingrese un apellido paterno valido!");
-            return false;
-        } else if (!ValidacionesForms.isValidText(apellidoMaterno)) {
-            Dialogs.mostrarMensajeError(this, "Ingrese un apellido materno valido!");
-            return false;
-        } else if (!Validaciones.isInteger(edad)) {
-            Dialogs.mostrarMensajeError(this, "Ingrese una edad valida!");
-            return false;
-        } else {
-            return true;
         }
+
+        if (!isValidText(apellidoPaterno)) {
+            mostrarMensajeError(this, "Ingrese un apellido paterno valido!");
+            return false;
+        }
+
+        if (!isValidText(apellidoMaterno)) {
+            mostrarMensajeError(this, "Ingrese un apellido materno valido!");
+            return false;
+        }
+
+        if (!isInteger(edad)) {
+            mostrarMensajeError(this, "Ingrese una edad valida!");
+            return false;
+        }
+
+        return true;
+
     }
 
     private void limpiarCampos() {
@@ -257,6 +253,22 @@ public class AgregarAutorForm extends javax.swing.JFrame {
 
     private void regresar() {
         FormUtils.regresar(frmAnterior, this);
+    }
+
+    private void agregarAutor() {
+        if (!validarCampos()) {
+            return;
+        }
+
+        try {
+            Autor autor = crearAutorDeCampos();
+            ControladorAutor.persistirAutor(autor);
+            Dialogs.mostrarMensajeExito(this, "Autor guardado con exito.");
+        } catch (Exception e) {
+            Dialogs.mostrarMensajeError(this, "No se pudo guardar el autor.");
+        } finally {
+            limpiarCampos();
+        }
     }
 
     private Autor crearAutorDeCampos() {

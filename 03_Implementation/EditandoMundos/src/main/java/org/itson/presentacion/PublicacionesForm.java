@@ -1,16 +1,11 @@
 package org.itson.presentacion;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.table.DefaultTableModel;
 import org.itson.controladores.ControladorPublicacion;
-import org.itson.dominio.Cliente;
 import org.itson.dominio.Publicacion;
-import org.itson.dominio.PublicacionDigital;
-import org.itson.dominio.PublicacionFisica;
 import org.itson.dominio.Usuario;
 import org.itson.utils.ConfiguracionPaginado;
 import org.itson.utils.FormUtils;
@@ -20,12 +15,12 @@ import org.itson.utils.FormUtils;
  * @author Toled
  */
 public class PublicacionesForm extends JFrame {
-    
+
     private static final Logger LOG = Logger.getLogger(PublicacionesForm.class.getName());
     private Usuario clienteLoggeado;
     private ConfiguracionPaginado configPaginado;
     private final JFrame frmAnterior;
-    
+
     public PublicacionesForm(JFrame frmAnterior, Usuario clienteLoggeado) {
         initComponents();
         this.configPaginado = new ConfiguracionPaginado(this.tblPublicaciones.getModel().getRowCount(), 0);
@@ -33,11 +28,11 @@ public class PublicacionesForm extends JFrame {
         this.frmAnterior = frmAnterior;
         cargarTablaPublicaciones();
     }
-    
+
     public final void cargarTablaPublicaciones() {
-        
+
         List<Publicacion> publicaciones = this.conseguirListaPublicaciones();
-        
+
         DefaultTableModel modeloTabla = (DefaultTableModel) this.tblPublicaciones.getModel();
         modeloTabla.setRowCount(0);
         for (Publicacion publicacion : publicaciones) {
@@ -47,12 +42,12 @@ public class PublicacionesForm extends JFrame {
                 publicacion.getNoPaginas(),
                 "$" + publicacion.getCostoProd(),
                 "$" + publicacion.getCostoVenta()};
-            
+
             modeloTabla.addRow(fila);
         }
-        
+
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -235,7 +230,7 @@ public class PublicacionesForm extends JFrame {
     private List<Publicacion> conseguirListaPublicaciones() {
         return ControladorPublicacion.consultaPaginado(this.configPaginado);
     }
-    
+
     private void regresar() {
         FormUtils.regresar(frmAnterior, this);
     }

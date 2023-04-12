@@ -1,8 +1,6 @@
 package org.itson.presentacion;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.table.DefaultTableModel;
@@ -12,21 +10,20 @@ import org.itson.dominio.Usuario;
 import org.itson.utils.ConfiguracionPaginado;
 import org.itson.utils.Dialogs;
 import org.itson.utils.FormUtils;
-import org.itson.utils.Validaciones;
 
 /**
  *
  * @author Toled
  */
 public class EditarAutoresForm extends JFrame {
-    
+
     private static final Logger LOG = Logger.getLogger(EditarAutoresForm.class.getName());
     private ConfiguracionPaginado configPaginado;
     private Usuario clienteLoggeado;
     private final JFrame frmAnterior;
     private EditarAutorForm editarAutorForm;
     private List<Autor> autores;
-    
+
     public EditarAutoresForm(JFrame frmAnterior, Usuario clienteLoggeado) {
         initComponents();
         this.configPaginado = new ConfiguracionPaginado(this.tblPublicaciones.getModel().getRowCount(), 0);
@@ -35,25 +32,30 @@ public class EditarAutoresForm extends JFrame {
         this.initFormsConectados();
         cargarTablaPublicaciones();
     }
-    
+
     public final void cargarTablaPublicaciones() {
-        
+
         autores = conseguirListaAutores();
-        
+
         DefaultTableModel modeloTabla = (DefaultTableModel) this.tblPublicaciones.getModel();
         modeloTabla.setRowCount(0);
+        String nombreCompleto;
         for (Autor autor : autores) {
+            nombreCompleto = autor.getNombre() + " "
+                    + autor.getApellidoPaterno()
+                    + " " + autor.getApellidoMaterno();
+
             Object[] fila = {
-                autor.getNombre() + " " + autor.getApellidoPaterno() + " " + autor.getApellidoMaterno(),
+                nombreCompleto,
                 autor.getEdad(),
                 autor.getNacionalidad()
             };
-            
+
             modeloTabla.addRow(fila);
         }
-        
+
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -260,24 +262,23 @@ public class EditarAutoresForm extends JFrame {
     private List<Autor> conseguirListaAutores() {
         return ControladorAutor.consultaPaginado(this.configPaginado);
     }
-    
+
     private void regresar() {
         FormUtils.regresar(frmAnterior, this);
     }
-    
-    private void editarElementoSeleccionado(){
+
+    private void editarElementoSeleccionado() {
         int index = tblPublicaciones.convertRowIndexToModel(tblPublicaciones.getSelectedRow());
-        if (index== -1) {
+        if (index == -1) {
             Dialogs.mostrarMensajeError(this, "No ha seleccionado ningun elemento de la tabla!");
-        }
-        else{
+        } else {
             Autor autorEditar = autores.get(index);
             editarAutorForm.setAutorModificar(autorEditar);
             FormUtils.cargarForm(editarAutorForm, this);
         }
     }
-    
-    private void initFormsConectados(){
+
+    private void initFormsConectados() {
         this.editarAutorForm = new EditarAutorForm(this, this.clienteLoggeado);
     }
 }
