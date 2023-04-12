@@ -4,10 +4,12 @@
  */
 package org.itson.controladores;
 
+import java.util.List;
 import org.itson.dominio.Publicacion;
 import org.itson.dominio.PublicacionDigital;
 import org.itson.dominio.PublicacionFisica;
 import org.itson.presentacion.UnitOfWork;
+import org.itson.utils.ConfiguracionPaginado;
 import org.itson.utils.Cotizador;
 
 /**
@@ -33,6 +35,10 @@ public class ControladorPublicacion {
             throw new IllegalArgumentException("Publicacion invalida");
         }
     }
+    
+    public static List<Publicacion> consultaPaginado(ConfiguracionPaginado configuracionPaginado){
+        return new UnitOfWork().publicacionesRepository().consultaPaginado(configuracionPaginado.getOffset(), configuracionPaginado.getLimite());
+    }    
     
     private static boolean isDensa(int numPaginas, float tamaño){
         return numPaginas > 10 && tamaño > 5.5;

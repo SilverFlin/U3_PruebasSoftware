@@ -6,11 +6,13 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.table.DefaultTableModel;
+import org.itson.controladores.ControladorPublicacion;
 import org.itson.dominio.Cliente;
 import org.itson.dominio.Publicacion;
 import org.itson.dominio.PublicacionDigital;
 import org.itson.dominio.PublicacionFisica;
 import org.itson.dominio.Usuario;
+import org.itson.utils.ConfiguracionPaginado;
 import org.itson.utils.FormUtils;
 
 /**
@@ -21,22 +23,24 @@ public class PublicacionesForm extends JFrame {
     
     private static final Logger LOG = Logger.getLogger(PublicacionesForm.class.getName());
     private Usuario clienteLoggeado;
+    private ConfiguracionPaginado configPaginado;
     private final JFrame frmAnterior;
     
     public PublicacionesForm(JFrame frmAnterior, Usuario clienteLoggeado) {
         initComponents();
-        cargarTablaPublicaciones();
+        this.configPaginado = new ConfiguracionPaginado(this.tblPublicaciones.getModel().getRowCount(), 0);
         this.clienteLoggeado = clienteLoggeado;
         this.frmAnterior = frmAnterior;
+        cargarTablaPublicaciones();
     }
     
-    private void cargarTablaPublicaciones() {
+    public final void cargarTablaPublicaciones() {
         
-        List<Publicacion> listaPublicaciones = this.conseguirListaPublicaciones();
+        List<Publicacion> publicaciones = this.conseguirListaPublicaciones();
         
         DefaultTableModel modeloTabla = (DefaultTableModel) this.tblPublicaciones.getModel();
         modeloTabla.setRowCount(0);
-        for (Publicacion publicacion : listaPublicaciones) {
+        for (Publicacion publicacion : publicaciones) {
             Object[] fila = {
                 publicacion.getTitulo(),
                 publicacion.getAutor().getNombre() + " " + publicacion.getAutor().getApellidoPaterno(),
@@ -203,8 +207,7 @@ public class PublicacionesForm extends JFrame {
      * @param evt Evento que lo acciono
      */
     private void btnAdelanteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdelanteActionPerformed
-        // TODO paginado
-        // this.configPaginado.avanzarPag();
+        this.configPaginado.avanzarPag();
         this.cargarTablaPublicaciones();
     }//GEN-LAST:event_btnAdelanteActionPerformed
     /**
@@ -213,8 +216,7 @@ public class PublicacionesForm extends JFrame {
      * @param evt Evento que lo acciono
      */
     private void btnRetrocederActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRetrocederActionPerformed
-        // TODO paginado
-        // this.configPaginado.retrocederPag();
+        this.configPaginado.retrocederPag();
         this.cargarTablaPublicaciones();
     }//GEN-LAST:event_btnRetrocederActionPerformed
 
@@ -231,13 +233,7 @@ public class PublicacionesForm extends JFrame {
     // End of variables declaration//GEN-END:variables
 
     private List<Publicacion> conseguirListaPublicaciones() {
-        UnitOfWork unitOfWork = new UnitOfWork();
-        List<Publicacion> publicaciones = new ArrayList<>();
-        List<PublicacionDigital> digitales = unitOfWork.publicacionesDigitalesRepository().lista();
-        List<PublicacionFisica> fisicas = unitOfWork.publicacionesFisicasRepository().lista();
-        publicaciones.addAll(digitales);
-        publicaciones.addAll(fisicas);
-        return publicaciones;
+        return ControladorPublicacion.consultaPaginado(this.configPaginado);
     }
     
     private void regresar() {

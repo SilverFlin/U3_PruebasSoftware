@@ -24,7 +24,7 @@ public class GestionarAutoresForm extends javax.swing.JFrame {
     private AutoresForm autoresForm;
     private AgregarAutorForm agregarAutorForm;
     private EliminarAutoresForm eliminarAutoresForm;
-    private EditarAutoresForm editarAutoesrForm;
+    private EditarAutoresForm editarAutoresForm;
 
     public GestionarAutoresForm(JFrame frmAnterior, Usuario usuarioLoggeado) {
         initComponents();
@@ -190,7 +190,6 @@ public class GestionarAutoresForm extends javax.swing.JFrame {
 
     private void btnCerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarSesionActionPerformed
         this.cerrarSesion();
-
     }//GEN-LAST:event_btnCerrarSesionActionPerformed
 
 
@@ -232,10 +231,10 @@ public class GestionarAutoresForm extends javax.swing.JFrame {
 
     private void regresar() {
         FormUtils.regresar(this.frmAnterior, this);
-        
     }
     
     private void cargarConsularAutoresForm(){
+        this.autoresForm.cargarTablaAutores();
         FormUtils.cargarForm(this.autoresForm, this);
     }
 
@@ -247,15 +246,17 @@ public class GestionarAutoresForm extends javax.swing.JFrame {
         autoresForm = new AutoresForm(this, this.usuarioLoggeado);
         agregarAutorForm = new AgregarAutorForm(this, this.usuarioLoggeado);
         eliminarAutoresForm = new EliminarAutoresForm(this, usuarioLoggeado);
-        editarAutoesrForm = new EditarAutoresForm(this, usuarioLoggeado);
+        editarAutoresForm = new EditarAutoresForm(this, usuarioLoggeado);
     }
     
     private void cargarEliminarAutoresForm(){
+        this.eliminarAutoresForm.cargarTablaPublicaciones();
         FormUtils.cargarForm(this.eliminarAutoresForm, this);
     }
     
     private void cargarEditarAutoresForm(){
-        FormUtils.cargarForm(this.editarAutoesrForm, this);
+        this.editarAutoresForm.cargarTablaPublicaciones();
+        FormUtils.cargarForm(this.editarAutoresForm, this);
     }
 
 }

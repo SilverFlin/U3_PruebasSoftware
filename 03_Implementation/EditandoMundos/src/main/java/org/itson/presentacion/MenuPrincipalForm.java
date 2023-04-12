@@ -188,7 +188,7 @@ public class MenuPrincipalForm extends javax.swing.JFrame {
 
 
     private void btnGestionarPublicacionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGestionarPublicacionesActionPerformed
-        this.cargarFormListaPublicaciones();
+        this.cargarFormGestionarPublicaciones();
     }//GEN-LAST:event_btnGestionarPublicacionesActionPerformed
 
     private void btnAgregarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarUsuarioActionPerformed
@@ -210,10 +210,6 @@ public class MenuPrincipalForm extends javax.swing.JFrame {
     
     private void cargarFormGestionarPublicaciones(){
         FormUtils.cargarForm(this.gestionarPublicacionesForm, this);
-    }
-    
-    private void cargarFormListaPublicaciones() {
-        FormUtils.cargarForm(this.listaPublicacionesForm, this);
     }
 
     private void cargarFormCotizacion() {
@@ -239,7 +235,7 @@ public class MenuPrincipalForm extends javax.swing.JFrame {
     }
 
     private void initFormsConectados() {
-        this.listaPublicacionesForm = new PublicacionesForm(this, this.usuarioLoggeado);
+        this.gestionarPublicacionesForm = new GestionarPublicacionesForm(this, this.usuarioLoggeado);
         this.cotizacionesForm = new PublicacionForm(this, this.usuarioLoggeado);
         this.gestionarAutoresForm = new GestionarAutoresForm(this, this.usuarioLoggeado);
         this.agregarUsuarioForm = new AgregarUsuarioForm(this, this.usuarioLoggeado);

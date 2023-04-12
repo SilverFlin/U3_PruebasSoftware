@@ -15,6 +15,7 @@ import org.itson.utils.FormUtils;
 public class GestionarPublicacionesForm extends javax.swing.JFrame {
 
     private Usuario usuarioLoggeado;
+    private ConsultarPublicacionesForm consultarPublicacionesForm;
     /**
      * Logger de excepciones
      */
@@ -25,7 +26,7 @@ public class GestionarPublicacionesForm extends javax.swing.JFrame {
     public GestionarPublicacionesForm(JFrame frmAnterior, Usuario usuarioLoggeado) {
         initComponents();
 //        cargarImagen();
-//        initFormsConectados();
+        initFormsConectados();
         this.frmAnterior = frmAnterior;
 
     }
@@ -184,7 +185,7 @@ public class GestionarPublicacionesForm extends javax.swing.JFrame {
     }//GEN-LAST:event_btnRegresarActionPerformed
 
     private void btnConsultarPublicacionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarPublicacionesActionPerformed
-
+        this.cargarConsultarPublicacionesForm();
     }//GEN-LAST:event_btnConsultarPublicacionesActionPerformed
 
 
@@ -209,9 +210,13 @@ public class GestionarPublicacionesForm extends javax.swing.JFrame {
         FormUtils.regresar(this.frmAnterior, this);
         
     }
+    
+    private void cargarConsultarPublicacionesForm(){
+        FormUtils.cargarForm(this.consultarPublicacionesForm,this);
+    }
 
     private void initFormsConectados() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        consultarPublicacionesForm = new ConsultarPublicacionesForm(this, usuarioLoggeado);
     }
 
 }

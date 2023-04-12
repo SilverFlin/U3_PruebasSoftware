@@ -16,6 +16,8 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -26,6 +28,9 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@NamedQueries({
+    @NamedQuery(name = "consultarTodasPublicaciones", query = "select a from Publicacion a")
+})
 public class Publicacion implements Serializable {
 
     @Id
@@ -47,11 +52,11 @@ public class Publicacion implements Serializable {
     private Integer noPaginas;
     
     @Temporal(TemporalType.DATE)
-    @Column(name = "fechaInicio", nullable = false)
+    @Column(name = "fechaInicio", nullable = true)
     private Date fechaInicio;
 
     @Temporal(TemporalType.DATE)
-    @Column(name = "fechaEntrega", nullable = false)
+    @Column(name = "fechaEntrega", nullable = true)
     private Date fechaEntrega;    
 
     @ManyToOne

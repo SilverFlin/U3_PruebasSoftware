@@ -27,7 +27,7 @@ public class AutoresRepository extends RepositoryBase<Autor> {
     }
     
     public List<Autor> consultaPaginado(int offset, int limit) {
-        TypedQuery<Autor> query = entityManager.createNamedQuery("consultarTodos", Autor.class);
+        TypedQuery<Autor> query = entityManager.createNamedQuery("consultarTodosAutores", Autor.class);
         query.setFirstResult(offset);
         query.setMaxResults(limit);
         return query.getResultList();
