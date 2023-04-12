@@ -40,6 +40,14 @@ public class ControladorPublicacion {
     public static List<Publicacion> consultaPaginado(ConfiguracionPaginado configuracionPaginado) {
         return new UnitOfWork().publicacionesRepository().consultaPaginado(configuracionPaginado.getOffset(), configuracionPaginado.getLimite());
     }
+    
+    public static void editarPublicacion(Publicacion publicacion){
+        new UnitOfWork().publicacionesRepository().actualizar(publicacion);
+    }
+    
+    public static void eliminarPublicacion(Publicacion publicacion){
+        new UnitOfWork().publicacionesRepository().eliminar(publicacion);
+    }
 
     private static boolean isDensa(int numPaginas, float size) {
         return numPaginas > 10 && size > 5.5;

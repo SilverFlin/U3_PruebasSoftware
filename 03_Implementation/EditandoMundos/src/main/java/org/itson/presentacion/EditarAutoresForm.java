@@ -15,7 +15,7 @@ import org.itson.utils.FormUtils;
  *
  * @author Toled
  */
-public class EditarAutoresForm extends JFrame {
+public class EditarAutoresForm extends JFrameActualizable {
 
     private static final Logger LOG = Logger.getLogger(EditarAutoresForm.class.getName());
     private ConfiguracionPaginado configPaginado;
@@ -30,10 +30,10 @@ public class EditarAutoresForm extends JFrame {
         this.clienteLoggeado = clienteLoggeado;
         this.frmAnterior = frmAnterior;
         this.initFormsConectados();
-        cargarTablaPublicaciones();
+        cargarTablaAutores();
     }
 
-    public final void cargarTablaPublicaciones() {
+    public final void cargarTablaAutores() {
 
         autores = conseguirListaAutores();
 
@@ -229,7 +229,7 @@ public class EditarAutoresForm extends JFrame {
      */
     private void btnAdelanteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdelanteActionPerformed
         this.configPaginado.avanzarPag();
-        this.cargarTablaPublicaciones();
+        this.cargarTablaAutores();
     }//GEN-LAST:event_btnAdelanteActionPerformed
     /**
      * Retrocede en la pagina de operaciones
@@ -238,12 +238,12 @@ public class EditarAutoresForm extends JFrame {
      */
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
         this.editarElementoSeleccionado();
-        this.cargarTablaPublicaciones();
+        this.cargarTablaAutores();
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnRetrocederActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRetrocederActionPerformed
         this.configPaginado.retrocederPag();
-        this.cargarTablaPublicaciones();
+        this.cargarTablaAutores();
     }//GEN-LAST:event_btnRetrocederActionPerformed
 
 
@@ -271,14 +271,19 @@ public class EditarAutoresForm extends JFrame {
         int index = tblPublicaciones.convertRowIndexToModel(tblPublicaciones.getSelectedRow());
         if (index == -1) {
             Dialogs.mostrarMensajeError(this, "No ha seleccionado ningun elemento de la tabla!");
-        } else {
-            Autor autorEditar = autores.get(index);
-            editarAutorForm.setAutorModificar(autorEditar);
-            FormUtils.cargarForm(editarAutorForm, this);
+            return;
         }
+        Autor autorEditar = autores.get(index);
+        editarAutorForm.setAutorModificar(autorEditar);
+        FormUtils.cargarForm(editarAutorForm, this);
     }
 
     private void initFormsConectados() {
         this.editarAutorForm = new EditarAutorForm(this, this.clienteLoggeado);
+    }
+
+    @Override
+    public void actualizaFrame() {
+        cargarTablaAutores();
     }
 }

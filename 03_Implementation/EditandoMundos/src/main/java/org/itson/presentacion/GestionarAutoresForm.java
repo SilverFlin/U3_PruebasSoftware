@@ -230,7 +230,6 @@ public class GestionarAutoresForm extends javax.swing.JFrame {
     }
     
     private void cargarConsularAutoresForm(){
-        this.autoresForm.cargarTablaAutores();
         FormUtils.cargarForm(this.autoresForm, this);
     }
 
@@ -246,12 +245,10 @@ public class GestionarAutoresForm extends javax.swing.JFrame {
     }
     
     private void cargarEliminarAutoresForm(){
-        this.eliminarAutoresForm.cargarTablaPublicaciones();
         FormUtils.cargarForm(this.eliminarAutoresForm, this);
     }
     
     private void cargarEditarAutoresForm(){
-        this.editarAutoresForm.cargarTablaPublicaciones();
         FormUtils.cargarForm(this.editarAutoresForm, this);
     }
 

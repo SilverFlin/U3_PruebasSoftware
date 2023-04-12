@@ -22,9 +22,9 @@ import org.itson.utils.Validaciones;
  *
  * @author Toled
  */
-public class PublicacionForm extends javax.swing.JFrame {
+public class AgregarPublicacionForm extends javax.swing.JFrame {
 
-    private static final Logger LOG = Logger.getLogger(PublicacionForm.class.getName());
+    private static final Logger LOG = Logger.getLogger(AgregarPublicacionForm.class.getName());
     private final int RADIO_PUBLICACION_FISICA = 0;
     private final int RADIO_PUBLICACION_DIGITAL = 1;
     private int publicacionSeleccionada = RADIO_PUBLICACION_FISICA;
@@ -39,7 +39,7 @@ public class PublicacionForm extends javax.swing.JFrame {
     private Usuario usuarioLoggeado;
     private final JFrame frmAnterior;
 
-    public PublicacionForm(JFrame frmAnterior, Usuario usuarioLoggeado) {
+    public AgregarPublicacionForm(JFrame frmAnterior, Usuario usuarioLoggeado) {
         initComponents();
         this.llenarComboBoxAutores();
         this.actualizarPublicacionSeleccionada();

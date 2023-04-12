@@ -13,6 +13,8 @@ public class GestionarPublicacionesForm extends javax.swing.JFrame {
 
     private Usuario usuarioLoggeado;
     private ConsultarPublicacionesForm consultarPublicacionesForm;
+    private EliminarPublicacionesForm eliminarPublicacionesForm;
+    private EditarPublicacionesForm editarPublicacionesForm;
     /**
      * Logger de excepciones
      */
@@ -22,9 +24,8 @@ public class GestionarPublicacionesForm extends javax.swing.JFrame {
 
     public GestionarPublicacionesForm(JFrame frmAnterior, Usuario usuarioLoggeado) {
         initComponents();
-        initFormsConectados();
         this.frmAnterior = frmAnterior;
-
+        initFormsConectados();
     }
 
     @SuppressWarnings("unchecked")
@@ -163,6 +164,7 @@ public class GestionarPublicacionesForm extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnEliminarPublicacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarPublicacionActionPerformed
+        this.cargarEliminarPublicacionesForm();
     }//GEN-LAST:event_btnEliminarPublicacionActionPerformed
 
 
@@ -173,6 +175,7 @@ public class GestionarPublicacionesForm extends javax.swing.JFrame {
 
 
     private void btnEditarPublicacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarPublicacionActionPerformed
+        this.cargarEditarPublicacionesForm();
     }//GEN-LAST:event_btnEditarPublicacionActionPerformed
 
 
@@ -207,12 +210,22 @@ public class GestionarPublicacionesForm extends javax.swing.JFrame {
         
     }
     
+    private void cargarEditarPublicacionesForm(){
+        FormUtils.cargarForm(this.editarPublicacionesForm, this);
+    }
+    
     private void cargarConsultarPublicacionesForm(){
         FormUtils.cargarForm(this.consultarPublicacionesForm,this);
+    }
+    
+    private void cargarEliminarPublicacionesForm(){
+        FormUtils.cargarForm(this.eliminarPublicacionesForm, this);
     }
 
     private void initFormsConectados() {
         consultarPublicacionesForm = new ConsultarPublicacionesForm(this, usuarioLoggeado);
+        eliminarPublicacionesForm = new EliminarPublicacionesForm(this, usuarioLoggeado);
+        editarPublicacionesForm = new EditarPublicacionesForm(this, usuarioLoggeado);
     }
 
 }

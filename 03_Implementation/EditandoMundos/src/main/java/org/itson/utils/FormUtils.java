@@ -2,6 +2,7 @@ package org.itson.utils;
 
 import javax.swing.JFrame;
 import org.itson.presentacion.IniciarSesionForm;
+import org.itson.presentacion.JFrameActualizable;
 
 /**
  *
@@ -21,6 +22,16 @@ public class FormUtils {
         }
         throw new InstantiationError("Form no instanciado");
     }
+    
+    public static <T extends JFrameActualizable> void cargarForm(T cargar, JFrame actual) {
+        if (cargar != null) {
+            actual.setVisible(false);
+            cargar.actualizaFrame();
+            cargar.setVisible(true);
+            return;
+        }
+        throw new InstantiationError("Form no instanciado");
+    }
 
     public static void cerrarSesion(JFrame actual) {
         IniciarSesionForm iniciarSesionForm = new IniciarSesionForm();
@@ -28,6 +39,12 @@ public class FormUtils {
         actual.dispose();
     }
 
+    public static void regresar(JFrameActualizable frmAnterior, JFrame actual) {
+        frmAnterior.actualizaFrame();
+        frmAnterior.setVisible(true);
+        actual.setVisible(false);
+    }
+    
     public static void regresar(JFrame frmAnterior, JFrame actual) {
         frmAnterior.setVisible(true);
         actual.setVisible(false);

@@ -21,9 +21,9 @@ public class EditarAutorForm extends javax.swing.JFrame {
     private UnitOfWork uw;
     private Usuario usuarioLoggeado;
     private Autor autorModificar;
-    private JFrame frmAnterior;
+    private JFrameActualizable frmAnterior;
 
-    public EditarAutorForm(JFrame frmAnterior, Usuario usuarioLoggeado) {
+    public EditarAutorForm(JFrameActualizable frmAnterior, Usuario usuarioLoggeado) {
         initComponents();
         uw = new UnitOfWork();
         this.usuarioLoggeado = usuarioLoggeado;
@@ -241,7 +241,6 @@ public class EditarAutorForm extends javax.swing.JFrame {
         } catch (Exception e) {
             Dialogs.mostrarMensajeError(this, "No se pudo modificar el autor.");
         } finally {
-            this.dispose();
             this.regresar();
         }
     }
