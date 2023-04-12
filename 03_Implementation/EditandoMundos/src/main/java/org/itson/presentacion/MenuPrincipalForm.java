@@ -18,7 +18,7 @@ public class MenuPrincipalForm extends javax.swing.JFrame {
      */
     private static final Logger LOG = Logger.getLogger(MenuPrincipalForm.class.getName());
     private PublicacionesForm listaPublicacionesForm;
-    private PublicacionForm cotizacionesForm;
+    private AgregarPublicacionForm cotizacionesForm;
     private GestionarPublicacionesForm gestionarPublicacionesForm;
     private AgregarAutorForm agregarAutorForm;
     private AgregarUsuarioForm agregarUsuarioForm;
@@ -235,7 +235,7 @@ public class MenuPrincipalForm extends javax.swing.JFrame {
 
     private void initFormsConectados() {
         this.gestionarPublicacionesForm = new GestionarPublicacionesForm(this, this.usuarioLoggeado);
-        this.cotizacionesForm = new PublicacionForm(this, this.usuarioLoggeado);
+        this.cotizacionesForm = new AgregarPublicacionForm(this, this.usuarioLoggeado);
         this.gestionarAutoresForm = new GestionarAutoresForm(this, this.usuarioLoggeado);
         this.agregarUsuarioForm = new AgregarUsuarioForm(this, this.usuarioLoggeado);
     }

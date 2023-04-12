@@ -14,7 +14,7 @@ import org.itson.utils.FormUtils;
  *
  * @author Toled
  */
-public class AutoresForm extends JFrame {
+public class AutoresForm extends JFrameActualizable {
 
     private static final Logger LOG = Logger.getLogger(AutoresForm.class.getName());
     private ConfiguracionPaginado configPaginado;
@@ -245,5 +245,10 @@ public class AutoresForm extends JFrame {
 
     private void regresar() {
         FormUtils.regresar(frmAnterior, this);
+    }
+
+    @Override
+    public void actualizaFrame() {
+        cargarTablaAutores();
     }
 }
