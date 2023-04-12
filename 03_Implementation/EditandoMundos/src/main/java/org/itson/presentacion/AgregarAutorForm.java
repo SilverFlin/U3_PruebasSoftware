@@ -219,9 +219,11 @@ public class AgregarAutorForm extends javax.swing.JFrame {
             return false;
         }
         else if (!ValidacionesForms.isValidText(apellidoPaterno)) {
+            Dialogs.mostrarMensajeError(this, "Ingrese un apellido paterno valido!");            
             return false;
         }        
         else if (!ValidacionesForms.isValidText(apellidoMaterno)) {
+            Dialogs.mostrarMensajeError(this, "Ingrese un apellido materno valido!");
             return false;
         }        
         else if (!Validaciones.isInteger(edad)) {

@@ -22,13 +22,11 @@ public class EditarAutorForm extends javax.swing.JFrame {
     private Autor autorModificar;
     private JFrame frmAnterior;
 
-    public EditarAutorForm(JFrame frmAnterior,Usuario usuarioLoggeado, Autor autor) {
+    public EditarAutorForm(JFrame frmAnterior,Usuario usuarioLoggeado) {
         initComponents();
         uw = new UnitOfWork();
         this.usuarioLoggeado = usuarioLoggeado;
         this.frmAnterior = frmAnterior;
-        this.autorModificar=autor;
-        llenarCampos();
     }
 
     @SuppressWarnings("unchecked")
@@ -205,9 +203,11 @@ public class EditarAutorForm extends javax.swing.JFrame {
             return false;
         }
         else if (!ValidacionesForms.isValidText(apellidoPaterno)) {
+            Dialogs.mostrarMensajeError(this, "Ingrese un apellido paterno valido!");
             return false;
         }        
         else if (!ValidacionesForms.isValidText(apellidoMaterno)) {
+            Dialogs.mostrarMensajeError(this, "Ingrese un apellido materno valido!");
             return false;
         }        
         else if (!Validaciones.isInteger(edad)) {
@@ -220,7 +220,10 @@ public class EditarAutorForm extends javax.swing.JFrame {
     }
     
     private void modificar(){
-        if (validarCampos()) {
+        if (autorModificar == null) {
+            throw  new IllegalArgumentException("No hay un autor a editar!");
+        }
+        else if (validarCampos()) {
             int eleccion = Dialogs.mostrarMensajeYesNoOption(this, "¿Seguro que desea modificar el autor?", "Confirmación");
             if (eleccion == 0) {
                 autorModificar.setNombre(campoTextoNombres.getText());
@@ -243,6 +246,11 @@ public class EditarAutorForm extends javax.swing.JFrame {
         } 
     }
 
+    public void setAutorModificar(Autor autorModificar) {
+        this.autorModificar = autorModificar;
+        llenarCampos();
+    }
+
     private void limpiarCampos(){
         campoTextoApellidoMaterno.setText("");
         campoTextoApellidoPaterno.setText("");
@@ -251,6 +259,9 @@ public class EditarAutorForm extends javax.swing.JFrame {
     }
     
     private void llenarCampos(){
+        if (autorModificar == null) {
+            throw  new IllegalArgumentException("No hay un autor a editar!");
+        }
         this.comboBoxNacionalidad.setSelectedItem(this.autorModificar.getNacionalidad());
         this.campoTextoEdad.setText(String.valueOf(this.autorModificar.getEdad()));
         this.campoTextoNombres.setText(this.autorModificar.getNombre());

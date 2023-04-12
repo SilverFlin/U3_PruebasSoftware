@@ -26,17 +26,16 @@ public class AutoresForm extends JFrame {
     private ConfiguracionPaginado configPaginado;
     private Usuario clienteLoggeado;
     private final JFrame frmAnterior;
-    List<Autor> autores;
     
     public AutoresForm(JFrame frmAnterior, Usuario clienteLoggeado) {
         initComponents();
         this.configPaginado = new ConfiguracionPaginado(this.tblPublicaciones.getModel().getRowCount(), 0);
         this.clienteLoggeado = clienteLoggeado;
         this.frmAnterior = frmAnterior;
-        cargarTablaPublicaciones();
+        cargarTablaAutores();
     }
     
-    private void cargarTablaPublicaciones() {
+    public final void cargarTablaAutores() {
         
         List<Autor> listaAutores = this.conseguirListaAutores();
         
@@ -217,7 +216,7 @@ public class AutoresForm extends JFrame {
      */
     private void btnAdelanteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdelanteActionPerformed
         this.configPaginado.avanzarPag();
-        this.cargarTablaPublicaciones();
+        this.cargarTablaAutores();
     }//GEN-LAST:event_btnAdelanteActionPerformed
     /**
      * Retrocede en la pagina de operaciones
@@ -226,9 +225,8 @@ public class AutoresForm extends JFrame {
      */
     private void btnRetrocederActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRetrocederActionPerformed
         this.configPaginado.retrocederPag();
-        this.cargarTablaPublicaciones();
+        this.cargarTablaAutores();
     }//GEN-LAST:event_btnRetrocederActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Background;
@@ -242,8 +240,7 @@ public class AutoresForm extends JFrame {
     // End of variables declaration//GEN-END:variables
 
     private List<Autor> conseguirListaAutores() {
-        autores = ControladorAutor.consultaPaginado(this.configPaginado);
-        return autores;
+        return ControladorAutor.consultaPaginado(this.configPaginado);
     }
     
     private void regresar() {

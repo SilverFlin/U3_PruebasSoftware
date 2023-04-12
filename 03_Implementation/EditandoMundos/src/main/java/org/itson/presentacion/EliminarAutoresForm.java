@@ -28,7 +28,7 @@ public class EliminarAutoresForm extends JFrame {
     private ConfiguracionPaginado configPaginado;
     private Usuario clienteLoggeado;
     private final JFrame frmAnterior;
-    List<Autor> autores;
+    private List<Autor> autores;
     
     public EliminarAutoresForm(JFrame frmAnterior, Usuario clienteLoggeado) {
         initComponents();
@@ -38,13 +38,13 @@ public class EliminarAutoresForm extends JFrame {
         cargarTablaPublicaciones();
     }
     
-    private void cargarTablaPublicaciones() {
+    public final void cargarTablaPublicaciones() {
         
-        List<Autor> listaAutores = this.conseguirListaAutores();
+        autores = this.conseguirListaAutores();
         
         DefaultTableModel modeloTabla = (DefaultTableModel) this.tblPublicaciones.getModel();
         modeloTabla.setRowCount(0);
-        for (Autor autor : listaAutores) {
+        for (Autor autor : autores) {
             Object[] fila = {
                 autor.getNombre() + " " + autor.getApellidoPaterno() + " " + autor.getApellidoMaterno(),
                 autor.getEdad(),
@@ -262,8 +262,7 @@ public class EliminarAutoresForm extends JFrame {
     // End of variables declaration//GEN-END:variables
 
     private List<Autor> conseguirListaAutores() {
-        autores = ControladorAutor.consultaPaginado(this.configPaginado);
-        return autores;
+        return ControladorAutor.consultaPaginado(this.configPaginado);
     }
     
     private void regresar() {

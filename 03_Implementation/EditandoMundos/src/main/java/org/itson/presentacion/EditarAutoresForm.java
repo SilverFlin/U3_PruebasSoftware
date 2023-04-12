@@ -8,10 +8,6 @@ import javax.swing.JFrame;
 import javax.swing.table.DefaultTableModel;
 import org.itson.controladores.ControladorAutor;
 import org.itson.dominio.Autor;
-import org.itson.dominio.Cliente;
-import org.itson.dominio.Publicacion;
-import org.itson.dominio.PublicacionDigital;
-import org.itson.dominio.PublicacionFisica;
 import org.itson.dominio.Usuario;
 import org.itson.utils.ConfiguracionPaginado;
 import org.itson.utils.Dialogs;
@@ -28,23 +24,25 @@ public class EditarAutoresForm extends JFrame {
     private ConfiguracionPaginado configPaginado;
     private Usuario clienteLoggeado;
     private final JFrame frmAnterior;
-    List<Autor> autores;
+    private EditarAutorForm editarAutorForm;
+    private List<Autor> autores;
     
     public EditarAutoresForm(JFrame frmAnterior, Usuario clienteLoggeado) {
         initComponents();
         this.configPaginado = new ConfiguracionPaginado(this.tblPublicaciones.getModel().getRowCount(), 0);
         this.clienteLoggeado = clienteLoggeado;
         this.frmAnterior = frmAnterior;
+        this.initFormsConectados();
         cargarTablaPublicaciones();
     }
     
-    private void cargarTablaPublicaciones() {
+    public final void cargarTablaPublicaciones() {
         
-        List<Autor> listaAutores = this.conseguirListaAutores();
+        autores = conseguirListaAutores();
         
         DefaultTableModel modeloTabla = (DefaultTableModel) this.tblPublicaciones.getModel();
         modeloTabla.setRowCount(0);
-        for (Autor autor : listaAutores) {
+        for (Autor autor : autores) {
             Object[] fila = {
                 autor.getNombre() + " " + autor.getApellidoPaterno() + " " + autor.getApellidoMaterno(),
                 autor.getEdad(),
@@ -177,7 +175,7 @@ public class EditarAutoresForm extends JFrame {
         btnEditar.setBackground(new java.awt.Color(0, 102, 255));
         btnEditar.setFont(new java.awt.Font("Nirmala UI Semilight", 1, 14)); // NOI18N
         btnEditar.setForeground(new java.awt.Color(255, 255, 255));
-        btnEditar.setText("Modificar");
+        btnEditar.setText("Editar");
         btnEditar.setBorder(null);
         btnEditar.setBorderPainted(false);
         btnEditar.addActionListener(new java.awt.event.ActionListener() {
@@ -260,8 +258,7 @@ public class EditarAutoresForm extends JFrame {
     // End of variables declaration//GEN-END:variables
 
     private List<Autor> conseguirListaAutores() {
-        autores = ControladorAutor.consultaPaginado(this.configPaginado);
-        return autores;
+        return ControladorAutor.consultaPaginado(this.configPaginado);
     }
     
     private void regresar() {
@@ -275,8 +272,12 @@ public class EditarAutoresForm extends JFrame {
         }
         else{
             Autor autorEditar = autores.get(index);
-            EditarAutorForm editarAutorForm = new EditarAutorForm(this, clienteLoggeado, autorEditar);
-            FormUtils.cargarForm(editarAutorForm, this);;
+            editarAutorForm.setAutorModificar(autorEditar);
+            FormUtils.cargarForm(editarAutorForm, this);
         }
+    }
+    
+    private void initFormsConectados(){
+        this.editarAutorForm = new EditarAutorForm(this, this.clienteLoggeado);
     }
 }
