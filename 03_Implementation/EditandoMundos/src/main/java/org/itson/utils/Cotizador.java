@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package org.itson.utils;
 
 import org.itson.dominio.Autor;
@@ -25,12 +21,14 @@ public class Cotizador {
     private static final float AUMENTO_DENSIDAD_BASE = 1.10f;
     private static final float AUMENTO_DENSIDAD_DENSO = 1.15f;
 
+    private Cotizador() {
+        throw new IllegalStateException("Utility class");
+    }
+
     public static int calcularCostoVenta(Publicacion publicacion) {
         int costoProd = calcularCostoProduccion(publicacion.getNoPaginas());
 
-        int costoVenta = calcularCostoVentaPorPublicacion(costoProd, publicacion);
-
-        return costoVenta;
+        return calcularCostoVentaPorPublicacion(costoProd, publicacion);
     }
 
     public static int calcularCostoProduccion(int numPaginas) {

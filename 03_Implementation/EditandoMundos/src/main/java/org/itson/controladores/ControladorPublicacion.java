@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package org.itson.controladores;
 
 import java.util.List;
@@ -18,6 +14,10 @@ import org.itson.utils.Cotizador;
  */
 public class ControladorPublicacion {
 
+    private ControladorPublicacion() {
+        throw new IllegalStateException("Utility class");
+    }
+
     public static Publicacion guardarPublicacion(Publicacion publicacion, float costoProduccion) {
         publicacion.setCostoProd(Math.round(costoProduccion));
         int costoVenta = Math.round(Cotizador.calcularCostoVenta(publicacion));
@@ -27,21 +27,22 @@ public class ControladorPublicacion {
     }
 
     private static Publicacion persistirSegunTipoPublicacion(Publicacion publicacion) {
-        if(publicacion instanceof PublicacionDigital publicacionDigital){
+        // TODO: No habra una forma más limpia?
+        if (publicacion instanceof PublicacionDigital publicacionDigital) {
             return new UnitOfWork().publicacionesDigitalesRepository().agregar(publicacionDigital);
-        }else if (publicacion instanceof PublicacionFisica publicacionFisica){
+        } else if (publicacion instanceof PublicacionFisica publicacionFisica) {
             return new UnitOfWork().publicacionesFisicasRepository().agregar(publicacionFisica);
-        }else{
+        } else {
             throw new IllegalArgumentException("Publicacion invalida");
         }
     }
-    
-    public static List<Publicacion> consultaPaginado(ConfiguracionPaginado configuracionPaginado){
+
+    public static List<Publicacion> consultaPaginado(ConfiguracionPaginado configuracionPaginado) {
         return new UnitOfWork().publicacionesRepository().consultaPaginado(configuracionPaginado.getOffset(), configuracionPaginado.getLimite());
-    }    
-    
-    private static boolean isDensa(int numPaginas, float tamaño){
-        return numPaginas > 10 && tamaño > 5.5;
+    }
+
+    private static boolean isDensa(int numPaginas, float size) {
+        return numPaginas > 10 && size > 5.5;
     }
 
 }

@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package org.itson.dominio;
 
 import java.io.Serializable;
@@ -26,8 +22,13 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "autor")
 @NamedQueries({
-    @NamedQuery(name = "autoresBuscarNombres", query = "select a from Autor a where a.nombres like :nombres and a.apellidoPaterno like :apellidopaterno"),
-    @NamedQuery(name = "consultarTodosAutores", query = "select a from Autor a")
+    @NamedQuery(
+            name = "autoresBuscarNombres",
+            query = "SELECT a FROM Autor a "
+            + "WHERE a.nombres LIKE :nombres "
+            + "AND a.apellidoPaterno LIKE :apellidopaterno"
+    ),
+    @NamedQuery(name = "consultarTodosAutores", query = "SELECT a FROM Autor a")
 })
 public class Autor implements Serializable {
 
@@ -84,7 +85,7 @@ public class Autor implements Serializable {
         this.edad = edad;
         this.nacionalidad = nacionalidad;
     }
-    
+
     public Long getId() {
         return id;
     }
@@ -163,7 +164,14 @@ public class Autor implements Serializable {
 
     @Override
     public String toString() {
-        return "Autor{" + "id=" + id + ", nombre=" + nombres + ", apellidoPaterno=" + apellidoPaterno + ", apellidoMaterno=" + apellidoMaterno + ", edad=" + edad + ", nacionalidad=" + nacionalidad + ", publicaciones=" + publicaciones + '}';
+        return "Autor{"
+                + "id=" + id
+                + ", nombre=" + nombres
+                + ", apellidoPaterno=" + apellidoPaterno
+                + ", apellidoMaterno=" + apellidoMaterno
+                + ", edad=" + edad
+                + ", nacionalidad=" + nacionalidad
+                + ", publicaciones=" + publicaciones + '}';
     }
 
 }

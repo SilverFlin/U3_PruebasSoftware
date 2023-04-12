@@ -1,12 +1,5 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- */
 package org.itson.main;
 
-import java.util.List;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import org.itson.dominio.Administrador;
 import org.itson.dominio.Autor;
 import org.itson.dominio.Nacionalidad;
@@ -14,8 +7,6 @@ import org.itson.dominio.PublicacionDigital;
 import org.itson.dominio.PublicacionFisica;
 import org.itson.dominio.Usuario;
 import org.itson.presentacion.IniciarSesionForm;
-import org.itson.presentacion.PublicacionForm;
-import org.itson.presentacion.PublicacionesForm;
 import org.itson.presentacion.UnitOfWork;
 import org.itson.utils.Dialogs;
 import org.itson.utils.Encriptador;
@@ -36,7 +27,6 @@ public class Main {
         PublicacionDigital pubDigital = agregarPubDigital(autor);
 
         imprimirEntidades(pubDigital, pubFisica, autor);
-
     }
 
     public static PublicacionFisica agregarPubFisica(Autor autor) {

@@ -1,15 +1,16 @@
 package org.itson.presentacion;
 
-
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFrame;
 import org.itson.controladores.ControladorAutor;
+import org.itson.dominio.Autor;
 import org.itson.dominio.Nacionalidad;
 import org.itson.dominio.Usuario;
 import org.itson.utils.Dialogs;
 import org.itson.utils.FormUtils;
 import org.itson.utils.ValidacionesForms;
 import org.itson.utils.Validaciones;
+
 /**
  *
  * @author Toled
@@ -20,7 +21,7 @@ public class AgregarAutorForm extends javax.swing.JFrame {
     private Usuario usuarioLoggeado;
     private JFrame frmAnterior;
 
-    public AgregarAutorForm(JFrame frmAnterior,Usuario usuarioLoggeado) {
+    public AgregarAutorForm(JFrame frmAnterior, Usuario usuarioLoggeado) {
         initComponents();
         uw = new UnitOfWork();
         this.usuarioLoggeado = usuarioLoggeado;
@@ -190,26 +191,20 @@ public class AgregarAutorForm extends javax.swing.JFrame {
         if (!validarCampos()) {
             return;
         }
-        String nombres = campoTextoNombres.getText();
-        String apellidoPaterno = campoTextoApellidoPaterno.getText();
-        String apellidoMaterno = campoTextoApellidoMaterno.getText();
-        String edad = campoTextoEdad.getText();
-        Nacionalidad nacionalidad = (Nacionalidad)comboBoxNacionalidad.getSelectedItem();
-        
+
         try {
-            ControladorAutor.persistirAutor(nombres, apellidoPaterno, apellidoMaterno, edad, nacionalidad);
+            Autor autor = crearAutorDeCampos();
+            ControladorAutor.persistirAutor(autor);
             Dialogs.mostrarMensajeExito(this, "Autor guardado con exito.");
-        }catch(Exception e){
+        } catch (Exception e) {
             Dialogs.mostrarMensajeError(this, "No se pudo guardar el autor.");
-        } 
-        finally {
+        } finally {
             limpiarCampos();
         }
-        
+
     }//GEN-LAST:event_btnAgregarActionPerformed
 
-
-    private boolean validarCampos(){
+    private boolean validarCampos() {
         String nombres = campoTextoNombres.getText();
         String apellidoPaterno = campoTextoApellidoPaterno.getText();
         String apellidoMaterno = campoTextoApellidoMaterno.getText();
@@ -217,25 +212,21 @@ public class AgregarAutorForm extends javax.swing.JFrame {
         if (!ValidacionesForms.isValidText(nombres)) {
             Dialogs.mostrarMensajeError(this, "Ingrese un nombre valido!");
             return false;
-        }
-        else if (!ValidacionesForms.isValidText(apellidoPaterno)) {
-            Dialogs.mostrarMensajeError(this, "Ingrese un apellido paterno valido!");            
+        } else if (!ValidacionesForms.isValidText(apellidoPaterno)) {
+            Dialogs.mostrarMensajeError(this, "Ingrese un apellido paterno valido!");
             return false;
-        }        
-        else if (!ValidacionesForms.isValidText(apellidoMaterno)) {
+        } else if (!ValidacionesForms.isValidText(apellidoMaterno)) {
             Dialogs.mostrarMensajeError(this, "Ingrese un apellido materno valido!");
             return false;
-        }        
-        else if (!Validaciones.isInteger(edad)) {
+        } else if (!Validaciones.isInteger(edad)) {
             Dialogs.mostrarMensajeError(this, "Ingrese una edad valida!");
             return false;
-        }
-        else{
+        } else {
             return true;
-        }    
+        }
     }
 
-    private void limpiarCampos(){
+    private void limpiarCampos() {
         campoTextoApellidoMaterno.setText("");
         campoTextoApellidoPaterno.setText("");
         campoTextoNombres.setText("");
@@ -266,5 +257,20 @@ public class AgregarAutorForm extends javax.swing.JFrame {
 
     private void regresar() {
         FormUtils.regresar(frmAnterior, this);
+    }
+
+    private Autor crearAutorDeCampos() {
+        String nombres = campoTextoNombres.getText();
+        String apellidoPaterno = campoTextoApellidoPaterno.getText();
+        String apellidoMaterno = campoTextoApellidoMaterno.getText();
+        Integer edad = Integer.valueOf(campoTextoEdad.getText());
+        Nacionalidad nacionalidad = (Nacionalidad) comboBoxNacionalidad.getSelectedItem();
+        return new Autor(
+                nombres,
+                apellidoPaterno,
+                apellidoMaterno,
+                edad,
+                nacionalidad
+        );
     }
 }

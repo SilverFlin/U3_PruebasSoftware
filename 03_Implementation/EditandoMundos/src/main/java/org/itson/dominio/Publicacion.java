@@ -1,13 +1,8 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package org.itson.dominio;
 
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Column;
-import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -18,7 +13,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -29,7 +23,10 @@ import javax.persistence.TemporalType;
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @NamedQueries({
-    @NamedQuery(name = "consultarTodasPublicaciones", query = "select a from Publicacion a")
+    @NamedQuery(
+            name = "consultarTodasPublicaciones",
+            query = "SELECT a FROM Publicacion a"
+    )
 })
 public class Publicacion implements Serializable {
 
@@ -50,14 +47,14 @@ public class Publicacion implements Serializable {
 
     @Column(name = "noPaginas", nullable = false)
     private Integer noPaginas;
-    
+
     @Temporal(TemporalType.DATE)
     @Column(name = "fechaInicio", nullable = true)
     private Date fechaInicio;
 
     @Temporal(TemporalType.DATE)
     @Column(name = "fechaEntrega", nullable = true)
-    private Date fechaEntrega;    
+    private Date fechaEntrega;
 
     @ManyToOne
     //Desde este momento ya se considera como una columna al hacer el JoinColumn
@@ -159,8 +156,7 @@ public class Publicacion implements Serializable {
     public void setFechaEntrega(Date fechaEntrega) {
         this.fechaEntrega = fechaEntrega;
     }
-    
-    
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -183,7 +179,11 @@ public class Publicacion implements Serializable {
 
     @Override
     public String toString() {
-        return "id=" + id + ", titulo=" + titulo + ", costoProd=" + costoProd + ", costoVenta=" + costoVenta + ", autor=" + autor;
+        return "id=" + id
+                + ", titulo=" + titulo
+                + ", costoProd=" + costoProd
+                + ", costoVenta=" + costoVenta
+                + ", autor=" + autor;
     }
 
 }

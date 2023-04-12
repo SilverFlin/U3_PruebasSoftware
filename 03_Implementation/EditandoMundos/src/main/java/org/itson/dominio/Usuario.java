@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package org.itson.dominio;
 
 import java.io.Serializable;
@@ -17,6 +13,7 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+
 /**
  *
  * @author Toled
@@ -42,7 +39,7 @@ public class Usuario implements Serializable {
 
     @Column(name = "password", nullable = false, length = 100)
     private String password;
-    
+
     @Column(name = "nombres", nullable = true, length = 100)
     private String nombres;
 
@@ -61,10 +58,10 @@ public class Usuario implements Serializable {
 
     @Column(name = "isAutor", nullable = true)
     private boolean isAutor;
-    
+
     @Column(name = "correoElectronico", nullable = true, length = 100)
     private String correoElectronico;
-   
+
     @Column(name = "direccion", nullable = true, length = 100)
     private String direccion;
 
@@ -214,7 +211,10 @@ public class Usuario implements Serializable {
 
     @Override
     public String toString() {
-        return "Usuario{" + "id=" + id + ", username=" + username + ", password=" + password +'}';
+        return "Usuario{"
+                + "id=" + id
+                + ", username=" + username
+                + ", password=" + password + '}';
     }
 
 }

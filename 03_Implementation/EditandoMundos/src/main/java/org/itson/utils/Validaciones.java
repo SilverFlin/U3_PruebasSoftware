@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package org.itson.utils;
 
 /**
@@ -9,6 +5,10 @@ package org.itson.utils;
  * @author Toled
  */
 public class Validaciones {
+
+    private Validaciones() {
+        throw new IllegalStateException("Utility class");
+    }
 
     public static boolean isPositivo(Double valor) {
         return !isNull(valor) && valor > 0;
@@ -26,7 +26,7 @@ public class Validaciones {
             return false;
         }
     }
-    
+
     public static boolean isInteger(String valor) {
         try {
             Integer.valueOf(valor);

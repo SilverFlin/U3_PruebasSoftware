@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package org.itson.presentacion;
 
 import javax.persistence.EntityManager;
@@ -31,19 +27,19 @@ public class UnitOfWork {
     private ClientesRepository _clientesRepository;
 
     private AdministradoresRepository _administradoresRepository;
-    
+
     private UsuariosRepository _usuariosRepository;
-    
+
     private PublicacionesRepository _publicacionesRepository;
-    
+
     public UnitOfWork() {
-
         entityManager = Persistence.createEntityManagerFactory("EditandoMundos").createEntityManager();
-
     }
 
     private EntityManager getEntityManager() {
-        return (entityManager != null) ? entityManager : (entityManager = Persistence.createEntityManagerFactory("EditandoMundos").createEntityManager());
+        return (entityManager != null)
+                ? entityManager
+                : (entityManager = Persistence.createEntityManagerFactory("EditandoMundos").createEntityManager());
     }
 
     public PublicacionesFisicasRepository publicacionesFisicasRepository() {
@@ -57,12 +53,12 @@ public class UnitOfWork {
                 ? _publicacionesDigitalesRepository
                 : (_publicacionesDigitalesRepository = new PublicacionesDigitalesRepository(getEntityManager()));
     }
-    
+
     public PublicacionesRepository publicacionesRepository() {
         return (_publicacionesRepository != null)
                 ? _publicacionesRepository
                 : (_publicacionesRepository = new PublicacionesRepository(getEntityManager()));
-    }    
+    }
 
     public AutoresRepository autoresRepository() {
         return (_autoresRepository != null)
@@ -81,11 +77,11 @@ public class UnitOfWork {
                 ? _administradoresRepository
                 : (_administradoresRepository = new AdministradoresRepository(getEntityManager()));
     }
-    
-    public UsuariosRepository usuariosRepository(){
-                return (_usuariosRepository != null)
+
+    public UsuariosRepository usuariosRepository() {
+        return (_usuariosRepository != null)
                 ? _usuariosRepository
                 : (_usuariosRepository = new UsuariosRepository(getEntityManager()));
     }
-        
+
 }

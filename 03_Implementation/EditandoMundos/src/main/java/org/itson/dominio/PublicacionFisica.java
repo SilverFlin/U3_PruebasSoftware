@@ -1,14 +1,8 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package org.itson.dominio;
 
-import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.Table;
 
 /**
  *
@@ -20,7 +14,7 @@ public class PublicacionFisica extends Publicacion {
 
     @Column(name = "paginaInicial", nullable = true)
     private int paginaInicial;
-    
+
     @Column(name = "nombreLibro", nullable = true)
     private String nombreLibro;
 
@@ -38,8 +32,6 @@ public class PublicacionFisica extends Publicacion {
         this.paginaInicial = paginaInicial;
         this.nombreLibro = nombreLibro;
     }
-
-    
 
     public int getPaginaInicial() {
         return paginaInicial;
