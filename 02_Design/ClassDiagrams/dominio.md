@@ -10,20 +10,16 @@ classDiagram
     Publicacion <|-- PublicacionFisica
     Usuario <|-- Administrador
     Usuario <|-- Cliente
+    Cliente <|-- Autor
+    Autor *-- Nacionalidad 
 
 
     %% Classes
     class Autor{
-     -Long id   
-     -String nombre
      -int edad
      -Nacionalidad nacionalidad
      -List~Publicacion~ publicaciones
 
-     +getId() Long
-     +setId(Long id): void
-     +getNombre() String
-     +setNombre(String nombre) void
      +getEdad() int
      +setEdad(int edad) void
      +getNacionalidad() String
@@ -44,13 +40,15 @@ classDiagram
         +setId(Long id): void
         +getTitulo() string
         +setTitulo(String titulo) void
-        +getCostoProd() Integer
+        +getCostoProd() Integerk
         +setCostoProd(Integer costoVenta) void
         +getCostoVenta() Integer
         +setCostoVenta(Integer costoVenta) void
         +getAutor() Autor
         +setAutor(Autor autor) void
     }
+
+
    
 
     class PublicacionFisica{
@@ -84,8 +82,21 @@ classDiagram
     }
 
     class Cliente{
+        -String nombre
+        -String email
+        -String telefono
+        -Direccion direccion
 
+        +getNombre() String
+        +setNombre(String nombre) void
+        +getEmail() String
+        +setEmail(String email) void
+        +getTelefono() String
+        +setTelefono(String telefono) void
+        +getDireccion() Direccion
+        +setDireccion(Direccion direccion) void
     }
+
     class Administrador{
         
     }
