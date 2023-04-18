@@ -9,23 +9,25 @@ import org.itson.utils.FormUtils;
  *
  * @author Toled
  */
-public class GestionarPublicacionesForm extends javax.swing.JFrame {
+public class FrmGestionarAutores extends javax.swing.JFrame {
 
     private Usuario usuarioLoggeado;
-    private ConsultarPublicacionesForm consultarPublicacionesForm;
-    private EliminarPublicacionesForm eliminarPublicacionesForm;
-    private EditarPublicacionesForm editarPublicacionesForm;
     /**
      * Logger de excepciones
      */
-    private static final Logger LOG = Logger.getLogger(GestionarPublicacionesForm.class.getName());
+    private static final Logger LOG = Logger.getLogger(FrmGestionarAutores.class.getName());
 
     private final JFrame frmAnterior;
+    private FrmAutores autoresForm;
+    private FrmAgregarAutor agregarAutorForm;
+    private FrmEliminarAutores eliminarAutoresForm;
+    private FrmEditarAutores editarAutoresForm;
 
-    public GestionarPublicacionesForm(JFrame frmAnterior, Usuario usuarioLoggeado) {
+    public FrmGestionarAutores(JFrame frmAnterior, Usuario usuarioLoggeado) {
         initComponents();
-        this.frmAnterior = frmAnterior;
         initFormsConectados();
+        this.frmAnterior = frmAnterior;
+
     }
 
     @SuppressWarnings("unchecked")
@@ -36,9 +38,10 @@ public class GestionarPublicacionesForm extends javax.swing.JFrame {
         head3 = new javax.swing.JPanel();
         txtBienvenida = new javax.swing.JLabel();
         btnCerrarSesion = new javax.swing.JButton();
-        btnEditarPublicacion = new javax.swing.JButton();
-        btnEliminarPublicacion = new javax.swing.JButton();
-        btnConsultarPublicaciones = new javax.swing.JButton();
+        btnEditarAutor = new javax.swing.JButton();
+        btnEliminarAutor = new javax.swing.JButton();
+        btnAgregarAutor = new javax.swing.JButton();
+        btnConsultarAutores = new javax.swing.JButton();
         btnRegresar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -55,7 +58,7 @@ public class GestionarPublicacionesForm extends javax.swing.JFrame {
 
         txtBienvenida.setFont(new java.awt.Font("Nirmala UI Semilight", 0, 24)); // NOI18N
         txtBienvenida.setForeground(new java.awt.Color(255, 255, 255));
-        txtBienvenida.setText("Publicaciones");
+        txtBienvenida.setText("Autores");
 
         btnCerrarSesion.setBackground(new java.awt.Color(0, 102, 255));
         btnCerrarSesion.setFont(new java.awt.Font("Nirmala UI Semilight", 1, 14)); // NOI18N
@@ -74,9 +77,9 @@ public class GestionarPublicacionesForm extends javax.swing.JFrame {
         head3Layout.setHorizontalGroup(
             head3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(head3Layout.createSequentialGroup()
-                .addContainerGap(231, Short.MAX_VALUE)
+                .addContainerGap(241, Short.MAX_VALUE)
                 .addComponent(txtBienvenida)
-                .addGap(118, 118, 118)
+                .addGap(166, 166, 166)
                 .addComponent(btnCerrarSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18))
         );
@@ -92,47 +95,60 @@ public class GestionarPublicacionesForm extends javax.swing.JFrame {
 
         background3.add(head3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 600, 90));
 
-        btnEditarPublicacion.setBackground(new java.awt.Color(0, 102, 255));
-        btnEditarPublicacion.setFont(new java.awt.Font("Nirmala UI Semilight", 1, 14)); // NOI18N
-        btnEditarPublicacion.setForeground(new java.awt.Color(255, 255, 255));
-        btnEditarPublicacion.setText("Editar");
-        btnEditarPublicacion.setBorder(null);
-        btnEditarPublicacion.setBorderPainted(false);
-        btnEditarPublicacion.addActionListener(new java.awt.event.ActionListener() {
+        btnEditarAutor.setBackground(new java.awt.Color(0, 102, 255));
+        btnEditarAutor.setFont(new java.awt.Font("Nirmala UI Semilight", 1, 14)); // NOI18N
+        btnEditarAutor.setForeground(new java.awt.Color(255, 255, 255));
+        btnEditarAutor.setText("Editar");
+        btnEditarAutor.setBorder(null);
+        btnEditarAutor.setBorderPainted(false);
+        btnEditarAutor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEditarPublicacionActionPerformed(evt);
+                btnEditarAutorActionPerformed(evt);
             }
         });
-        background3.add(btnEditarPublicacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 240, 180, 40));
+        background3.add(btnEditarAutor, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 240, 180, 40));
 
-        btnEliminarPublicacion.setBackground(new java.awt.Color(0, 102, 255));
-        btnEliminarPublicacion.setFont(new java.awt.Font("Nirmala UI Semilight", 1, 14)); // NOI18N
-        btnEliminarPublicacion.setForeground(new java.awt.Color(255, 255, 255));
-        btnEliminarPublicacion.setText("Eliminar");
-        btnEliminarPublicacion.setBorder(null);
-        btnEliminarPublicacion.setBorderPainted(false);
-        btnEliminarPublicacion.setMaximumSize(new java.awt.Dimension(153, 20));
-        btnEliminarPublicacion.setMinimumSize(new java.awt.Dimension(153, 20));
-        btnEliminarPublicacion.setPreferredSize(new java.awt.Dimension(153, 20));
-        btnEliminarPublicacion.addActionListener(new java.awt.event.ActionListener() {
+        btnEliminarAutor.setBackground(new java.awt.Color(0, 102, 255));
+        btnEliminarAutor.setFont(new java.awt.Font("Nirmala UI Semilight", 1, 14)); // NOI18N
+        btnEliminarAutor.setForeground(new java.awt.Color(255, 255, 255));
+        btnEliminarAutor.setText("Eliminar");
+        btnEliminarAutor.setBorder(null);
+        btnEliminarAutor.setBorderPainted(false);
+        btnEliminarAutor.setMaximumSize(new java.awt.Dimension(153, 20));
+        btnEliminarAutor.setMinimumSize(new java.awt.Dimension(153, 20));
+        btnEliminarAutor.setPreferredSize(new java.awt.Dimension(153, 20));
+        btnEliminarAutor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEliminarPublicacionActionPerformed(evt);
+                btnEliminarAutorActionPerformed(evt);
             }
         });
-        background3.add(btnEliminarPublicacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 180, 180, 40));
+        background3.add(btnEliminarAutor, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 180, 180, 40));
 
-        btnConsultarPublicaciones.setBackground(new java.awt.Color(0, 102, 255));
-        btnConsultarPublicaciones.setFont(new java.awt.Font("Nirmala UI Semilight", 1, 14)); // NOI18N
-        btnConsultarPublicaciones.setForeground(new java.awt.Color(255, 255, 255));
-        btnConsultarPublicaciones.setText("Consultar");
-        btnConsultarPublicaciones.setBorder(null);
-        btnConsultarPublicaciones.setBorderPainted(false);
-        btnConsultarPublicaciones.addActionListener(new java.awt.event.ActionListener() {
+        btnAgregarAutor.setBackground(new java.awt.Color(0, 102, 255));
+        btnAgregarAutor.setFont(new java.awt.Font("Nirmala UI Semilight", 1, 14)); // NOI18N
+        btnAgregarAutor.setForeground(new java.awt.Color(255, 255, 255));
+        btnAgregarAutor.setText("Agregar");
+        btnAgregarAutor.setBorder(null);
+        btnAgregarAutor.setBorderPainted(false);
+        btnAgregarAutor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnConsultarPublicacionesActionPerformed(evt);
+                btnAgregarAutorActionPerformed(evt);
             }
         });
-        background3.add(btnConsultarPublicaciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 300, 180, 40));
+        background3.add(btnAgregarAutor, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 120, 180, 40));
+
+        btnConsultarAutores.setBackground(new java.awt.Color(0, 102, 255));
+        btnConsultarAutores.setFont(new java.awt.Font("Nirmala UI Semilight", 1, 14)); // NOI18N
+        btnConsultarAutores.setForeground(new java.awt.Color(255, 255, 255));
+        btnConsultarAutores.setText("Consultar");
+        btnConsultarAutores.setBorder(null);
+        btnConsultarAutores.setBorderPainted(false);
+        btnConsultarAutores.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConsultarAutoresActionPerformed(evt);
+            }
+        });
+        background3.add(btnConsultarAutores, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 300, 180, 40));
 
         btnRegresar.setBackground(new java.awt.Color(0, 102, 204));
         btnRegresar.setFont(new java.awt.Font("Nirmala UI Semilight", 1, 12)); // NOI18N
@@ -163,37 +179,41 @@ public class GestionarPublicacionesForm extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnEliminarPublicacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarPublicacionActionPerformed
-        this.cargarEliminarPublicacionesForm();
-    }//GEN-LAST:event_btnEliminarPublicacionActionPerformed
+    private void btnEliminarAutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarAutorActionPerformed
+        this.cargarEliminarAutoresForm();
+    }//GEN-LAST:event_btnEliminarAutorActionPerformed
 
 
     private void btnCerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarSesionActionPerformed
         this.cerrarSesion();
-
     }//GEN-LAST:event_btnCerrarSesionActionPerformed
 
 
-    private void btnEditarPublicacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarPublicacionActionPerformed
-        this.cargarEditarPublicacionesForm();
-    }//GEN-LAST:event_btnEditarPublicacionActionPerformed
+    private void btnEditarAutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarAutorActionPerformed
+        this.cargarEditarAutoresForm();
+    }//GEN-LAST:event_btnEditarAutorActionPerformed
 
+
+    private void btnAgregarAutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarAutorActionPerformed
+        this.cargarAgregarAutorForm();
+    }//GEN-LAST:event_btnAgregarAutorActionPerformed
+
+    private void btnConsultarAutoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarAutoresActionPerformed
+        this.cargarConsularAutoresForm();
+    }//GEN-LAST:event_btnConsultarAutoresActionPerformed
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
         this.regresar();
     }//GEN-LAST:event_btnRegresarActionPerformed
 
-    private void btnConsultarPublicacionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarPublicacionesActionPerformed
-        this.cargarConsultarPublicacionesForm();
-    }//GEN-LAST:event_btnConsultarPublicacionesActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel background3;
+    private javax.swing.JButton btnAgregarAutor;
     private javax.swing.JButton btnCerrarSesion;
-    private javax.swing.JButton btnConsultarPublicaciones;
-    private javax.swing.JButton btnEditarPublicacion;
-    private javax.swing.JButton btnEliminarPublicacion;
+    private javax.swing.JButton btnConsultarAutores;
+    private javax.swing.JButton btnEditarAutor;
+    private javax.swing.JButton btnEliminarAutor;
     private javax.swing.JButton btnRegresar;
     private javax.swing.JPanel head3;
     private javax.swing.JLabel txtBienvenida;
@@ -207,25 +227,29 @@ public class GestionarPublicacionesForm extends javax.swing.JFrame {
 
     private void regresar() {
         FormUtils.regresar(this.frmAnterior, this);
-        
     }
     
-    private void cargarEditarPublicacionesForm(){
-        FormUtils.cargarForm(this.editarPublicacionesForm, this);
-    }
-    
-    private void cargarConsultarPublicacionesForm(){
-        FormUtils.cargarForm(this.consultarPublicacionesForm,this);
-    }
-    
-    private void cargarEliminarPublicacionesForm(){
-        FormUtils.cargarForm(this.eliminarPublicacionesForm, this);
+    private void cargarConsularAutoresForm(){
+        FormUtils.cargarForm(this.autoresForm, this);
     }
 
+    private void cargarAgregarAutorForm(){
+        FormUtils.cargarForm(this.agregarAutorForm, this);
+    }
+    
     private void initFormsConectados() {
-        consultarPublicacionesForm = new ConsultarPublicacionesForm(this, usuarioLoggeado);
-        eliminarPublicacionesForm = new EliminarPublicacionesForm(this, usuarioLoggeado);
-        editarPublicacionesForm = new EditarPublicacionesForm(this, usuarioLoggeado);
+        autoresForm = new FrmAutores(this, this.usuarioLoggeado);
+        agregarAutorForm = new FrmAgregarAutor(this, this.usuarioLoggeado);
+        eliminarAutoresForm = new FrmEliminarAutores(this, usuarioLoggeado);
+        editarAutoresForm = new FrmEditarAutores(this, usuarioLoggeado);
+    }
+    
+    private void cargarEliminarAutoresForm(){
+        FormUtils.cargarForm(this.eliminarAutoresForm, this);
+    }
+    
+    private void cargarEditarAutoresForm(){
+        FormUtils.cargarForm(this.editarAutoresForm, this);
     }
 
 }

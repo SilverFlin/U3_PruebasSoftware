@@ -14,14 +14,14 @@ import org.itson.utils.ValidacionesForms;
  *
  * @author Toled
  */
-public class AgregarUsuarioForm extends javax.swing.JFrame {
+public class FrmAgregarUsuario extends javax.swing.JFrame {
 
     private Usuario usuarioLoggeado;
     private JFrame frmAnterior;
     private final int RADIO_USUARIO_CLIENTE = 0;
     private final int RADIO_USUARIO_ADMIN = 1;
 
-    public AgregarUsuarioForm(JFrame frmAnterior, Usuario usuarioLoggeado) {
+    public FrmAgregarUsuario(JFrame frmAnterior, Usuario usuarioLoggeado) {
         initComponents();
         this.usuarioLoggeado = usuarioLoggeado;
         this.frmAnterior = frmAnterior;

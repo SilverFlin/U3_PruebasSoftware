@@ -15,31 +15,36 @@ import org.itson.utils.FormUtils;
  *
  * @author Toled
  */
-public class EliminarAutoresForm extends JFrameActualizable {
+public class FrmEditarAutores extends JFrameActualizable {
 
-    private static final Logger LOG = Logger.getLogger(EliminarAutoresForm.class.getName());
+    private static final Logger LOG = Logger.getLogger(FrmEditarAutores.class.getName());
     private ConfiguracionPaginado configPaginado;
     private Usuario clienteLoggeado;
     private final JFrame frmAnterior;
+    private FrmEditarAutor editarAutorForm;
     private List<Autor> autores;
 
-    public EliminarAutoresForm(JFrame frmAnterior, Usuario clienteLoggeado) {
+    public FrmEditarAutores(JFrame frmAnterior, Usuario clienteLoggeado) {
         initComponents();
         this.configPaginado = new ConfiguracionPaginado(this.tblPublicaciones.getModel().getRowCount(), 0);
         this.clienteLoggeado = clienteLoggeado;
         this.frmAnterior = frmAnterior;
+        this.initFormsConectados();
         cargarTablaAutores();
     }
 
     public final void cargarTablaAutores() {
 
-        autores = this.conseguirListaAutores();
+        autores = conseguirListaAutores();
 
         DefaultTableModel modeloTabla = (DefaultTableModel) this.tblPublicaciones.getModel();
         modeloTabla.setRowCount(0);
         String nombreCompleto;
         for (Autor autor : autores) {
-            nombreCompleto = autor.getNombres() + " " + autor.getApellidoPaterno() + " " + autor.getApellidoMaterno();
+            nombreCompleto = autor.getNombres() + " "
+                    + autor.getApellidoPaterno()
+                    + " " + autor.getApellidoMaterno();
+
             Object[] fila = {
                 nombreCompleto,
                 autor.getEdad(),
@@ -48,6 +53,7 @@ public class EliminarAutoresForm extends JFrameActualizable {
 
             modeloTabla.addRow(fila);
         }
+
     }
 
     @SuppressWarnings("unchecked")
@@ -61,7 +67,7 @@ public class EliminarAutoresForm extends JFrameActualizable {
         panelTablaCuentas = new javax.swing.JScrollPane();
         tblPublicaciones = new javax.swing.JTable();
         btnAdelante = new javax.swing.JButton();
-        btnEliminar = new javax.swing.JButton();
+        btnEditar = new javax.swing.JButton();
         btnRetroceder = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -76,7 +82,7 @@ public class EliminarAutoresForm extends JFrameActualizable {
 
         lblOperaciones.setFont(new java.awt.Font("Nirmala UI Semilight", 0, 24)); // NOI18N
         lblOperaciones.setForeground(new java.awt.Color(255, 255, 255));
-        lblOperaciones.setText("Eliminar Autores");
+        lblOperaciones.setText("Editar Autor");
 
         btnAtras.setBackground(new java.awt.Color(0, 102, 255));
         btnAtras.setFont(new java.awt.Font("Nirmala UI Semilight", 1, 14)); // NOI18N
@@ -97,9 +103,9 @@ public class EliminarAutoresForm extends JFrameActualizable {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addComponent(btnAtras, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(128, 128, 128)
+                .addGap(155, 155, 155)
                 .addComponent(lblOperaciones)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(238, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -145,8 +151,6 @@ public class EliminarAutoresForm extends JFrameActualizable {
                 return canEdit [columnIndex];
             }
         });
-        tblPublicaciones.setCellSelectionEnabled(false);
-        tblPublicaciones.setRowSelectionAllowed(true);
         panelTablaCuentas.setViewportView(tblPublicaciones);
         tblPublicaciones.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
         if (tblPublicaciones.getColumnModel().getColumnCount() > 0) {
@@ -170,18 +174,18 @@ public class EliminarAutoresForm extends JFrameActualizable {
         });
         Background.add(btnAdelante, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 340, 30, 30));
 
-        btnEliminar.setBackground(new java.awt.Color(0, 102, 255));
-        btnEliminar.setFont(new java.awt.Font("Nirmala UI Semilight", 1, 14)); // NOI18N
-        btnEliminar.setForeground(new java.awt.Color(255, 255, 255));
-        btnEliminar.setText("Eliminar");
-        btnEliminar.setBorder(null);
-        btnEliminar.setBorderPainted(false);
-        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+        btnEditar.setBackground(new java.awt.Color(0, 102, 255));
+        btnEditar.setFont(new java.awt.Font("Nirmala UI Semilight", 1, 14)); // NOI18N
+        btnEditar.setForeground(new java.awt.Color(255, 255, 255));
+        btnEditar.setText("Editar");
+        btnEditar.setBorder(null);
+        btnEditar.setBorderPainted(false);
+        btnEditar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEliminarActionPerformed(evt);
+                btnEditarActionPerformed(evt);
             }
         });
-        Background.add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 360, 140, 30));
+        Background.add(btnEditar, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 360, 140, 30));
 
         btnRetroceder.setBackground(new java.awt.Color(0, 102, 255));
         btnRetroceder.setFont(new java.awt.Font("Nirmala UI Semilight", 1, 14)); // NOI18N
@@ -232,10 +236,10 @@ public class EliminarAutoresForm extends JFrameActualizable {
      *
      * @param evt Evento que lo acciono
      */
-    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        this.eliminarElementoSeleccionado();
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+        this.editarElementoSeleccionado();
         this.cargarTablaAutores();
-    }//GEN-LAST:event_btnEliminarActionPerformed
+    }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnRetrocederActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRetrocederActionPerformed
         this.configPaginado.retrocederPag();
@@ -247,7 +251,7 @@ public class EliminarAutoresForm extends JFrameActualizable {
     private javax.swing.JPanel Background;
     private javax.swing.JButton btnAdelante;
     private javax.swing.JButton btnAtras;
-    private javax.swing.JButton btnEliminar;
+    private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnRetroceder;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lblOperaciones;
@@ -263,18 +267,19 @@ public class EliminarAutoresForm extends JFrameActualizable {
         FormUtils.regresar(frmAnterior, this);
     }
 
-    private void eliminarElementoSeleccionado() {
+    private void editarElementoSeleccionado() {
         int index = tblPublicaciones.convertRowIndexToModel(tblPublicaciones.getSelectedRow());
         if (index == -1) {
             Dialogs.mostrarMensajeError(this, "No ha seleccionado ningun elemento de la tabla!");
             return;
         }
+        Autor autorEditar = autores.get(index);
+        editarAutorForm.setAutorModificar(autorEditar);
+        FormUtils.cargarForm(editarAutorForm, this);
+    }
 
-        int eleccion = Dialogs.mostrarMensajeYesNoOption(this, "¿Seguro que desea eliminar el autor seleccionado?", "Confirmación");
-        if (eleccion == Dialogs.OPCION_SI) {
-            Autor autorEliminar = autores.get(index);
-            ControladorAutor.eliminarAutor(autorEliminar);
-        }
+    private void initFormsConectados() {
+        this.editarAutorForm = new FrmEditarAutor(this, this.clienteLoggeado);
     }
 
     @Override

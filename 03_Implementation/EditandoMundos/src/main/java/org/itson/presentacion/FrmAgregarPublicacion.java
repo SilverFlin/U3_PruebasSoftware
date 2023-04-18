@@ -22,9 +22,12 @@ import org.itson.utils.Validaciones;
  *
  * @author Toled
  */
-public class EditarPublicacionForm extends JFrameActualizable {
+public class FrmAgregarPublicacion extends javax.swing.JFrame {
 
-    private static final Logger LOG = Logger.getLogger(EditarPublicacionForm.class.getName());
+    private static final Logger LOG = Logger.getLogger(FrmAgregarPublicacion.class.getName());
+    private final int RADIO_PUBLICACION_FISICA = 0;
+    private final int RADIO_PUBLICACION_DIGITAL = 1;
+    private int publicacionSeleccionada = RADIO_PUBLICACION_FISICA;
 
     private String tituloPub;
     private Integer pagInicialPub;
@@ -32,14 +35,14 @@ public class EditarPublicacionForm extends JFrameActualizable {
     private String nombreLibroPub;
     private Integer noPaginasPub;
     private Double sizeMegasPub;
-    private Publicacion publicacionSeleccionada;
 
     private Usuario usuarioLoggeado;
-    private final JFrameActualizable frmAnterior;
+    private final JFrame frmAnterior;
 
-    public EditarPublicacionForm(JFrameActualizable frmAnterior, Usuario usuarioLoggeado) {
+    public FrmAgregarPublicacion(JFrame frmAnterior, Usuario usuarioLoggeado) {
         initComponents();
         this.llenarComboBoxAutores();
+        this.actualizarPublicacionSeleccionada();
         this.usuarioLoggeado = usuarioLoggeado;
         this.frmAnterior = frmAnterior;
     }
@@ -60,6 +63,8 @@ public class EditarPublicacionForm extends JFrameActualizable {
         btnRegresar = new javax.swing.JButton();
         btnCotizar = new javax.swing.JButton();
         cBoxAutores = new javax.swing.JComboBox<>();
+        radioPublicacionFisica = new javax.swing.JRadioButton();
+        radioPublicacionDigital = new javax.swing.JRadioButton();
         txtPaginaInicial = new javax.swing.JTextField();
         separadorPaginaInicial = new javax.swing.JSeparator();
         lblPaginaInicial = new javax.swing.JLabel();
@@ -87,23 +92,23 @@ public class EditarPublicacionForm extends JFrameActualizable {
 
         lblTituloForm.setFont(new java.awt.Font("Nirmala UI Semilight", 0, 24)); // NOI18N
         lblTituloForm.setForeground(new java.awt.Color(255, 255, 255));
-        lblTituloForm.setText("Editar Publicación");
+        lblTituloForm.setText("Publicación");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(214, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(225, 225, 225)
                 .addComponent(lblTituloForm)
-                .addGap(204, 204, 204))
+                .addContainerGap(259, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(23, 23, 23)
+                .addGap(25, 25, 25)
                 .addComponent(lblTituloForm)
-                .addContainerGap(35, Short.MAX_VALUE))
+                .addContainerGap(33, Short.MAX_VALUE))
         );
 
         Background.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 600, 90));
@@ -139,7 +144,7 @@ public class EditarPublicacionForm extends JFrameActualizable {
         btnCotizar.setBackground(new java.awt.Color(0, 102, 204));
         btnCotizar.setFont(new java.awt.Font("Nirmala UI Semilight", 1, 12)); // NOI18N
         btnCotizar.setForeground(new java.awt.Color(255, 255, 255));
-        btnCotizar.setText("Editar");
+        btnCotizar.setText("Cotizar");
         btnCotizar.setBorder(null);
         btnCotizar.setBorderPainted(false);
         btnCotizar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -157,6 +162,27 @@ public class EditarPublicacionForm extends JFrameActualizable {
             }
         });
         Background.add(cBoxAutores, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 170, 190, -1));
+
+        btnGroupTipoPublicacion.add(radioPublicacionFisica);
+        radioPublicacionFisica.setMnemonic(RADIO_PUBLICACION_FISICA);
+        radioPublicacionFisica.setSelected(true);
+        radioPublicacionFisica.setText("Publicacion Física");
+        radioPublicacionFisica.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                radioPublicacionFisicaActionPerformed(evt);
+            }
+        });
+        Background.add(radioPublicacionFisica, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 110, -1, -1));
+
+        btnGroupTipoPublicacion.add(radioPublicacionDigital);
+        radioPublicacionDigital.setMnemonic(RADIO_PUBLICACION_DIGITAL);
+        radioPublicacionDigital.setText("Publicación Digital");
+        radioPublicacionDigital.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                radioPublicacionDigitalActionPerformed(evt);
+            }
+        });
+        Background.add(radioPublicacionDigital, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 110, -1, -1));
 
         txtPaginaInicial.setForeground(new java.awt.Color(51, 51, 51));
         txtPaginaInicial.setToolTipText("");
@@ -230,6 +256,14 @@ public class EditarPublicacionForm extends JFrameActualizable {
         // TODO add your handling code here:
     }//GEN-LAST:event_cBoxAutoresActionPerformed
 
+    private void radioPublicacionDigitalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioPublicacionDigitalActionPerformed
+        this.actualizarPublicacionSeleccionada();
+    }//GEN-LAST:event_radioPublicacionDigitalActionPerformed
+
+    private void radioPublicacionFisicaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioPublicacionFisicaActionPerformed
+        this.actualizarPublicacionSeleccionada();
+    }//GEN-LAST:event_radioPublicacionFisicaActionPerformed
+
     private void txtNoPaginasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNoPaginasActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtNoPaginasActionPerformed
@@ -250,6 +284,8 @@ public class EditarPublicacionForm extends JFrameActualizable {
     private javax.swing.JLabel lblSizeMegas;
     private javax.swing.JLabel lblTituloForm;
     private javax.swing.JLabel lblTituloPublicacion;
+    private javax.swing.JRadioButton radioPublicacionDigital;
+    private javax.swing.JRadioButton radioPublicacionFisica;
     private javax.swing.JSeparator separadorNoPaginas;
     private javax.swing.JSeparator separadorNombreLibro;
     private javax.swing.JSeparator separadorPaginaInicial;
@@ -267,14 +303,9 @@ public class EditarPublicacionForm extends JFrameActualizable {
             return;
         }
 
-        if (this.publicacionSeleccionada == null) {
-            Dialogs.mostrarMensajeError(rootPane, "Publicacion inexistente");
-            return;
-        }
-
         this.colectarCampos();
 
-        this.modificarPublicacionSeleccionada();
+        Publicacion publicacion = this.crearPublicacionDeCampos();
 
         int costoProduccion = Cotizador.calcularCostoProduccion(this.noPaginasPub);
 
@@ -284,8 +315,10 @@ public class EditarPublicacionForm extends JFrameActualizable {
             return;
         }
         if (respuesta == JOptionPane.OK_OPTION) {
-            ControladorPublicacion.editarPublicacion(publicacionSeleccionada);
-            this.dialogPublicacionGuardada(publicacionSeleccionada);
+            Publicacion publicacionGuardada = ControladorPublicacion.guardarPublicacion(publicacion, costoProduccion);
+
+            this.dialogPublicacionGuardada(publicacionGuardada);
+
             this.regresar();
         }
 
@@ -315,7 +348,7 @@ public class EditarPublicacionForm extends JFrameActualizable {
 
         }
 
-        if (this.publicacionSeleccionada instanceof PublicacionDigital) {
+        if (this.publicacionSeleccionada == RADIO_PUBLICACION_DIGITAL) {
             String rawSizeMegas = txtSizeMegas.getText();
             if (rawSizeMegas.isBlank()) {
                 Dialogs.mostrarMensajeError(rootPane, "Se debe seleccionar el tamaño");
@@ -328,7 +361,7 @@ public class EditarPublicacionForm extends JFrameActualizable {
 
         }
 
-        if (this.publicacionSeleccionada instanceof PublicacionFisica) {
+        if (this.publicacionSeleccionada == RADIO_PUBLICACION_FISICA) {
             String rawPaginaInicial = txtPaginaInicial.getText();
             if (rawPaginaInicial.isBlank() || !Validaciones.isInteger(rawPaginaInicial)) {
                 Dialogs.mostrarMensajeError(rootPane, "Formato de página inicial inválido");
@@ -367,20 +400,20 @@ public class EditarPublicacionForm extends JFrameActualizable {
     }
 
     private void actualizarPublicacionSeleccionada() throws IllegalArgumentException {
-        if (publicacionSeleccionada instanceof PublicacionFisica) {
+        int tipoPublicacion = btnGroupTipoPublicacion.getSelection().getMnemonic();
+
+        if (tipoPublicacion == RADIO_PUBLICACION_FISICA) {
             this.mostrarCamposPubFisica();
             this.ocultarCamposPubDigital();
-        } else if (publicacionSeleccionada instanceof PublicacionDigital) {
+            this.publicacionSeleccionada = RADIO_PUBLICACION_FISICA;
+        } else if (tipoPublicacion == RADIO_PUBLICACION_DIGITAL) {
             this.mostrarCamposPubDigital();
             this.ocultarCamposPubFisica();
+            this.publicacionSeleccionada = RADIO_PUBLICACION_DIGITAL;
         } else {
             throw new IllegalArgumentException();
         }
-    }
 
-    public void setPublicacionModificar(Publicacion publicacionModificar) {
-        this.publicacionSeleccionada = publicacionModificar;
-        llenarCampos();
     }
 
     private void mostrarCamposPubFisica() {
@@ -415,22 +448,24 @@ public class EditarPublicacionForm extends JFrameActualizable {
         this.separadorSizeMegas.setVisible(false);
     }
 
-    private Publicacion modificarPublicacionSeleccionada() {
+    private Publicacion crearPublicacionDeCampos() {
+        Publicacion publicacion = publicacionSeleccionada == RADIO_PUBLICACION_DIGITAL
+                ? new PublicacionDigital() : new PublicacionFisica();
 
-        publicacionSeleccionada.setAutor(this.autorPub);
-        publicacionSeleccionada.setTitulo(this.tituloPub);
-        publicacionSeleccionada.setNoPaginas(noPaginasPub);
+        publicacion.setAutor(this.autorPub);
+        publicacion.setTitulo(this.tituloPub);
+        publicacion.setNoPaginas(noPaginasPub);
 
-        if (publicacionSeleccionada instanceof PublicacionDigital publicacionDigital) {
+        if (publicacion instanceof PublicacionDigital publicacionDigital) {
             publicacionDigital.setSizeMegas(this.sizeMegasPub);
-            publicacionSeleccionada = publicacionDigital;
-        } else if (publicacionSeleccionada instanceof PublicacionFisica publicacionFisica) {
+            publicacion = publicacionDigital;
+        } else if (publicacion instanceof PublicacionFisica publicacionFisica) {
             publicacionFisica.setPaginaInicial(this.pagInicialPub);
             publicacionFisica.setNombreLibro(this.nombreLibroPub);
-            publicacionSeleccionada = publicacionFisica;
+            publicacion = publicacionFisica;
         }
 
-        return publicacionSeleccionada;
+        return publicacion;
     }
 
     private Autor buscarAutor(String nombres, String apellidoPaterno) {
@@ -448,10 +483,10 @@ public class EditarPublicacionForm extends JFrameActualizable {
         this.autorPub = buscarAutor(nombresAutor, apellidoPaternoAutor);
         this.tituloPub = this.txtTitulo.getText();
         this.noPaginasPub = Integer.valueOf(txtNoPaginas.getText());
-
-        if (this.publicacionSeleccionada instanceof PublicacionDigital) {
+        
+        if (this.publicacionSeleccionada == RADIO_PUBLICACION_DIGITAL) {
             this.sizeMegasPub = Double.valueOf(txtSizeMegas.getText());
-        } else if (this.publicacionSeleccionada instanceof PublicacionFisica) {
+        } else if (this.publicacionSeleccionada == RADIO_PUBLICACION_FISICA) {
             this.pagInicialPub = Integer.valueOf(txtPaginaInicial.getText());
             this.nombreLibroPub = txtNombreLibro.getText();
         }
@@ -462,39 +497,16 @@ public class EditarPublicacionForm extends JFrameActualizable {
     }
 
     private int dialogConfirmarGuardar(int costoProduccion) {
-        String mensaje = "El nuevo costo de producción es de: \n" + costoProduccion;
-        String titulo = "¿Modificar Publicación?";
+        String mensaje = "El costo de producción es de: \n" + costoProduccion;
+        String titulo = "¿Guardar Publicación?";
         return Dialogs.mostrarMensajeYesNoOption(rootPane, mensaje, titulo);
 
     }
 
     private void dialogPublicacionGuardada(Publicacion publicacionGuardada) {
         String mensaje = """
-                         Publicacion modificada 
+                         Publicacion guardada 
                           costo venta: """ + publicacionGuardada.getCostoVenta();
         Dialogs.mostrarMensajeExito(rootPane, mensaje);
-    }
-
-    private void llenarCampos() {
-        String titulo = publicacionSeleccionada.getTitulo();
-        String noPaginas = String.valueOf(publicacionSeleccionada.getNoPaginas());
-        String autor = publicacionSeleccionada.getAutor().getNombres() + " " + publicacionSeleccionada.getAutor().getNombres();
-        this.txtTitulo.setText(titulo);
-        this.txtNoPaginas.setText(noPaginas);
-        this.cBoxAutores.setSelectedItem(autor);
-        if (publicacionSeleccionada instanceof PublicacionDigital publicacionDigital) {
-            String sizeMegas = String.valueOf(publicacionDigital.getSizeMegas());
-            this.txtSizeMegas.setText(sizeMegas);
-        } else if (publicacionSeleccionada instanceof PublicacionFisica publicacionFisica) {
-            String paginaInicial = String.valueOf(publicacionFisica.getPaginaInicial());
-            String nombreLibro = publicacionFisica.getNombreLibro();
-            this.txtPaginaInicial.setText(paginaInicial);
-            this.txtNombreLibro.setText(nombreLibro);
-        }
-    }
-
-    @Override
-    public void actualizaFrame() {
-        actualizarPublicacionSeleccionada();
     }
 }

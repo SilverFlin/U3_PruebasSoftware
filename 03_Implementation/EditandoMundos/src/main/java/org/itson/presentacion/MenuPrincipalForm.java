@@ -17,12 +17,12 @@ public class MenuPrincipalForm extends javax.swing.JFrame {
      * Logger de excepciones
      */
     private static final Logger LOG = Logger.getLogger(MenuPrincipalForm.class.getName());
-    private PublicacionesForm listaPublicacionesForm;
-    private AgregarPublicacionForm cotizacionesForm;
-    private GestionarPublicacionesForm gestionarPublicacionesForm;
-    private AgregarAutorForm agregarAutorForm;
-    private AgregarUsuarioForm agregarUsuarioForm;
-    private GestionarAutoresForm gestionarAutoresForm;
+    private FrmPublicaciones listaPublicacionesForm;
+    private FrmAgregarPublicacion cotizacionesForm;
+    private FrmGestionarPublicaciones gestionarPublicacionesForm;
+    private FrmAgregarAutor agregarAutorForm;
+    private FrmAgregarUsuario agregarUsuarioForm;
+    private FrmGestionarAutores gestionarAutoresForm;
 
     public MenuPrincipalForm(Usuario usuarioLoggeado) {
         initComponents();
@@ -234,10 +234,10 @@ public class MenuPrincipalForm extends javax.swing.JFrame {
     }
 
     private void initFormsConectados() {
-        this.gestionarPublicacionesForm = new GestionarPublicacionesForm(this, this.usuarioLoggeado);
-        this.cotizacionesForm = new AgregarPublicacionForm(this, this.usuarioLoggeado);
-        this.gestionarAutoresForm = new GestionarAutoresForm(this, this.usuarioLoggeado);
-        this.agregarUsuarioForm = new AgregarUsuarioForm(this, this.usuarioLoggeado);
+        this.gestionarPublicacionesForm = new FrmGestionarPublicaciones(this, this.usuarioLoggeado);
+        this.cotizacionesForm = new FrmAgregarPublicacion(this, this.usuarioLoggeado);
+        this.gestionarAutoresForm = new FrmGestionarAutores(this, this.usuarioLoggeado);
+        this.agregarUsuarioForm = new FrmAgregarUsuario(this, this.usuarioLoggeado);
     }
 
 }

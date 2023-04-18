@@ -4,8 +4,8 @@ import java.util.List;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.table.DefaultTableModel;
-import org.itson.controladores.ControladorPublicacion;
-import org.itson.dominio.Publicacion;
+import org.itson.controladores.ControladorAutor;
+import org.itson.dominio.Autor;
 import org.itson.dominio.Usuario;
 import org.itson.utils.ConfiguracionPaginado;
 import org.itson.utils.FormUtils;
@@ -14,34 +14,39 @@ import org.itson.utils.FormUtils;
  *
  * @author Toled
  */
-public class PublicacionesForm extends JFrame {
+public class FrmAutores extends JFrameActualizable {
 
-    private static final Logger LOG = Logger.getLogger(PublicacionesForm.class.getName());
-    private Usuario clienteLoggeado;
+    private static final Logger LOG = Logger.getLogger(FrmAutores.class.getName());
     private ConfiguracionPaginado configPaginado;
+    private Usuario clienteLoggeado;
     private final JFrame frmAnterior;
 
-    public PublicacionesForm(JFrame frmAnterior, Usuario clienteLoggeado) {
+    public FrmAutores(JFrame frmAnterior, Usuario clienteLoggeado) {
         initComponents();
         this.configPaginado = new ConfiguracionPaginado(this.tblPublicaciones.getModel().getRowCount(), 0);
         this.clienteLoggeado = clienteLoggeado;
         this.frmAnterior = frmAnterior;
-        cargarTablaPublicaciones();
+        cargarTablaAutores();
     }
 
-    public final void cargarTablaPublicaciones() {
+    public final void cargarTablaAutores() {
 
-        List<Publicacion> publicaciones = this.conseguirListaPublicaciones();
+        List<Autor> listaAutores = this.conseguirListaAutores();
 
         DefaultTableModel modeloTabla = (DefaultTableModel) this.tblPublicaciones.getModel();
         modeloTabla.setRowCount(0);
-        for (Publicacion publicacion : publicaciones) {
+        for (Autor autor : listaAutores) {
+            // TODO utils generar nombre completo
+            // TODO apellido materno puede no existir.
+            String nombreCompleto
+                    = autor.getNombres() + " "
+                    + autor.getApellidoPaterno()
+                    + " " + autor.getApellidoMaterno();
             Object[] fila = {
-                publicacion.getTitulo(),
-                publicacion.getAutor().getNombres() + " " + publicacion.getAutor().getApellidoPaterno(),
-                publicacion.getNoPaginas(),
-                "$" + publicacion.getCostoProd(),
-                "$" + publicacion.getCostoVenta()};
+                nombreCompleto,
+                autor.getEdad(),
+                autor.getNacionalidad()
+            };
 
             modeloTabla.addRow(fila);
         }
@@ -73,7 +78,7 @@ public class PublicacionesForm extends JFrame {
 
         lblOperaciones.setFont(new java.awt.Font("Nirmala UI Semilight", 0, 24)); // NOI18N
         lblOperaciones.setForeground(new java.awt.Color(255, 255, 255));
-        lblOperaciones.setText("Publicaciones");
+        lblOperaciones.setText("Consultar Autores");
 
         btnAtras.setBackground(new java.awt.Color(0, 102, 255));
         btnAtras.setFont(new java.awt.Font("Nirmala UI Semilight", 1, 14)); // NOI18N
@@ -94,9 +99,9 @@ public class PublicacionesForm extends JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addComponent(btnAtras, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(168, 168, 168)
+                .addGap(128, 128, 128)
                 .addComponent(lblOperaciones)
-                .addContainerGap(211, Short.MAX_VALUE))
+                .addContainerGap(204, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -112,26 +117,26 @@ public class PublicacionesForm extends JFrame {
 
         tblPublicaciones.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
             },
             new String [] {
-                "Titulo", "Autor", "No. Paginas", "Producción", "Venta"
+                "Nombre", "Edad", "Nacionalidad"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, true
+                false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -145,6 +150,14 @@ public class PublicacionesForm extends JFrame {
         tblPublicaciones.setColumnSelectionAllowed(true);
         panelTablaCuentas.setViewportView(tblPublicaciones);
         tblPublicaciones.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+        if (tblPublicaciones.getColumnModel().getColumnCount() > 0) {
+            tblPublicaciones.getColumnModel().getColumn(0).setResizable(false);
+            tblPublicaciones.getColumnModel().getColumn(0).setHeaderValue("Nombre");
+            tblPublicaciones.getColumnModel().getColumn(1).setResizable(false);
+            tblPublicaciones.getColumnModel().getColumn(1).setHeaderValue("Edad");
+            tblPublicaciones.getColumnModel().getColumn(2).setResizable(false);
+            tblPublicaciones.getColumnModel().getColumn(2).setHeaderValue("Nacionalidad");
+        }
 
         Background.add(panelTablaCuentas, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 150, 560, 190));
 
@@ -203,7 +216,7 @@ public class PublicacionesForm extends JFrame {
      */
     private void btnAdelanteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdelanteActionPerformed
         this.configPaginado.avanzarPag();
-        this.cargarTablaPublicaciones();
+        this.cargarTablaAutores();
     }//GEN-LAST:event_btnAdelanteActionPerformed
     /**
      * Retrocede en la pagina de operaciones
@@ -212,9 +225,8 @@ public class PublicacionesForm extends JFrame {
      */
     private void btnRetrocederActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRetrocederActionPerformed
         this.configPaginado.retrocederPag();
-        this.cargarTablaPublicaciones();
+        this.cargarTablaAutores();
     }//GEN-LAST:event_btnRetrocederActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Background;
@@ -227,11 +239,16 @@ public class PublicacionesForm extends JFrame {
     private javax.swing.JTable tblPublicaciones;
     // End of variables declaration//GEN-END:variables
 
-    private List<Publicacion> conseguirListaPublicaciones() {
-        return ControladorPublicacion.consultaPaginado(this.configPaginado);
+    private List<Autor> conseguirListaAutores() {
+        return ControladorAutor.consultaPaginado(this.configPaginado);
     }
 
     private void regresar() {
         FormUtils.regresar(frmAnterior, this);
+    }
+
+    @Override
+    public void actualizaFrame() {
+        cargarTablaAutores();
     }
 }

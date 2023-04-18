@@ -16,13 +16,14 @@ import static org.itson.utils.ValidacionesForms.isValidText;
  *
  * @author Toled
  */
-public class AgregarAutorForm extends javax.swing.JFrame {
+public class FrmEditarAutor extends javax.swing.JFrame {
 
     private UnitOfWork uw;
     private Usuario usuarioLoggeado;
-    private JFrame frmAnterior;
+    private Autor autorModificar;
+    private JFrameActualizable frmAnterior;
 
-    public AgregarAutorForm(JFrame frmAnterior, Usuario usuarioLoggeado) {
+    public FrmEditarAutor(JFrameActualizable frmAnterior, Usuario usuarioLoggeado) {
         initComponents();
         uw = new UnitOfWork();
         this.usuarioLoggeado = usuarioLoggeado;
@@ -69,14 +70,14 @@ public class AgregarAutorForm extends javax.swing.JFrame {
 
         lblBienvenido.setFont(new java.awt.Font("Nirmala UI Semilight", 0, 24)); // NOI18N
         lblBienvenido.setForeground(new java.awt.Color(255, 255, 255));
-        lblBienvenido.setText("Agregar Autor");
+        lblBienvenido.setText("Editar Autor");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(230, Short.MAX_VALUE)
+                .addContainerGap(254, Short.MAX_VALUE)
                 .addComponent(lblBienvenido)
                 .addGap(222, 222, 222))
         );
@@ -121,7 +122,7 @@ public class AgregarAutorForm extends javax.swing.JFrame {
         btnAgregar.setBackground(new java.awt.Color(0, 102, 204));
         btnAgregar.setFont(new java.awt.Font("Nirmala UI Semilight", 1, 12)); // NOI18N
         btnAgregar.setForeground(new java.awt.Color(255, 255, 255));
-        btnAgregar.setText("Agregar");
+        btnAgregar.setText("Editar");
         btnAgregar.setBorder(null);
         btnAgregar.setBorderPainted(false);
         btnAgregar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -189,7 +190,7 @@ public class AgregarAutorForm extends javax.swing.JFrame {
     }//GEN-LAST:event_btnRegresarActionPerformed
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
-        this.agregarAutor();
+        this.modificar();
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private boolean validarCampos() {
@@ -202,24 +203,51 @@ public class AgregarAutorForm extends javax.swing.JFrame {
             mostrarMensajeError(this, "Ingrese un nombre valido!");
             return false;
         }
-
         if (!isValidText(apellidoPaterno)) {
             mostrarMensajeError(this, "Ingrese un apellido paterno valido!");
             return false;
         }
-
         if (!isValidText(apellidoMaterno)) {
             mostrarMensajeError(this, "Ingrese un apellido materno valido!");
             return false;
         }
-
         if (!isInteger(edad)) {
             mostrarMensajeError(this, "Ingrese una edad valida!");
             return false;
         }
 
         return true;
+    }
 
+    private void modificar() {
+        if (autorModificar == null) {
+            throw new IllegalArgumentException("No hay un autor a editar!");
+        }
+
+        if (!validarCampos()) {
+            return;
+        }
+
+        int eleccion = Dialogs.mostrarMensajeYesNoOption(this, "¿Seguro que desea modificar el autor?", "Confirmación");
+        if (eleccion == Dialogs.OPCION_NO) {
+            return;
+        }
+
+        this.actualizarAutorModificar();
+
+        try {
+            ControladorAutor.modificarAutor(autorModificar);
+            Dialogs.mostrarMensajeExito(this, "Autor modificado con exito.");
+        } catch (Exception e) {
+            Dialogs.mostrarMensajeError(this, "No se pudo modificar el autor.");
+        } finally {
+            this.regresar();
+        }
+    }
+
+    public void setAutorModificar(Autor autorModificar) {
+        this.autorModificar = autorModificar;
+        llenarCampos();
     }
 
     private void limpiarCampos() {
@@ -227,6 +255,17 @@ public class AgregarAutorForm extends javax.swing.JFrame {
         campoTextoApellidoPaterno.setText("");
         campoTextoNombres.setText("");
         campoTextoEdad.setText("");
+    }
+
+    private void llenarCampos() {
+        if (autorModificar == null) {
+            throw new IllegalArgumentException("No hay un autor a editar!");
+        }
+        this.comboBoxNacionalidad.setSelectedItem(this.autorModificar.getNacionalidad());
+        this.campoTextoEdad.setText(String.valueOf(this.autorModificar.getEdad()));
+        this.campoTextoNombres.setText(this.autorModificar.getNombres());
+        this.campoTextoApellidoPaterno.setText(this.autorModificar.getApellidoPaterno());
+        this.campoTextoApellidoMaterno.setText(this.autorModificar.getApellidoMaterno());
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Background;
@@ -255,37 +294,11 @@ public class AgregarAutorForm extends javax.swing.JFrame {
         FormUtils.regresar(frmAnterior, this);
     }
 
-    private void agregarAutor() {
-        if (!validarCampos()) {
-            return;
-        }
-
-        try {
-            Autor autor = crearAutorDeCampos();
-            ControladorAutor.persistirAutor(autor);
-            Dialogs.mostrarMensajeExito(this, "Autor guardado con exito.");
-        } catch (Exception e) {
-            Dialogs.mostrarMensajeError(this, "No se pudo guardar el autor.");
-        } finally {
-            limpiarCampos();
-        }
-    }
-
-    private Autor crearAutorDeCampos() {
-        String nombres = campoTextoNombres.getText();
-        String apellidoPaterno = campoTextoApellidoPaterno.getText();
-        String apellidoMaterno = campoTextoApellidoMaterno.getText();
-        Integer edad = Integer.valueOf(campoTextoEdad.getText());
-        Nacionalidad nacionalidad = (Nacionalidad) comboBoxNacionalidad.getSelectedItem();
-        
-        
-        throw new UnsupportedOperationException("Cambiando JFrame");
-//        return new Autor(
-//                nombres,
-//                apellidoPaterno,
-//                apellidoMaterno,
-//                edad,
-//                nacionalidad
-//        );
+    private void actualizarAutorModificar() {
+        autorModificar.setNombres(campoTextoNombres.getText());
+        autorModificar.setApellidoPaterno(campoTextoApellidoPaterno.getText());
+        autorModificar.setApellidoMaterno(campoTextoApellidoMaterno.getText());
+        autorModificar.setEdad(Integer.parseInt(campoTextoEdad.getText()));
+        autorModificar.setNacionalidad((Nacionalidad) comboBoxNacionalidad.getSelectedItem());
     }
 }
