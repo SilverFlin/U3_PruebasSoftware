@@ -39,7 +39,7 @@ public class AutoresForm extends JFrameActualizable {
             // TODO utils generar nombre completo
             // TODO apellido materno puede no existir.
             String nombreCompleto
-                    = autor.getNombre() + " "
+                    = autor.getNombres() + " "
                     + autor.getApellidoPaterno()
                     + " " + autor.getApellidoMaterno();
             Object[] fila = {

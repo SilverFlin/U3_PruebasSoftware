@@ -387,7 +387,7 @@ public class AgregarPublicacionForm extends javax.swing.JFrame {
         List<Autor> listaAutores = consultarAutores();
         List<String> nombreAutores = new ArrayList<>();
         for (Autor autor : listaAutores) {
-            String nombreCompleto = autor.getNombre() + " " + autor.getApellidoPaterno();
+            String nombreCompleto = autor.getNombres() + " " + autor.getApellidoPaterno();
             nombreAutores.add(nombreCompleto);
         }
 

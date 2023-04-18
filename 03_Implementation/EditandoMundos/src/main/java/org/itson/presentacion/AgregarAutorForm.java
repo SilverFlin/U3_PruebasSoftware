@@ -277,12 +277,15 @@ public class AgregarAutorForm extends javax.swing.JFrame {
         String apellidoMaterno = campoTextoApellidoMaterno.getText();
         Integer edad = Integer.valueOf(campoTextoEdad.getText());
         Nacionalidad nacionalidad = (Nacionalidad) comboBoxNacionalidad.getSelectedItem();
-        return new Autor(
-                nombres,
-                apellidoPaterno,
-                apellidoMaterno,
-                edad,
-                nacionalidad
-        );
+        
+        
+        throw new UnsupportedOperationException("Cambiando JFrame");
+//        return new Autor(
+//                nombres,
+//                apellidoPaterno,
+//                apellidoMaterno,
+//                edad,
+//                nacionalidad
+//        );
     }
 }

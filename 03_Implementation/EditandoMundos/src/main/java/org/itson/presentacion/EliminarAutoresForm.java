@@ -39,7 +39,7 @@ public class EliminarAutoresForm extends JFrameActualizable {
         modeloTabla.setRowCount(0);
         String nombreCompleto;
         for (Autor autor : autores) {
-            nombreCompleto = autor.getNombre() + " " + autor.getApellidoPaterno() + " " + autor.getApellidoMaterno();
+            nombreCompleto = autor.getNombres() + " " + autor.getApellidoPaterno() + " " + autor.getApellidoMaterno();
             Object[] fila = {
                 nombreCompleto,
                 autor.getEdad(),

@@ -15,12 +15,8 @@ public class Administrador extends Usuario {
     public Administrador() {
     }
 
-    public Administrador(String username, String password) {
-        super(username, password);
-    }
-
-    public Administrador(Long id, String username, String password) {
-        super(id, username, password);
+    public Administrador(Usuario usuario) {
+        super(usuario.getUsername(), usuario.getPassword());
     }
 
 }

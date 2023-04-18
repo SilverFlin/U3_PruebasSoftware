@@ -41,7 +41,7 @@ public class EditarAutoresForm extends JFrameActualizable {
         modeloTabla.setRowCount(0);
         String nombreCompleto;
         for (Autor autor : autores) {
-            nombreCompleto = autor.getNombre() + " "
+            nombreCompleto = autor.getNombres() + " "
                     + autor.getApellidoPaterno()
                     + " " + autor.getApellidoMaterno();
 

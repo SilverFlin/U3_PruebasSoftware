@@ -42,7 +42,7 @@ public class EditarPublicacionesForm extends JFrameActualizable{
         for (Publicacion publicacion : publicaciones) {
             Object[] fila = {
                 publicacion.getTitulo(),
-                publicacion.getAutor().getNombre() + " " + publicacion.getAutor().getApellidoPaterno(),
+                publicacion.getAutor().getNombres() + " " + publicacion.getAutor().getApellidoPaterno(),
                 publicacion.getNoPaginas(),
                 "$" + publicacion.getCostoProd(),
                 "$" + publicacion.getCostoVenta()};

@@ -263,7 +263,7 @@ public class EditarAutorForm extends javax.swing.JFrame {
         }
         this.comboBoxNacionalidad.setSelectedItem(this.autorModificar.getNacionalidad());
         this.campoTextoEdad.setText(String.valueOf(this.autorModificar.getEdad()));
-        this.campoTextoNombres.setText(this.autorModificar.getNombre());
+        this.campoTextoNombres.setText(this.autorModificar.getNombres());
         this.campoTextoApellidoPaterno.setText(this.autorModificar.getApellidoPaterno());
         this.campoTextoApellidoMaterno.setText(this.autorModificar.getApellidoMaterno());
     }
@@ -295,7 +295,7 @@ public class EditarAutorForm extends javax.swing.JFrame {
     }
 
     private void actualizarAutorModificar() {
-        autorModificar.setNombre(campoTextoNombres.getText());
+        autorModificar.setNombres(campoTextoNombres.getText());
         autorModificar.setApellidoPaterno(campoTextoApellidoPaterno.getText());
         autorModificar.setApellidoMaterno(campoTextoApellidoMaterno.getText());
         autorModificar.setEdad(Integer.parseInt(campoTextoEdad.getText()));
