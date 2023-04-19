@@ -4,46 +4,49 @@ import java.util.List;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.table.DefaultTableModel;
-import org.itson.controladores.ControladorPublicacion;
-import org.itson.dominio.Publicacion;
+import org.itson.controladores.ControladorAutor;
+import org.itson.dominio.Autor;
 import org.itson.dominio.Usuario;
 import org.itson.utils.ConfiguracionPaginado;
-import org.itson.utils.Dialogs;
 import org.itson.utils.FormUtils;
 
 /**
  *
  * @author Toled
  */
-public class EliminarPublicacionesForm extends JFrameActualizable{
+public class FrmAutores extends JFrameActualizable {
 
-    private static final Logger LOG = Logger.getLogger(EliminarPublicacionesForm.class.getName());
-    private Usuario clienteLoggeado;
+    private static final Logger LOG = Logger.getLogger(FrmAutores.class.getName());
     private ConfiguracionPaginado configPaginado;
+    private Usuario clienteLoggeado;
     private final JFrame frmAnterior;
-    private List<Publicacion> publicaciones;
 
-    public EliminarPublicacionesForm(JFrame frmAnterior, Usuario clienteLoggeado) {
+    public FrmAutores(JFrame frmAnterior, Usuario clienteLoggeado) {
         initComponents();
         this.configPaginado = new ConfiguracionPaginado(this.tblPublicaciones.getModel().getRowCount(), 0);
         this.clienteLoggeado = clienteLoggeado;
         this.frmAnterior = frmAnterior;
-        cargarTablaPublicaciones();
+        cargarTablaAutores();
     }
 
-    public final void cargarTablaPublicaciones() {
+    public final void cargarTablaAutores() {
 
-        publicaciones = this.conseguirListaPublicaciones();
+        List<Autor> listaAutores = this.conseguirListaAutores();
 
         DefaultTableModel modeloTabla = (DefaultTableModel) this.tblPublicaciones.getModel();
         modeloTabla.setRowCount(0);
-        for (Publicacion publicacion : publicaciones) {
+        for (Autor autor : listaAutores) {
+            // TODO utils generar nombre completo
+            // TODO apellido materno puede no existir.
+            String nombreCompleto
+                    = autor.getNombres() + " "
+                    + autor.getApellidoPaterno()
+                    + " " + autor.getApellidoMaterno();
             Object[] fila = {
-                publicacion.getTitulo(),
-                publicacion.getAutor().getNombre() + " " + publicacion.getAutor().getApellidoPaterno(),
-                publicacion.getNoPaginas(),
-                "$" + publicacion.getCostoProd(),
-                "$" + publicacion.getCostoVenta()};
+                nombreCompleto,
+                autor.getEdad(),
+                autor.getNacionalidad()
+            };
 
             modeloTabla.addRow(fila);
         }
@@ -62,7 +65,6 @@ public class EliminarPublicacionesForm extends JFrameActualizable{
         tblPublicaciones = new javax.swing.JTable();
         btnAdelante = new javax.swing.JButton();
         btnRetroceder = new javax.swing.JButton();
-        btnEliminar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(600, 400));
@@ -76,7 +78,7 @@ public class EliminarPublicacionesForm extends JFrameActualizable{
 
         lblOperaciones.setFont(new java.awt.Font("Nirmala UI Semilight", 0, 24)); // NOI18N
         lblOperaciones.setForeground(new java.awt.Color(255, 255, 255));
-        lblOperaciones.setText("Eliminar Publicaciones");
+        lblOperaciones.setText("Consultar Autores");
 
         btnAtras.setBackground(new java.awt.Color(0, 102, 255));
         btnAtras.setFont(new java.awt.Font("Nirmala UI Semilight", 1, 14)); // NOI18N
@@ -99,7 +101,7 @@ public class EliminarPublicacionesForm extends JFrameActualizable{
                 .addComponent(btnAtras, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(128, 128, 128)
                 .addComponent(lblOperaciones)
-                .addContainerGap(164, Short.MAX_VALUE))
+                .addContainerGap(204, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -108,33 +110,33 @@ public class EliminarPublicacionesForm extends JFrameActualizable{
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblOperaciones)
                     .addComponent(btnAtras, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(22, Short.MAX_VALUE))
         );
 
         Background.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 600, 90));
 
         tblPublicaciones.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
             },
             new String [] {
-                "Titulo", "Autor", "No. Paginas", "Producción", "Venta"
+                "Nombre", "Edad", "Nacionalidad"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, true
+                false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -145,10 +147,17 @@ public class EliminarPublicacionesForm extends JFrameActualizable{
                 return canEdit [columnIndex];
             }
         });
-        tblPublicaciones.setCellSelectionEnabled(false);
-        tblPublicaciones.setRowSelectionAllowed(true);
+        tblPublicaciones.setColumnSelectionAllowed(true);
         panelTablaCuentas.setViewportView(tblPublicaciones);
         tblPublicaciones.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+        if (tblPublicaciones.getColumnModel().getColumnCount() > 0) {
+            tblPublicaciones.getColumnModel().getColumn(0).setResizable(false);
+            tblPublicaciones.getColumnModel().getColumn(0).setHeaderValue("Nombre");
+            tblPublicaciones.getColumnModel().getColumn(1).setResizable(false);
+            tblPublicaciones.getColumnModel().getColumn(1).setHeaderValue("Edad");
+            tblPublicaciones.getColumnModel().getColumn(2).setResizable(false);
+            tblPublicaciones.getColumnModel().getColumn(2).setHeaderValue("Nacionalidad");
+        }
 
         Background.add(panelTablaCuentas, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 150, 560, 190));
 
@@ -177,19 +186,6 @@ public class EliminarPublicacionesForm extends JFrameActualizable{
             }
         });
         Background.add(btnRetroceder, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 340, 30, 30));
-
-        btnEliminar.setBackground(new java.awt.Color(0, 102, 255));
-        btnEliminar.setFont(new java.awt.Font("Nirmala UI Semilight", 1, 14)); // NOI18N
-        btnEliminar.setForeground(new java.awt.Color(255, 255, 255));
-        btnEliminar.setText("Eliminar");
-        btnEliminar.setBorder(null);
-        btnEliminar.setBorderPainted(false);
-        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEliminarActionPerformed(evt);
-            }
-        });
-        Background.add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 350, 150, 30));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -220,7 +216,7 @@ public class EliminarPublicacionesForm extends JFrameActualizable{
      */
     private void btnAdelanteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdelanteActionPerformed
         this.configPaginado.avanzarPag();
-        this.cargarTablaPublicaciones();
+        this.cargarTablaAutores();
     }//GEN-LAST:event_btnAdelanteActionPerformed
     /**
      * Retrocede en la pagina de operaciones
@@ -229,20 +225,13 @@ public class EliminarPublicacionesForm extends JFrameActualizable{
      */
     private void btnRetrocederActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRetrocederActionPerformed
         this.configPaginado.retrocederPag();
-        this.cargarTablaPublicaciones();
+        this.cargarTablaAutores();
     }//GEN-LAST:event_btnRetrocederActionPerformed
-
-    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        this.eliminarElementoSeleccionado();
-        this.cargarTablaPublicaciones();
-    }//GEN-LAST:event_btnEliminarActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Background;
     private javax.swing.JButton btnAdelante;
     private javax.swing.JButton btnAtras;
-    private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnRetroceder;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lblOperaciones;
@@ -250,30 +239,16 @@ public class EliminarPublicacionesForm extends JFrameActualizable{
     private javax.swing.JTable tblPublicaciones;
     // End of variables declaration//GEN-END:variables
 
-    private List<Publicacion> conseguirListaPublicaciones() {
-        return ControladorPublicacion.consultaPaginado(this.configPaginado);
+    private List<Autor> conseguirListaAutores() {
+        return ControladorAutor.consultaPaginado(this.configPaginado);
     }
 
     private void regresar() {
         FormUtils.regresar(frmAnterior, this);
     }
-    
-    private void eliminarElementoSeleccionado() {
-        int index = tblPublicaciones.convertRowIndexToModel(tblPublicaciones.getSelectedRow());
-        if (index == -1) {
-            Dialogs.mostrarMensajeError(this, "No ha seleccionado ningun elemento de la tabla!");
-            return;
-        }
-
-        int eleccion = Dialogs.mostrarMensajeYesNoOption(this, "¿Seguro que desea eliminar la publicación seleccionada?", "Confirmación");
-        if (eleccion == Dialogs.OPCION_SI) {
-            Publicacion publicacionEliminar = publicaciones.get(index);
-            ControladorPublicacion.eliminarPublicacion(publicacionEliminar);
-        }
-    }    
 
     @Override
     public void actualizaFrame() {
-        cargarTablaPublicaciones();
+        cargarTablaAutores();
     }
 }

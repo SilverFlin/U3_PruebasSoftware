@@ -17,4 +17,20 @@ public class ValidacionesForms {
         return texto.matches(regex);
     }
 
+    public static boolean isValidEmail(String email) {
+
+        String regex = "^[\\w\\-\\.]+@([\\w-]+\\.)+[\\w-]{2,}$";
+
+        return email.matches(regex);
+    }
+
+    public static boolean isMismaPassword(String password, String confirmPassword) {
+        return password.matches(confirmPassword);
+    }
+
+    public static boolean isValidTelefono(String telefono) {
+        // TODO buscar regex para telefono.
+        return telefono.length() >= 8 && telefono.length() <= 10;
+    }
+
 }

@@ -22,9 +22,9 @@ import org.itson.utils.Validaciones;
  *
  * @author Toled
  */
-public class EditarPublicacionForm extends JFrameActualizable {
+public class FrmEditarPublicacion extends JFrameActualizable {
 
-    private static final Logger LOG = Logger.getLogger(EditarPublicacionForm.class.getName());
+    private static final Logger LOG = Logger.getLogger(FrmEditarPublicacion.class.getName());
 
     private String tituloPub;
     private Integer pagInicialPub;
@@ -37,7 +37,7 @@ public class EditarPublicacionForm extends JFrameActualizable {
     private Usuario usuarioLoggeado;
     private final JFrameActualizable frmAnterior;
 
-    public EditarPublicacionForm(JFrameActualizable frmAnterior, Usuario usuarioLoggeado) {
+    public FrmEditarPublicacion(JFrameActualizable frmAnterior, Usuario usuarioLoggeado) {
         initComponents();
         this.llenarComboBoxAutores();
         this.usuarioLoggeado = usuarioLoggeado;
@@ -266,7 +266,7 @@ public class EditarPublicacionForm extends JFrameActualizable {
         if (!this.validarCampos()) {
             return;
         }
-        
+
         if (this.publicacionSeleccionada == null) {
             Dialogs.mostrarMensajeError(rootPane, "Publicacion inexistente");
             return;
@@ -354,7 +354,7 @@ public class EditarPublicacionForm extends JFrameActualizable {
         List<Autor> listaAutores = consultarAutores();
         List<String> nombreAutores = new ArrayList<>();
         for (Autor autor : listaAutores) {
-            String nombreCompleto = autor.getNombre() + " " + autor.getApellidoPaterno();
+            String nombreCompleto = autor.getNombres() + " " + autor.getApellidoPaterno();
             nombreAutores.add(nombreCompleto);
         }
 
@@ -377,7 +377,7 @@ public class EditarPublicacionForm extends JFrameActualizable {
             throw new IllegalArgumentException();
         }
     }
-    
+
     public void setPublicacionModificar(Publicacion publicacionModificar) {
         this.publicacionSeleccionada = publicacionModificar;
         llenarCampos();
@@ -448,7 +448,7 @@ public class EditarPublicacionForm extends JFrameActualizable {
         this.autorPub = buscarAutor(nombresAutor, apellidoPaternoAutor);
         this.tituloPub = this.txtTitulo.getText();
         this.noPaginasPub = Integer.valueOf(txtNoPaginas.getText());
-        
+
         if (this.publicacionSeleccionada instanceof PublicacionDigital) {
             this.sizeMegasPub = Double.valueOf(txtSizeMegas.getText());
         } else if (this.publicacionSeleccionada instanceof PublicacionFisica) {
@@ -476,17 +476,16 @@ public class EditarPublicacionForm extends JFrameActualizable {
     }
 
     private void llenarCampos() {
-        String titulo =publicacionSeleccionada.getTitulo();
+        String titulo = publicacionSeleccionada.getTitulo();
         String noPaginas = String.valueOf(publicacionSeleccionada.getNoPaginas());
-        String autor = publicacionSeleccionada.getAutor().getNombre() + " " + publicacionSeleccionada.getAutor().getNombre();
+        String autor = publicacionSeleccionada.getAutor().getNombres() + " " + publicacionSeleccionada.getAutor().getNombres();
         this.txtTitulo.setText(titulo);
         this.txtNoPaginas.setText(noPaginas);
         this.cBoxAutores.setSelectedItem(autor);
         if (publicacionSeleccionada instanceof PublicacionDigital publicacionDigital) {
             String sizeMegas = String.valueOf(publicacionDigital.getSizeMegas());
             this.txtSizeMegas.setText(sizeMegas);
-        }
-        else if (publicacionSeleccionada instanceof PublicacionFisica publicacionFisica) {
+        } else if (publicacionSeleccionada instanceof PublicacionFisica publicacionFisica) {
             String paginaInicial = String.valueOf(publicacionFisica.getPaginaInicial());
             String nombreLibro = publicacionFisica.getNombreLibro();
             this.txtPaginaInicial.setText(paginaInicial);

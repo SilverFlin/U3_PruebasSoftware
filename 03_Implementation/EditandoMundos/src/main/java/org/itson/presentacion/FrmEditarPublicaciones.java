@@ -8,37 +8,41 @@ import org.itson.controladores.ControladorPublicacion;
 import org.itson.dominio.Publicacion;
 import org.itson.dominio.Usuario;
 import org.itson.utils.ConfiguracionPaginado;
+import org.itson.utils.Dialogs;
 import org.itson.utils.FormUtils;
 
 /**
  *
  * @author Toled
  */
-public class PublicacionesForm extends JFrame {
+public class FrmEditarPublicaciones extends JFrameActualizable{
 
-    private static final Logger LOG = Logger.getLogger(PublicacionesForm.class.getName());
+    private static final Logger LOG = Logger.getLogger(FrmEditarPublicaciones.class.getName());
     private Usuario clienteLoggeado;
     private ConfiguracionPaginado configPaginado;
     private final JFrame frmAnterior;
+    private FrmEditarPublicacion editarPublicacionForm;
+    private List<Publicacion> publicaciones;
 
-    public PublicacionesForm(JFrame frmAnterior, Usuario clienteLoggeado) {
+    public FrmEditarPublicaciones(JFrame frmAnterior, Usuario clienteLoggeado) {
         initComponents();
         this.configPaginado = new ConfiguracionPaginado(this.tblPublicaciones.getModel().getRowCount(), 0);
         this.clienteLoggeado = clienteLoggeado;
         this.frmAnterior = frmAnterior;
         cargarTablaPublicaciones();
+        initFormsConectados();
     }
 
     public final void cargarTablaPublicaciones() {
 
-        List<Publicacion> publicaciones = this.conseguirListaPublicaciones();
+        publicaciones = this.conseguirListaPublicaciones();
 
         DefaultTableModel modeloTabla = (DefaultTableModel) this.tblPublicaciones.getModel();
         modeloTabla.setRowCount(0);
         for (Publicacion publicacion : publicaciones) {
             Object[] fila = {
                 publicacion.getTitulo(),
-                publicacion.getAutor().getNombre() + " " + publicacion.getAutor().getApellidoPaterno(),
+                publicacion.getAutor().getNombres() + " " + publicacion.getAutor().getApellidoPaterno(),
                 publicacion.getNoPaginas(),
                 "$" + publicacion.getCostoProd(),
                 "$" + publicacion.getCostoVenta()};
@@ -60,6 +64,7 @@ public class PublicacionesForm extends JFrame {
         tblPublicaciones = new javax.swing.JTable();
         btnAdelante = new javax.swing.JButton();
         btnRetroceder = new javax.swing.JButton();
+        btnEditar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(600, 400));
@@ -73,7 +78,7 @@ public class PublicacionesForm extends JFrame {
 
         lblOperaciones.setFont(new java.awt.Font("Nirmala UI Semilight", 0, 24)); // NOI18N
         lblOperaciones.setForeground(new java.awt.Color(255, 255, 255));
-        lblOperaciones.setText("Publicaciones");
+        lblOperaciones.setText("Editar Publicaciones");
 
         btnAtras.setBackground(new java.awt.Color(0, 102, 255));
         btnAtras.setFont(new java.awt.Font("Nirmala UI Semilight", 1, 14)); // NOI18N
@@ -94,9 +99,9 @@ public class PublicacionesForm extends JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addComponent(btnAtras, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(168, 168, 168)
+                .addGap(139, 139, 139)
                 .addComponent(lblOperaciones)
-                .addContainerGap(211, Short.MAX_VALUE))
+                .addContainerGap(174, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -105,7 +110,7 @@ public class PublicacionesForm extends JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblOperaciones)
                     .addComponent(btnAtras, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         Background.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 600, 90));
@@ -142,7 +147,6 @@ public class PublicacionesForm extends JFrame {
                 return canEdit [columnIndex];
             }
         });
-        tblPublicaciones.setColumnSelectionAllowed(true);
         panelTablaCuentas.setViewportView(tblPublicaciones);
         tblPublicaciones.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 
@@ -173,6 +177,19 @@ public class PublicacionesForm extends JFrame {
             }
         });
         Background.add(btnRetroceder, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 340, 30, 30));
+
+        btnEditar.setBackground(new java.awt.Color(0, 102, 255));
+        btnEditar.setFont(new java.awt.Font("Nirmala UI Semilight", 1, 14)); // NOI18N
+        btnEditar.setForeground(new java.awt.Color(255, 255, 255));
+        btnEditar.setText("Editar");
+        btnEditar.setBorder(null);
+        btnEditar.setBorderPainted(false);
+        btnEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarActionPerformed(evt);
+            }
+        });
+        Background.add(btnEditar, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 350, 150, 30));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -215,11 +232,16 @@ public class PublicacionesForm extends JFrame {
         this.cargarTablaPublicaciones();
     }//GEN-LAST:event_btnRetrocederActionPerformed
 
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+        this.editarElementoSeleccionado();
+    }//GEN-LAST:event_btnEditarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Background;
     private javax.swing.JButton btnAdelante;
     private javax.swing.JButton btnAtras;
+    private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnRetroceder;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lblOperaciones;
@@ -233,5 +255,25 @@ public class PublicacionesForm extends JFrame {
 
     private void regresar() {
         FormUtils.regresar(frmAnterior, this);
+    }
+    
+    private void editarElementoSeleccionado() {
+        int index = tblPublicaciones.convertRowIndexToModel(tblPublicaciones.getSelectedRow());
+        if (index == -1) {
+            Dialogs.mostrarMensajeError(this, "No ha seleccionado ningun elemento de la tabla!");
+            return;
+        }
+        Publicacion publicacionEditar = publicaciones.get(index);
+        editarPublicacionForm.setPublicacionModificar(publicacionEditar);
+        FormUtils.cargarForm(editarPublicacionForm, this);
+    }    
+    
+    private void initFormsConectados() {
+        this.editarPublicacionForm = new FrmEditarPublicacion(this, this.clienteLoggeado);
+    }
+
+    @Override
+    public void actualizaFrame() {
+        cargarTablaPublicaciones();
     }
 }

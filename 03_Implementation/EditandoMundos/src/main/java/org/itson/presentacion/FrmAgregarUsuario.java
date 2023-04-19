@@ -1,8 +1,9 @@
 package org.itson.presentacion;
 
 import javax.swing.JFrame;
-import org.itson.controladores.ControladorAdministrador;
-import org.itson.controladores.ControladorCliente;
+import org.itson.controladores.ControladorUsuario;
+import org.itson.dominio.Administrador;
+import org.itson.dominio.Cliente;
 import org.itson.dominio.Usuario;
 import org.itson.utils.Dialogs;
 import static org.itson.utils.Dialogs.mostrarMensajeError;
@@ -13,14 +14,14 @@ import org.itson.utils.ValidacionesForms;
  *
  * @author Toled
  */
-public class AgregarUsuarioForm extends javax.swing.JFrame {
+public class FrmAgregarUsuario extends javax.swing.JFrame {
 
     private Usuario usuarioLoggeado;
     private JFrame frmAnterior;
     private final int RADIO_USUARIO_CLIENTE = 0;
     private final int RADIO_USUARIO_ADMIN = 1;
 
-    public AgregarUsuarioForm(JFrame frmAnterior, Usuario usuarioLoggeado) {
+    public FrmAgregarUsuario(JFrame frmAnterior, Usuario usuarioLoggeado) {
         initComponents();
         this.usuarioLoggeado = usuarioLoggeado;
         this.frmAnterior = frmAnterior;
@@ -253,12 +254,16 @@ public class AgregarUsuarioForm extends javax.swing.JFrame {
 
         switch (tipoUsuario) {
             case RADIO_USUARIO_CLIENTE -> {
-                ControladorCliente.persistirCliente(nombreUsuario, password);
+                // TODO cambiar 
+                Cliente cliente = new Cliente();
+                ControladorUsuario.persistirCliente(cliente);
+
                 Dialogs.mostrarMensajeExito(this, "Usuario guardado con exito");
                 break;
             }
             case RADIO_USUARIO_ADMIN -> {
-                ControladorAdministrador.persistirAdministrador(nombreUsuario, password);
+                Administrador administrador = new Administrador();
+                ControladorUsuario.persistirAdministrador(administrador);
                 Dialogs.mostrarMensajeExito(this, "Usuario guardado con exito");
                 break;
             }

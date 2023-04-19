@@ -15,22 +15,20 @@ import org.itson.utils.FormUtils;
  *
  * @author Toled
  */
-public class EditarPublicacionesForm extends JFrameActualizable{
+public class FrmEliminarPublicaciones extends JFrameActualizable{
 
-    private static final Logger LOG = Logger.getLogger(EditarPublicacionesForm.class.getName());
+    private static final Logger LOG = Logger.getLogger(FrmEliminarPublicaciones.class.getName());
     private Usuario clienteLoggeado;
     private ConfiguracionPaginado configPaginado;
     private final JFrame frmAnterior;
-    private EditarPublicacionForm editarPublicacionForm;
     private List<Publicacion> publicaciones;
 
-    public EditarPublicacionesForm(JFrame frmAnterior, Usuario clienteLoggeado) {
+    public FrmEliminarPublicaciones(JFrame frmAnterior, Usuario clienteLoggeado) {
         initComponents();
         this.configPaginado = new ConfiguracionPaginado(this.tblPublicaciones.getModel().getRowCount(), 0);
         this.clienteLoggeado = clienteLoggeado;
         this.frmAnterior = frmAnterior;
         cargarTablaPublicaciones();
-        initFormsConectados();
     }
 
     public final void cargarTablaPublicaciones() {
@@ -42,7 +40,7 @@ public class EditarPublicacionesForm extends JFrameActualizable{
         for (Publicacion publicacion : publicaciones) {
             Object[] fila = {
                 publicacion.getTitulo(),
-                publicacion.getAutor().getNombre() + " " + publicacion.getAutor().getApellidoPaterno(),
+                publicacion.getAutor().getNombres() + " " + publicacion.getAutor().getApellidoPaterno(),
                 publicacion.getNoPaginas(),
                 "$" + publicacion.getCostoProd(),
                 "$" + publicacion.getCostoVenta()};
@@ -64,7 +62,7 @@ public class EditarPublicacionesForm extends JFrameActualizable{
         tblPublicaciones = new javax.swing.JTable();
         btnAdelante = new javax.swing.JButton();
         btnRetroceder = new javax.swing.JButton();
-        btnEditar = new javax.swing.JButton();
+        btnEliminar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(600, 400));
@@ -78,7 +76,7 @@ public class EditarPublicacionesForm extends JFrameActualizable{
 
         lblOperaciones.setFont(new java.awt.Font("Nirmala UI Semilight", 0, 24)); // NOI18N
         lblOperaciones.setForeground(new java.awt.Color(255, 255, 255));
-        lblOperaciones.setText("Editar Publicaciones");
+        lblOperaciones.setText("Eliminar Publicaciones");
 
         btnAtras.setBackground(new java.awt.Color(0, 102, 255));
         btnAtras.setFont(new java.awt.Font("Nirmala UI Semilight", 1, 14)); // NOI18N
@@ -99,9 +97,9 @@ public class EditarPublicacionesForm extends JFrameActualizable{
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addComponent(btnAtras, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(139, 139, 139)
+                .addGap(128, 128, 128)
                 .addComponent(lblOperaciones)
-                .addContainerGap(174, Short.MAX_VALUE))
+                .addContainerGap(164, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -178,18 +176,18 @@ public class EditarPublicacionesForm extends JFrameActualizable{
         });
         Background.add(btnRetroceder, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 340, 30, 30));
 
-        btnEditar.setBackground(new java.awt.Color(0, 102, 255));
-        btnEditar.setFont(new java.awt.Font("Nirmala UI Semilight", 1, 14)); // NOI18N
-        btnEditar.setForeground(new java.awt.Color(255, 255, 255));
-        btnEditar.setText("Editar");
-        btnEditar.setBorder(null);
-        btnEditar.setBorderPainted(false);
-        btnEditar.addActionListener(new java.awt.event.ActionListener() {
+        btnEliminar.setBackground(new java.awt.Color(0, 102, 255));
+        btnEliminar.setFont(new java.awt.Font("Nirmala UI Semilight", 1, 14)); // NOI18N
+        btnEliminar.setForeground(new java.awt.Color(255, 255, 255));
+        btnEliminar.setText("Eliminar");
+        btnEliminar.setBorder(null);
+        btnEliminar.setBorderPainted(false);
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEditarActionPerformed(evt);
+                btnEliminarActionPerformed(evt);
             }
         });
-        Background.add(btnEditar, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 350, 150, 30));
+        Background.add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 350, 150, 30));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -232,16 +230,17 @@ public class EditarPublicacionesForm extends JFrameActualizable{
         this.cargarTablaPublicaciones();
     }//GEN-LAST:event_btnRetrocederActionPerformed
 
-    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        this.editarElementoSeleccionado();
-    }//GEN-LAST:event_btnEditarActionPerformed
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        this.eliminarElementoSeleccionado();
+        this.cargarTablaPublicaciones();
+    }//GEN-LAST:event_btnEliminarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Background;
     private javax.swing.JButton btnAdelante;
     private javax.swing.JButton btnAtras;
-    private javax.swing.JButton btnEditar;
+    private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnRetroceder;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lblOperaciones;
@@ -257,20 +256,19 @@ public class EditarPublicacionesForm extends JFrameActualizable{
         FormUtils.regresar(frmAnterior, this);
     }
     
-    private void editarElementoSeleccionado() {
+    private void eliminarElementoSeleccionado() {
         int index = tblPublicaciones.convertRowIndexToModel(tblPublicaciones.getSelectedRow());
         if (index == -1) {
             Dialogs.mostrarMensajeError(this, "No ha seleccionado ningun elemento de la tabla!");
             return;
         }
-        Publicacion publicacionEditar = publicaciones.get(index);
-        editarPublicacionForm.setPublicacionModificar(publicacionEditar);
-        FormUtils.cargarForm(editarPublicacionForm, this);
+
+        int eleccion = Dialogs.mostrarMensajeYesNoOption(this, "¿Seguro que desea eliminar la publicación seleccionada?", "Confirmación");
+        if (eleccion == Dialogs.OPCION_SI) {
+            Publicacion publicacionEliminar = publicaciones.get(index);
+            ControladorPublicacion.eliminarPublicacion(publicacionEliminar);
+        }
     }    
-    
-    private void initFormsConectados() {
-        this.editarPublicacionForm = new EditarPublicacionForm(this, this.clienteLoggeado);
-    }
 
     @Override
     public void actualizaFrame() {

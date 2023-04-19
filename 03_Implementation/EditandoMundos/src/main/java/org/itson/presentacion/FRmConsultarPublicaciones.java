@@ -9,20 +9,20 @@ import org.itson.utils.FormUtils;
  *
  * @author Toled
  */
-public class ConsultarPublicacionesForm extends javax.swing.JFrame {
+public class FrmConsultarPublicaciones extends javax.swing.JFrame {
 
     private Usuario usuarioLoggeado;
     /**
      * Logger de excepciones
      */
-    private static final Logger LOG = Logger.getLogger(ConsultarPublicacionesForm.class.getName());
+    private static final Logger LOG = Logger.getLogger(FrmConsultarPublicaciones.class.getName());
 
     private final JFrame frmAnterior;
-    private PublicacionesForm consultarForm;
+    private FrmPublicaciones consultarForm;
 
-    public ConsultarPublicacionesForm(JFrame frmAnterior, Usuario usuarioLoggeado) {
+    public FrmConsultarPublicaciones(JFrame frmAnterior, Usuario usuarioLoggeado) {
         initComponents();
-        this.consultarForm = new PublicacionesForm(this, this.usuarioLoggeado);
+        this.consultarForm = new FrmPublicaciones(this, this.usuarioLoggeado);
         this.frmAnterior = frmAnterior;
 
     }
@@ -235,7 +235,6 @@ public class ConsultarPublicacionesForm extends javax.swing.JFrame {
     private javax.swing.JButton btnConsultarPendientesPago;
     private javax.swing.JButton btnConsultarTipo;
     private javax.swing.JButton btnConsultarTodas;
-    private javax.swing.JButton btnConsultarTodas1;
     private javax.swing.JButton btnRegresar;
     private javax.swing.JPanel head3;
     private javax.swing.JLabel txtBienvenida;

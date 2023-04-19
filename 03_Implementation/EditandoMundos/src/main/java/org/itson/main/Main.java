@@ -6,7 +6,7 @@ import org.itson.dominio.Nacionalidad;
 import org.itson.dominio.PublicacionDigital;
 import org.itson.dominio.PublicacionFisica;
 import org.itson.dominio.Usuario;
-import org.itson.presentacion.IniciarSesionForm;
+import org.itson.presentacion.FrmIniciarSesion;
 import org.itson.presentacion.UnitOfWork;
 import org.itson.utils.Dialogs;
 import org.itson.utils.Encriptador;
@@ -60,7 +60,7 @@ public class Main {
         autor.setApellidoPaterno("Toledo");
         autor.setEdad(5);
         autor.setNacionalidad(Nacionalidad.MEXICANA);
-        autor.setNombre("Luis Angel");
+        autor.setNombres("Luis Angel");
 
         UnitOfWork unitOfWork = new UnitOfWork();
         return unitOfWork.autoresRepository().agregar(autor);
@@ -95,7 +95,7 @@ public class Main {
 
     private static void iniciarApp() {
         agregarAdminPrueba();
-        IniciarSesionForm iniciarSesionForm = new IniciarSesionForm();
+        FrmIniciarSesion iniciarSesionForm = new FrmIniciarSesion();
         iniciarSesionForm.setVisible(true);
         Dialogs.mostrarMensajeExito(iniciarSesionForm, """
                                                        Admin Prueba:

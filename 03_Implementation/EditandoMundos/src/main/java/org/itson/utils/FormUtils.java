@@ -1,7 +1,7 @@
 package org.itson.utils;
 
 import javax.swing.JFrame;
-import org.itson.presentacion.IniciarSesionForm;
+import org.itson.presentacion.FrmIniciarSesion;
 import org.itson.presentacion.JFrameActualizable;
 
 /**
@@ -34,7 +34,7 @@ public class FormUtils {
     }
 
     public static void cerrarSesion(JFrame actual) {
-        IniciarSesionForm iniciarSesionForm = new IniciarSesionForm();
+        FrmIniciarSesion iniciarSesionForm = new FrmIniciarSesion();
         iniciarSesionForm.setVisible(true);
         actual.dispose();
     }

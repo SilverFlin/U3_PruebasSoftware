@@ -6,18 +6,19 @@ import org.itson.repositories.UsuariosRepository;
 import org.itson.utils.Dialogs;
 import static org.itson.utils.Dialogs.mostrarMensajeError;
 import org.itson.utils.Encriptador;
+import org.itson.utils.FormUtils;
 import static org.itson.utils.ValidacionesForms.isValidText;
 
 /**
  *
  * @author Toled
  */
-public class IniciarSesionForm extends javax.swing.JFrame {
+public class FrmIniciarSesion extends javax.swing.JFrame {
 
     private UnitOfWork unitOfWork;
     private Usuario usuarioLoggeado;
 
-    public IniciarSesionForm() {
+    public FrmIniciarSesion() {
         initComponents();
         unitOfWork = new UnitOfWork();
     }
@@ -36,8 +37,13 @@ public class IniciarSesionForm extends javax.swing.JFrame {
         jSeparator2 = new javax.swing.JSeparator();
         lblContraseña = new javax.swing.JLabel();
         campoTextoContraseña = new javax.swing.JPasswordField();
-        btnIngresar = new javax.swing.JButton();
-        txtIniciarSesion = new javax.swing.JLabel();
+        btnCotizar = new javax.swing.JButton();
+        lblSeparador = new javax.swing.JLabel();
+        btnRegistrarse = new javax.swing.JButton();
+        txtIniciarSesion1 = new javax.swing.JLabel();
+        txtIniciarSesion2 = new javax.swing.JLabel();
+        lblCorreo1 = new javax.swing.JLabel();
+        btnIniciarSesion = new javax.swing.JButton();
 
         jButton2.setText("jButton2");
 
@@ -82,38 +88,78 @@ public class IniciarSesionForm extends javax.swing.JFrame {
                 campoTextoUsuarioActionPerformed(evt);
             }
         });
-        Background.add(campoTextoUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 180, 190, 20));
-        Background.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 200, 190, 10));
+        Background.add(campoTextoUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 190, 190, 20));
+        Background.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 210, 190, 10));
 
         lblCorreo.setFont(new java.awt.Font("Nirmala UI Semilight", 0, 14)); // NOI18N
-        lblCorreo.setText("Usuario");
-        Background.add(lblCorreo, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 160, 180, 20));
-        Background.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 280, 190, 10));
+        lblCorreo.setText("Cotiza una publicación");
+        Background.add(lblCorreo, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 210, 140, 20));
+        Background.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 290, 190, 10));
 
         lblContraseña.setFont(new java.awt.Font("Nirmala UI Semilight", 0, 14)); // NOI18N
         lblContraseña.setText("Contraseña");
-        Background.add(lblContraseña, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 240, -1, -1));
+        Background.add(lblContraseña, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 250, -1, -1));
 
         campoTextoContraseña.setBorder(null);
-        Background.add(campoTextoContraseña, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 260, 190, 20));
+        Background.add(campoTextoContraseña, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 270, 190, 20));
 
-        btnIngresar.setBackground(new java.awt.Color(0, 102, 204));
-        btnIngresar.setFont(new java.awt.Font("Nirmala UI Semilight", 1, 12)); // NOI18N
-        btnIngresar.setForeground(new java.awt.Color(255, 255, 255));
-        btnIngresar.setText("Ingresar");
-        btnIngresar.setBorder(null);
-        btnIngresar.setBorderPainted(false);
-        btnIngresar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        btnIngresar.addActionListener(new java.awt.event.ActionListener() {
+        btnCotizar.setBackground(new java.awt.Color(0, 102, 204));
+        btnCotizar.setFont(new java.awt.Font("Nirmala UI Semilight", 1, 18)); // NOI18N
+        btnCotizar.setForeground(new java.awt.Color(255, 255, 255));
+        btnCotizar.setText("COTIZAR");
+        btnCotizar.setBorder(null);
+        btnCotizar.setBorderPainted(false);
+        btnCotizar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        btnCotizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnIngresarActionPerformed(evt);
+                btnCotizarActionPerformed(evt);
             }
         });
-        Background.add(btnIngresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 310, 70, 30));
+        Background.add(btnCotizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 260, 180, 40));
 
-        txtIniciarSesion.setFont(new java.awt.Font("Nirmala UI Semilight", 0, 16)); // NOI18N
-        txtIniciarSesion.setText("Iniciar sesion");
-        Background.add(txtIniciarSesion, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 110, -1, -1));
+        lblSeparador.setFont(new java.awt.Font("Nirmala UI Semilight", 0, 16)); // NOI18N
+        lblSeparador.setText("Ó");
+        Background.add(lblSeparador, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 210, -1, -1));
+
+        btnRegistrarse.setBackground(new java.awt.Color(0, 102, 204));
+        btnRegistrarse.setFont(new java.awt.Font("Nirmala UI Semilight", 1, 12)); // NOI18N
+        btnRegistrarse.setForeground(new java.awt.Color(255, 255, 255));
+        btnRegistrarse.setText("Registrarse");
+        btnRegistrarse.setBorder(null);
+        btnRegistrarse.setBorderPainted(false);
+        btnRegistrarse.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        btnRegistrarse.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegistrarseActionPerformed(evt);
+            }
+        });
+        Background.add(btnRegistrarse, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 310, 90, 30));
+
+        txtIniciarSesion1.setFont(new java.awt.Font("Nirmala UI Semilight", 0, 18)); // NOI18N
+        txtIniciarSesion1.setText("Cotiza");
+        Background.add(txtIniciarSesion1, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 120, -1, -1));
+
+        txtIniciarSesion2.setFont(new java.awt.Font("Nirmala UI Semilight", 0, 18)); // NOI18N
+        txtIniciarSesion2.setText("Iniciar sesion");
+        Background.add(txtIniciarSesion2, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 120, -1, -1));
+
+        lblCorreo1.setFont(new java.awt.Font("Nirmala UI Semilight", 0, 14)); // NOI18N
+        lblCorreo1.setText("Usuario");
+        Background.add(lblCorreo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 170, 180, 20));
+
+        btnIniciarSesion.setBackground(new java.awt.Color(0, 102, 204));
+        btnIniciarSesion.setFont(new java.awt.Font("Nirmala UI Semilight", 1, 12)); // NOI18N
+        btnIniciarSesion.setForeground(new java.awt.Color(255, 255, 255));
+        btnIniciarSesion.setText("Iniciar Sesión");
+        btnIniciarSesion.setBorder(null);
+        btnIniciarSesion.setBorderPainted(false);
+        btnIniciarSesion.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        btnIniciarSesion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnIniciarSesionActionPerformed(evt);
+            }
+        });
+        Background.add(btnIniciarSesion, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 310, 90, 30));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -135,18 +181,28 @@ public class IniciarSesionForm extends javax.swing.JFrame {
      *
      * @param evt Evento que lo acciona
      */
-    private void btnIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarActionPerformed
-        this.iniciarSesion();
-    }//GEN-LAST:event_btnIngresarActionPerformed
+    private void btnCotizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCotizarActionPerformed
+        this.cotizar();
+    }//GEN-LAST:event_btnCotizarActionPerformed
 
     private void campoTextoUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoTextoUsuarioActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_campoTextoUsuarioActionPerformed
 
+    private void btnRegistrarseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarseActionPerformed
+        this.registrarse();
+    }//GEN-LAST:event_btnRegistrarseActionPerformed
+
+    private void btnIniciarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarSesionActionPerformed
+        this.iniciarSesion();
+    }//GEN-LAST:event_btnIniciarSesionActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Background;
-    private javax.swing.JButton btnIngresar;
+    private javax.swing.JButton btnCotizar;
+    private javax.swing.JButton btnIniciarSesion;
+    private javax.swing.JButton btnRegistrarse;
     private javax.swing.JPasswordField campoTextoContraseña;
     private javax.swing.JTextField campoTextoUsuario;
     private javax.swing.JButton jButton2;
@@ -156,7 +212,10 @@ public class IniciarSesionForm extends javax.swing.JFrame {
     private javax.swing.JLabel lblBienvenido;
     private javax.swing.JLabel lblContraseña;
     private javax.swing.JLabel lblCorreo;
-    private javax.swing.JLabel txtIniciarSesion;
+    private javax.swing.JLabel lblCorreo1;
+    private javax.swing.JLabel lblSeparador;
+    private javax.swing.JLabel txtIniciarSesion1;
+    private javax.swing.JLabel txtIniciarSesion2;
     // End of variables declaration//GEN-END:variables
 
     private void iniciarSesion() {
@@ -169,12 +228,6 @@ public class IniciarSesionForm extends javax.swing.JFrame {
         } catch (NoResultException e) {
             mostrarMensajeError(rootPane, "No se encontró el usuario");
         }
-    }
-
-    private void cargarMenuPrincipal() {
-        MenuPrincipalForm menuPrincipal = new MenuPrincipalForm(usuarioLoggeado);
-        menuPrincipal.setVisible(true);
-        this.dispose();
     }
 
     private boolean validarCampos() {
@@ -201,5 +254,30 @@ public class IniciarSesionForm extends javax.swing.JFrame {
         this.usuarioLoggeado = usuario;
 
         this.cargarMenuPrincipal();
+    }
+
+    private void cargarMenuPrincipal() {
+        MenuPrincipalForm menuPrincipal = new MenuPrincipalForm(usuarioLoggeado);
+        FormUtils.cargarForm(menuPrincipal, this);
+    }
+
+    private void registrarse() {
+        this.cargarRegistroCliente();
+    }
+
+    private void cargarRegistroCliente() {
+        FrmRegistroCliente frmRegistroCliente = new FrmRegistroCliente(this);
+        FormUtils.cargarForm(frmRegistroCliente, this);
+    }
+
+    private void cotizar() {
+        this.cargarCotizacion();
+    }
+
+    private void cargarCotizacion() {
+        FrmCotizarPublicacion frmCotizarPublicacion
+                = new FrmCotizarPublicacion(this, usuarioLoggeado);
+        FormUtils.cargarForm(frmCotizarPublicacion, this);
+
     }
 }

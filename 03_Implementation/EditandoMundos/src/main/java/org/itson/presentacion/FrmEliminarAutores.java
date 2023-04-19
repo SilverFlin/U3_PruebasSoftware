@@ -15,36 +15,31 @@ import org.itson.utils.FormUtils;
  *
  * @author Toled
  */
-public class EditarAutoresForm extends JFrameActualizable {
+public class FrmEliminarAutores extends JFrameActualizable {
 
-    private static final Logger LOG = Logger.getLogger(EditarAutoresForm.class.getName());
+    private static final Logger LOG = Logger.getLogger(FrmEliminarAutores.class.getName());
     private ConfiguracionPaginado configPaginado;
     private Usuario clienteLoggeado;
     private final JFrame frmAnterior;
-    private EditarAutorForm editarAutorForm;
     private List<Autor> autores;
 
-    public EditarAutoresForm(JFrame frmAnterior, Usuario clienteLoggeado) {
+    public FrmEliminarAutores(JFrame frmAnterior, Usuario clienteLoggeado) {
         initComponents();
         this.configPaginado = new ConfiguracionPaginado(this.tblPublicaciones.getModel().getRowCount(), 0);
         this.clienteLoggeado = clienteLoggeado;
         this.frmAnterior = frmAnterior;
-        this.initFormsConectados();
         cargarTablaAutores();
     }
 
     public final void cargarTablaAutores() {
 
-        autores = conseguirListaAutores();
+        autores = this.conseguirListaAutores();
 
         DefaultTableModel modeloTabla = (DefaultTableModel) this.tblPublicaciones.getModel();
         modeloTabla.setRowCount(0);
         String nombreCompleto;
         for (Autor autor : autores) {
-            nombreCompleto = autor.getNombre() + " "
-                    + autor.getApellidoPaterno()
-                    + " " + autor.getApellidoMaterno();
-
+            nombreCompleto = autor.getNombres() + " " + autor.getApellidoPaterno() + " " + autor.getApellidoMaterno();
             Object[] fila = {
                 nombreCompleto,
                 autor.getEdad(),
@@ -53,7 +48,6 @@ public class EditarAutoresForm extends JFrameActualizable {
 
             modeloTabla.addRow(fila);
         }
-
     }
 
     @SuppressWarnings("unchecked")
@@ -67,7 +61,7 @@ public class EditarAutoresForm extends JFrameActualizable {
         panelTablaCuentas = new javax.swing.JScrollPane();
         tblPublicaciones = new javax.swing.JTable();
         btnAdelante = new javax.swing.JButton();
-        btnEditar = new javax.swing.JButton();
+        btnEliminar = new javax.swing.JButton();
         btnRetroceder = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -82,7 +76,7 @@ public class EditarAutoresForm extends JFrameActualizable {
 
         lblOperaciones.setFont(new java.awt.Font("Nirmala UI Semilight", 0, 24)); // NOI18N
         lblOperaciones.setForeground(new java.awt.Color(255, 255, 255));
-        lblOperaciones.setText("Editar Autor");
+        lblOperaciones.setText("Eliminar Autores");
 
         btnAtras.setBackground(new java.awt.Color(0, 102, 255));
         btnAtras.setFont(new java.awt.Font("Nirmala UI Semilight", 1, 14)); // NOI18N
@@ -103,9 +97,9 @@ public class EditarAutoresForm extends JFrameActualizable {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addComponent(btnAtras, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(155, 155, 155)
+                .addGap(128, 128, 128)
                 .addComponent(lblOperaciones)
-                .addContainerGap(238, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -174,18 +168,18 @@ public class EditarAutoresForm extends JFrameActualizable {
         });
         Background.add(btnAdelante, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 340, 30, 30));
 
-        btnEditar.setBackground(new java.awt.Color(0, 102, 255));
-        btnEditar.setFont(new java.awt.Font("Nirmala UI Semilight", 1, 14)); // NOI18N
-        btnEditar.setForeground(new java.awt.Color(255, 255, 255));
-        btnEditar.setText("Editar");
-        btnEditar.setBorder(null);
-        btnEditar.setBorderPainted(false);
-        btnEditar.addActionListener(new java.awt.event.ActionListener() {
+        btnEliminar.setBackground(new java.awt.Color(0, 102, 255));
+        btnEliminar.setFont(new java.awt.Font("Nirmala UI Semilight", 1, 14)); // NOI18N
+        btnEliminar.setForeground(new java.awt.Color(255, 255, 255));
+        btnEliminar.setText("Eliminar");
+        btnEliminar.setBorder(null);
+        btnEliminar.setBorderPainted(false);
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEditarActionPerformed(evt);
+                btnEliminarActionPerformed(evt);
             }
         });
-        Background.add(btnEditar, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 360, 140, 30));
+        Background.add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 360, 140, 30));
 
         btnRetroceder.setBackground(new java.awt.Color(0, 102, 255));
         btnRetroceder.setFont(new java.awt.Font("Nirmala UI Semilight", 1, 14)); // NOI18N
@@ -236,10 +230,10 @@ public class EditarAutoresForm extends JFrameActualizable {
      *
      * @param evt Evento que lo acciono
      */
-    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        this.editarElementoSeleccionado();
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        this.eliminarElementoSeleccionado();
         this.cargarTablaAutores();
-    }//GEN-LAST:event_btnEditarActionPerformed
+    }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnRetrocederActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRetrocederActionPerformed
         this.configPaginado.retrocederPag();
@@ -251,7 +245,7 @@ public class EditarAutoresForm extends JFrameActualizable {
     private javax.swing.JPanel Background;
     private javax.swing.JButton btnAdelante;
     private javax.swing.JButton btnAtras;
-    private javax.swing.JButton btnEditar;
+    private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnRetroceder;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lblOperaciones;
@@ -267,19 +261,18 @@ public class EditarAutoresForm extends JFrameActualizable {
         FormUtils.regresar(frmAnterior, this);
     }
 
-    private void editarElementoSeleccionado() {
+    private void eliminarElementoSeleccionado() {
         int index = tblPublicaciones.convertRowIndexToModel(tblPublicaciones.getSelectedRow());
         if (index == -1) {
             Dialogs.mostrarMensajeError(this, "No ha seleccionado ningun elemento de la tabla!");
             return;
         }
-        Autor autorEditar = autores.get(index);
-        editarAutorForm.setAutorModificar(autorEditar);
-        FormUtils.cargarForm(editarAutorForm, this);
-    }
 
-    private void initFormsConectados() {
-        this.editarAutorForm = new EditarAutorForm(this, this.clienteLoggeado);
+        int eleccion = Dialogs.mostrarMensajeYesNoOption(this, "¿Seguro que desea eliminar el autor seleccionado?", "Confirmación");
+        if (eleccion == Dialogs.OPCION_SI) {
+            Autor autorEliminar = autores.get(index);
+            ControladorAutor.eliminarAutor(autorEliminar);
+        }
     }
 
     @Override
