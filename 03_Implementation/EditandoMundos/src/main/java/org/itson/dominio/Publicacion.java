@@ -2,6 +2,7 @@ package org.itson.dominio;
 
 import java.io.Serializable;
 import java.util.Date;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,6 +14,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -57,11 +59,12 @@ public class Publicacion implements Serializable {
     private Date fechaEntrega;
 
     @ManyToOne
-    //Desde este momento ya se considera como una columna al hacer el JoinColumn
-    //Se agregan los gets y sets con este igual
-    // TODO cambiar nullable a false
     @JoinColumn(name = "idAutor", nullable = false)//LLAVE FORÁNEA
     private Autor autor;
+
+    @OneToOne(cascade = {CascadeType.MERGE})
+    @JoinColumn(name = "idPago", referencedColumnName = "id", nullable = true)
+    private Pago pago;
 
     public Publicacion(Long id, String titulo, Integer costoProd, Integer costoVenta, Integer noPaginas, Autor autor) {
         this.id = id;
@@ -155,6 +158,14 @@ public class Publicacion implements Serializable {
 
     public void setFechaEntrega(Date fechaEntrega) {
         this.fechaEntrega = fechaEntrega;
+    }
+
+    public Pago getPago() {
+        return pago;
+    }
+
+    public void setPago(Pago pago) {
+        this.pago = pago;
     }
 
     @Override

@@ -1,10 +1,15 @@
 package org.itson.dominio;
 
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 /**
  *
@@ -31,6 +36,9 @@ public class Cliente extends Usuario {
 
     @Column(name = "direccion", nullable = true, length = 100)
     private String direccion;
+
+     @OneToMany(mappedBy = "pago", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    private List<Pago> pagos;
 
     public Cliente() {
     }
