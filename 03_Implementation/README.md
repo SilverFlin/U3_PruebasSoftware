@@ -13,7 +13,7 @@
 git clone https://github.com/SilverFlin/U3_PruebasSoftware.git
 ```
 
-2. Abrir el proyecto en NetBeans
+2. Abrir el [proyecto](../03_Implementation/EditandoMundos/) en NetBeans 
 
 3. Montar MySQL
     - Instalar MySQL (Si es que no se tiene instalado)
@@ -27,6 +27,10 @@ git clone https://github.com/SilverFlin/U3_PruebasSoftware.git
     - Asegurarse de que todas las entidades están registradas
 
 5. Darle Build adentro de Netbeans
+
+## Getting Started
+
+El site map del sistema se puede encontrar [aquí](https://raw.githubusercontent.com/SilverFlin/U3_PruebasSoftware/master/04_Verification/SiteMap.svg)
 
 ## Contribuidores 
 TODO ...
