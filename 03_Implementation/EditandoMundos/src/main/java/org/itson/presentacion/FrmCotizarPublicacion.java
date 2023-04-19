@@ -9,6 +9,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import org.itson.controladores.ControladorPublicacion;
 import org.itson.dominio.Autor;
+import org.itson.dominio.Pago;
 import org.itson.dominio.Publicacion;
 import org.itson.dominio.PublicacionDigital;
 import org.itson.dominio.PublicacionFisica;
@@ -336,9 +337,6 @@ public class FrmCotizarPublicacion extends javax.swing.JFrame {
         }
 
         this.colectarCampos();
-
-        Publicacion publicacion = this.crearPublicacionDeCampos();
-
         int costoProduccion = Cotizador.calcularCostoProduccion(this.noPaginasPub);
 
         int respuesta = this.dialogConfirmarGuardar(costoProduccion);
@@ -347,11 +345,7 @@ public class FrmCotizarPublicacion extends javax.swing.JFrame {
             return;
         }
         if (respuesta == JOptionPane.OK_OPTION) {
-            Publicacion publicacionGuardada = ControladorPublicacion.guardarPublicacion(publicacion, costoProduccion);
-
-            this.dialogPublicacionGuardada(publicacionGuardada);
-
-            this.regresar();
+            this.procederAPago(costoProduccion);
         }
 
     }
@@ -501,6 +495,7 @@ public class FrmCotizarPublicacion extends javax.swing.JFrame {
     }
 
     private Autor buscarAutor(String nombres, String apellidoPaterno) {
+        // TODO actualizar para cuando el usuario sea el autor de la publciacion
         UnitOfWork unitOfWork = new UnitOfWork();
         List<Autor> autores = unitOfWork.autoresRepository().buscarPorNombreYApellido(nombres, apellidoPaterno);
         return autores.get(0);
@@ -545,5 +540,15 @@ public class FrmCotizarPublicacion extends javax.swing.JFrame {
     private void toggleComboBoxAutores() {
         boolean estadoActual = cBoxAutores.isEnabled();
         this.cBoxAutores.setEnabled(!estadoActual);
+    }
+
+    private void procederAPago(double monto) {
+        // TODO Cambiar cliente
+        System.out.println(monto+"Monto");
+        PagoDTO pagoDTO = new PagoDTO();
+        pagoDTO.setMontoTotal(monto);
+        System.out.println(pagoDTO.getMontoTotal());
+        FrmRealizarPago frmRealizarPago = new FrmRealizarPago(this, pagoDTO);
+        FormUtils.cargarForm(frmRealizarPago, this);
     }
 }
