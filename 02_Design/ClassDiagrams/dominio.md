@@ -12,6 +12,13 @@ classDiagram
     Usuario <|-- Cliente
     Cliente <|-- Autor
     Autor *-- Nacionalidad 
+     MetodoPago <|-- PagoTarjeta
+    MetodoPago <|-- PagoEfectivo
+    MetodoPago <|-- PagoDeposito
+    Pago *-- MetodoPago
+    Pago *-- EstadoPago
+    Pago *-- DivisionPago
+    Publicacion *-- Pago
 
 
     %% Classes
@@ -35,6 +42,7 @@ classDiagram
         -Integer costoProd
         -Integer costoVenta
         -Autor autor
+        -Pago pago
 
         +getId() Long
         +setId(Long id): void
@@ -49,7 +57,48 @@ classDiagram
     }
 
 
+
+    class Pago{
+        -Cliente cliente
+        -MetodoPago metodoPago
+        -Date fechaPago
+        -EstadoPago estado
+        -DivisionPago divisionPago
+        
+    }
+
+    class EstadoPago{
+        <<enumeration>>
+        PAGADO,
+        PENDIENTE
+    }
+
+    class DivisionPago{
+        <<enumeration>>
+        PAGO_UNICO,
+        DOS_PAGOS
+    }
+
+    
+
+    class MetodoPago{
+        -Long id        
+        -Double monto
+    }
+
+    class PagoTarjeta{
+
+    }
+    class PagoEfectivo{
+
+    }
+    class PagoDeposito{
+
+    }
+
    
+
+
 
     class PublicacionFisica{
         -int paginaInicial
@@ -86,6 +135,7 @@ classDiagram
         -String email
         -String telefono
         -Direccion direccion
+        -List~Pago~ pagos
 
         +getNombre() String
         +setNombre(String nombre) void
