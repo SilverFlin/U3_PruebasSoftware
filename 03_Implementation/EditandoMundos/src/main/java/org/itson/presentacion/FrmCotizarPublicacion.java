@@ -231,6 +231,16 @@ public class FrmCotizarPublicacion extends javax.swing.JFrame {
         Background.add(lblNoPaginas, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 250, -1, -1));
 
         cBoxIsAutor.setText("Yo soy el autor");
+        cBoxIsAutor.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                cBoxIsAutorStateChanged(evt);
+            }
+        });
+        cBoxIsAutor.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                cBoxIsAutorMouseClicked(evt);
+            }
+        });
         cBoxIsAutor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cBoxIsAutorActionPerformed(evt);
@@ -280,6 +290,14 @@ public class FrmCotizarPublicacion extends javax.swing.JFrame {
     private void cBoxIsAutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cBoxIsAutorActionPerformed
         this.toggleComboBoxAutores();
     }//GEN-LAST:event_cBoxIsAutorActionPerformed
+
+    private void cBoxIsAutorStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_cBoxIsAutorStateChanged
+//        this.toggleComboBoxAutores();
+
+    }//GEN-LAST:event_cBoxIsAutorStateChanged
+
+    private void cBoxIsAutorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cBoxIsAutorMouseClicked
+    }//GEN-LAST:event_cBoxIsAutorMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -525,7 +543,7 @@ public class FrmCotizarPublicacion extends javax.swing.JFrame {
     }
 
     private void toggleComboBoxAutores() {
-        boolean estadoActual = this.isEnabled();
+        boolean estadoActual = cBoxAutores.isEnabled();
         this.cBoxAutores.setEnabled(!estadoActual);
     }
 }
