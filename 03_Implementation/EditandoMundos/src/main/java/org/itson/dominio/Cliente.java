@@ -3,12 +3,15 @@ package org.itson.dominio;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 
 /**
  *
  * @author Toled
  */
 @Entity
+//@Inheritance(strategy = InheritanceType.JOINED)
 @DiscriminatorValue("cliente")
 public class Cliente extends Usuario {
 
