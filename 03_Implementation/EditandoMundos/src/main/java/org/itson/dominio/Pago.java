@@ -31,7 +31,7 @@ public class Pago implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne(mappedBy = "publicacion", cascade = {CascadeType.MERGE})
+    @OneToOne(mappedBy = "pago", cascade = {CascadeType.MERGE})
     private Publicacion publicacion;
 
     @ManyToOne
@@ -46,7 +46,7 @@ public class Pago implements Serializable {
     @Enumerated(EnumType.STRING)
     private EstadoPago estado;
 
-    @Column(name = "estado", nullable = false)
+    @Column(name = "divisionPago", nullable = false)
     @Enumerated(EnumType.STRING)
     private DivisionPago divisionPago;
 

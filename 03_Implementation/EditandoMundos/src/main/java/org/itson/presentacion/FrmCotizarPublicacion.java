@@ -77,6 +77,7 @@ public class FrmCotizarPublicacion extends javax.swing.JFrame {
         txtNoPaginas = new javax.swing.JTextField();
         separadorNoPaginas = new javax.swing.JSeparator();
         lblNoPaginas = new javax.swing.JLabel();
+        cBoxIsAutor = new javax.swing.JCheckBox();
 
         jButton2.setText("jButton2");
 
@@ -153,7 +154,7 @@ public class FrmCotizarPublicacion extends javax.swing.JFrame {
                 btnCotizarActionPerformed(evt);
             }
         });
-        Background.add(btnCotizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 330, 70, 30));
+        Background.add(btnCotizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 350, 70, 30));
 
         cBoxAutores.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         cBoxAutores.addActionListener(new java.awt.event.ActionListener() {
@@ -187,32 +188,32 @@ public class FrmCotizarPublicacion extends javax.swing.JFrame {
         txtPaginaInicial.setForeground(new java.awt.Color(51, 51, 51));
         txtPaginaInicial.setToolTipText("");
         txtPaginaInicial.setBorder(null);
-        Background.add(txtPaginaInicial, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 230, 190, 20));
-        Background.add(separadorPaginaInicial, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 250, 190, 10));
+        Background.add(txtPaginaInicial, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 270, 190, 20));
+        Background.add(separadorPaginaInicial, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 290, 190, 10));
 
         lblPaginaInicial.setFont(new java.awt.Font("Nirmala UI Semilight", 0, 14)); // NOI18N
         lblPaginaInicial.setText("Pagina Inicial");
-        Background.add(lblPaginaInicial, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 210, -1, -1));
+        Background.add(lblPaginaInicial, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 250, -1, -1));
 
         txtSizeMegas.setForeground(new java.awt.Color(51, 51, 51));
         txtSizeMegas.setToolTipText("");
         txtSizeMegas.setBorder(null);
-        Background.add(txtSizeMegas, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 280, 190, 20));
-        Background.add(separadorSizeMegas, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 300, 190, 10));
+        Background.add(txtSizeMegas, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 320, 190, 20));
+        Background.add(separadorSizeMegas, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 340, 190, 10));
 
         lblSizeMegas.setFont(new java.awt.Font("Nirmala UI Semilight", 0, 14)); // NOI18N
         lblSizeMegas.setText("Tamaño Megas");
-        Background.add(lblSizeMegas, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 260, -1, -1));
-        Background.add(separadorNombreLibro, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 250, 190, 10));
+        Background.add(lblSizeMegas, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 300, -1, -1));
+        Background.add(separadorNombreLibro, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 240, 190, 10));
 
         txtNombreLibro.setForeground(new java.awt.Color(51, 51, 51));
         txtNombreLibro.setToolTipText("");
         txtNombreLibro.setBorder(null);
-        Background.add(txtNombreLibro, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 230, 190, 20));
+        Background.add(txtNombreLibro, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 220, 190, 20));
 
         lblNombreLibro.setFont(new java.awt.Font("Nirmala UI Semilight", 0, 14)); // NOI18N
         lblNombreLibro.setText("Nombre Libro");
-        Background.add(lblNombreLibro, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 210, -1, -1));
+        Background.add(lblNombreLibro, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 200, -1, -1));
 
         txtNoPaginas.setForeground(new java.awt.Color(51, 51, 51));
         txtNoPaginas.setToolTipText("");
@@ -222,12 +223,20 @@ public class FrmCotizarPublicacion extends javax.swing.JFrame {
                 txtNoPaginasActionPerformed(evt);
             }
         });
-        Background.add(txtNoPaginas, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 280, 190, 20));
-        Background.add(separadorNoPaginas, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 300, 190, 10));
+        Background.add(txtNoPaginas, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 270, 190, 20));
+        Background.add(separadorNoPaginas, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 290, 190, 10));
 
         lblNoPaginas.setFont(new java.awt.Font("Nirmala UI Semilight", 0, 14)); // NOI18N
         lblNoPaginas.setText("No. Paginas");
-        Background.add(lblNoPaginas, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 260, -1, -1));
+        Background.add(lblNoPaginas, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 250, -1, -1));
+
+        cBoxIsAutor.setText("Yo soy el autor");
+        cBoxIsAutor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cBoxIsAutorActionPerformed(evt);
+            }
+        });
+        Background.add(cBoxIsAutor, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 210, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -268,6 +277,10 @@ public class FrmCotizarPublicacion extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtNoPaginasActionPerformed
 
+    private void cBoxIsAutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cBoxIsAutorActionPerformed
+        this.toggleComboBoxAutores();
+    }//GEN-LAST:event_cBoxIsAutorActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Background;
@@ -275,6 +288,7 @@ public class FrmCotizarPublicacion extends javax.swing.JFrame {
     private javax.swing.ButtonGroup btnGroupTipoPublicacion;
     private javax.swing.JButton btnRegresar;
     private javax.swing.JComboBox<String> cBoxAutores;
+    private javax.swing.JCheckBox cBoxIsAutor;
     private javax.swing.JButton jButton2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lblAutor;
@@ -483,7 +497,7 @@ public class FrmCotizarPublicacion extends javax.swing.JFrame {
         this.autorPub = buscarAutor(nombresAutor, apellidoPaternoAutor);
         this.tituloPub = this.txtTitulo.getText();
         this.noPaginasPub = Integer.valueOf(txtNoPaginas.getText());
-        
+
         if (this.publicacionSeleccionada == RADIO_PUBLICACION_DIGITAL) {
             this.sizeMegasPub = Double.valueOf(txtSizeMegas.getText());
         } else if (this.publicacionSeleccionada == RADIO_PUBLICACION_FISICA) {
@@ -508,5 +522,10 @@ public class FrmCotizarPublicacion extends javax.swing.JFrame {
                          Publicacion guardada 
                           costo venta: """ + publicacionGuardada.getCostoVenta();
         Dialogs.mostrarMensajeExito(rootPane, mensaje);
+    }
+
+    private void toggleComboBoxAutores() {
+        boolean estadoActual = this.isEnabled();
+        this.cBoxAutores.setEnabled(!estadoActual);
     }
 }

@@ -23,7 +23,7 @@ public class MetodoPago implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne(mappedBy = "pago", cascade = {CascadeType.MERGE})
+    @OneToOne(mappedBy = "MetodoPago", cascade = {CascadeType.MERGE})
     private Pago pago;
 
     @Column(name = "monto", nullable = false)

@@ -37,7 +37,7 @@ public class Cliente extends Usuario {
     @Column(name = "direccion", nullable = true, length = 100)
     private String direccion;
 
-     @OneToMany(mappedBy = "pago", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+     @OneToMany(mappedBy = "cliente", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     private List<Pago> pagos;
 
     public Cliente() {
