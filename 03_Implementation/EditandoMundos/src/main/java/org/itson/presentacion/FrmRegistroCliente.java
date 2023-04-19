@@ -194,7 +194,6 @@ public class FrmRegistroCliente extends javax.swing.JFrame {
         Background.add(lblNombres2, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 280, 180, 20));
         Background.add(jSeparator7, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 320, 190, 10));
 
-        txtConfirmPassword.setText("jPasswordField1");
         txtConfirmPassword.setBorder(null);
         Background.add(txtConfirmPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 360, 190, 20));
         Background.add(jSeparator8, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 380, 190, 10));
@@ -203,7 +202,6 @@ public class FrmRegistroCliente extends javax.swing.JFrame {
         lblNombres3.setText("Confirmar Contraseña");
         Background.add(lblNombres3, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 340, 180, 20));
 
-        txtPassword.setText("jPasswordField1");
         txtPassword.setBorder(null);
         Background.add(txtPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 300, 190, 20));
         Background.add(jSeparator9, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 250, 190, 10));
@@ -405,8 +403,8 @@ public class FrmRegistroCliente extends javax.swing.JFrame {
     }
 
     private void cargarRegistroAutor() {
-//        FrmRegistroAutor frmRegistroAutor(this,this.clienteRegistrado);
-//        FormUtils.cargarForm(frmRegistroAutor, this);
+        FrmRegistroAutor frmRegistroAutor = new FrmRegistroAutor(frmAnterior, this.clienteRegistrado);
+        FormUtils.cargarForm(frmRegistroAutor, this);
     }
 
     private void guardarCliente() {
