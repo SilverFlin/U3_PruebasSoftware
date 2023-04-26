@@ -1,7 +1,9 @@
 package org.itson.presentacion;
 
 import javax.persistence.NoResultException;
+import org.itson.dominio.Cliente;
 import org.itson.dominio.Usuario;
+import org.itson.repositories.ClientesRepository;
 import org.itson.repositories.UsuariosRepository;
 import org.itson.utils.Dialogs;
 import static org.itson.utils.Dialogs.mostrarMensajeError;
@@ -16,7 +18,7 @@ import static org.itson.utils.ValidacionesForms.isValidText;
 public class FrmIniciarSesion extends javax.swing.JFrame {
 
     private UnitOfWork unitOfWork;
-    private Usuario usuarioLoggeado;
+    private Cliente usuarioLoggeado;
 
     public FrmIniciarSesion() {
         initComponents();
@@ -244,15 +246,14 @@ public class FrmIniciarSesion extends javax.swing.JFrame {
     }
 
     private void intentarInicioSesion() {
-        UsuariosRepository usuariosRepository = unitOfWork.usuariosRepository();
+        ClientesRepository clientesRepository = unitOfWork.clientesRepository();
         String intentoPassword = new String(this.campoTextoContraseña.getPassword());
-        Usuario usuario = usuariosRepository.obtenPorUsername(campoTextoUsuario.getText());
-        if (!Encriptador.verificarPasswordConHash(intentoPassword, usuario.getPassword())) {
+        Cliente cliente = clientesRepository.obtenPorUsername(campoTextoUsuario.getText());
+        if (!Encriptador.verificarPasswordConHash(intentoPassword, cliente.getPassword())) {
             Dialogs.mostrarMensajeError(rootPane, "Credenciales inválidas");
             return;
         }
-        this.usuarioLoggeado = usuario;
-
+        this.usuarioLoggeado = cliente;
         this.cargarMenuPrincipal();
     }
 

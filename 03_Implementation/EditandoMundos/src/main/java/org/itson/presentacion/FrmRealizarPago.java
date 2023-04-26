@@ -1,38 +1,47 @@
 package org.itson.presentacion;
 
+import java.util.GregorianCalendar;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFrame;
-import org.itson.controladores.ControladorAutor;
-import org.itson.dominio.Autor;
-import org.itson.dominio.Nacionalidad;
-import org.itson.dominio.Usuario;
+import org.itson.dominio.DivisionPago;
+import org.itson.dominio.EstadoPago;
+import org.itson.dominio.MetodoPago;
+import org.itson.dominio.Pago;
+import org.itson.dominio.PagoDeposito;
+import org.itson.dominio.PagoEfectivo;
+import org.itson.dominio.PagoTarjeta;
 import org.itson.utils.Dialogs;
-import static org.itson.utils.Dialogs.mostrarMensajeError;
+
 import org.itson.utils.FormUtils;
-import static org.itson.utils.Validaciones.isInteger;
-import static org.itson.utils.ValidacionesForms.isValidText;
 
 /**
  *
  * @author Toled
  */
 public class FrmRealizarPago extends javax.swing.JFrame {
-    
-    private UnitOfWork uw;
+
+    private UnitOfWork unitOfWork;
     private JFrame frmAnterior;
     private PagoDTO pagoDTO;
-    
+
+    /**
+     * Logger de excepciones
+     */
+    private static final Logger LOG = Logger.getLogger(FrmGestionarAutores.class.getName());
+
     private static final Double MINIMO_MONTO_DOS_PAGOS = 1000.0;
-    
+
     public FrmRealizarPago(JFrame frmAnterior, PagoDTO pagoDTO) {
         initComponents();
-        uw = new UnitOfWork();
+        unitOfWork = new UnitOfWork();
         this.frmAnterior = frmAnterior;
         this.pagoDTO = pagoDTO;
         this.cargarCampos();
-        
+
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -44,8 +53,8 @@ public class FrmRealizarPago extends javax.swing.JFrame {
         lblNacionalidad = new javax.swing.JLabel();
         btnRegresar = new javax.swing.JButton();
         btnProceder = new javax.swing.JButton();
-        comboBoxTipoPago =  new javax.swing.JComboBox<>();
-        comboBoxTipoPago.setModel(new DefaultComboBoxModel<>(TipoMetodoPago.values()));
+        cBoxTipoPago =  new javax.swing.JComboBox<>();
+        cBoxTipoPago.setModel(new DefaultComboBoxModel<>(TipoMetodoPago.values()));
         lblTotal = new javax.swing.JLabel();
         cboxDosPasos = new javax.swing.JCheckBox();
 
@@ -116,7 +125,7 @@ public class FrmRealizarPago extends javax.swing.JFrame {
         });
         Background.add(btnProceder, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 340, 70, 30));
 
-        Background.add(comboBoxTipoPago, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 170, 190, -1));
+        Background.add(cBoxTipoPago, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 170, 190, -1));
 
         lblTotal.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         lblTotal.setText("Total: $");
@@ -158,8 +167,8 @@ public class FrmRealizarPago extends javax.swing.JFrame {
     private javax.swing.JPanel Background;
     private javax.swing.JButton btnProceder;
     private javax.swing.JButton btnRegresar;
+    private javax.swing.JComboBox<TipoMetodoPago> cBoxTipoPago;
     private javax.swing.JCheckBox cboxDosPasos;
-    private javax.swing.JComboBox<TipoMetodoPago> comboBoxTipoPago;
     private javax.swing.JButton jButton2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lblBienvenido;
@@ -167,22 +176,84 @@ public class FrmRealizarPago extends javax.swing.JFrame {
     private javax.swing.JLabel lblTotal;
     // End of variables declaration//GEN-END:variables
 
+    private void proceder() {
+        Pago pago = this.realizarPago();
+        Pago pagoGuardado = this.persistirPago(pago);
+        if(pagoGuardado == null){
+            Dialogs.mostrarMensajeError(rootPane, "Algo salió mal.");
+            return;
+        }
+        Dialogs.mostrarMensajeExito(rootPane, "Pago realizado.");
+        this.regresar();
+    }
+
     private void regresar() {
         FormUtils.regresar(frmAnterior, this);
     }
-    
-    private void proceder() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-    
+
     private void cargarComboBox() {
         if (this.pagoDTO.getMontoTotal() < MINIMO_MONTO_DOS_PAGOS) {
             this.cboxDosPasos.setVisible(false);
         }
     }
-    
+
     private void cargarCampos() {
         this.cargarComboBox();
         this.lblTotal.setText("Total: $" + this.pagoDTO.getMontoTotal());
+    }
+
+    private Pago realizarPago() {
+        Pago pago = new Pago();
+
+        pago.setCliente(pagoDTO.getCliente());
+
+        DivisionPago divisionPago
+                = this.cboxDosPasos.isSelected()
+                ? DivisionPago.DOS_PAGOS : DivisionPago.PAGO_UNICO;
+        pago.setDivisionPago(divisionPago);
+
+        pago.setEstado(EstadoPago.PAGADO);
+
+        pago.setFechaPago(new GregorianCalendar());
+
+        MetodoPago metodoPago = this.getMetodoPago();
+        metodoPago.setMonto(pagoDTO.getMontoTotal());
+        metodoPago.setPago(pago);
+        pago.setMetodoPago(metodoPago);
+
+        pago.setPublicacion(pagoDTO.getPublicacion());
+        pago.setMonto(pagoDTO.getMontoTotal());
+
+        return pago;
+    }
+
+    private MetodoPago getMetodoPago() {
+        int selectedItem = cBoxTipoPago.getSelectedIndex();
+        TipoMetodoPago tipoMetodoPago = cBoxTipoPago.getItemAt(selectedItem);
+
+        MetodoPago metodoPago = null;
+        switch (tipoMetodoPago) {
+            case PAGO_DEPOSITO ->
+                metodoPago = new PagoDeposito();
+            case PAGO_EFECTIVO ->
+                metodoPago = new PagoEfectivo();
+            case PAGO_TARJETA ->
+                metodoPago = new PagoTarjeta();
+            default ->
+                throw new AssertionError();
+        }
+
+        return metodoPago;
+    }
+
+    private Pago persistirPago(Pago pago) {
+        try {
+            System.out.println(pago.getMonto());
+            return unitOfWork.pagosRepository().agregar(pago);
+        } catch (Exception ex) {
+            LOG.log(Level.SEVERE, "Error al persistir pago.");
+        }
+        return null;
+
     }
 }

@@ -9,6 +9,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import org.itson.controladores.ControladorPublicacion;
 import org.itson.dominio.Autor;
+import org.itson.dominio.Cliente;
 import org.itson.dominio.Pago;
 import org.itson.dominio.Publicacion;
 import org.itson.dominio.PublicacionDigital;
@@ -481,6 +482,7 @@ public class FrmCotizarPublicacion extends javax.swing.JFrame {
         publicacion.setAutor(this.autorPub);
         publicacion.setTitulo(this.tituloPub);
         publicacion.setNoPaginas(noPaginasPub);
+        
 
         if (publicacion instanceof PublicacionDigital publicacionDigital) {
             publicacionDigital.setSizeMegas(this.sizeMegasPub);
@@ -491,6 +493,10 @@ public class FrmCotizarPublicacion extends javax.swing.JFrame {
             publicacion = publicacionFisica;
         }
 
+        int costoProduccion = Cotizador.calcularCostoProduccion(this.noPaginasPub);
+        publicacion.setCostoProd(costoProduccion);
+        int costoVenta = Cotizador.calcularCostoVenta(publicacion);
+        publicacion.setCostoVenta(costoVenta);
         return publicacion;
     }
 
@@ -542,12 +548,14 @@ public class FrmCotizarPublicacion extends javax.swing.JFrame {
         this.cBoxAutores.setEnabled(!estadoActual);
     }
 
-    private void procederAPago(double monto) {
+    private void procederAPago(double costoProduccion) {
         // TODO Cambiar cliente
-        System.out.println(monto+"Monto");
+        
         PagoDTO pagoDTO = new PagoDTO();
-        pagoDTO.setMontoTotal(monto);
-        System.out.println(pagoDTO.getMontoTotal());
+        pagoDTO.setMontoTotal(costoProduccion);
+        pagoDTO.setCliente((Cliente) this.usuarioLoggeado);
+        
+        pagoDTO.setPublicacion(this.crearPublicacionDeCampos());
         FrmRealizarPago frmRealizarPago = new FrmRealizarPago(this, pagoDTO);
         FormUtils.cargarForm(frmRealizarPago, this);
     }
