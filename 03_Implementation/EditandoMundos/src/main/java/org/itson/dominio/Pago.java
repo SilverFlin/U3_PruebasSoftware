@@ -31,10 +31,10 @@ public class Pago implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne(mappedBy = "pago", cascade = {CascadeType.MERGE})
+    @OneToOne(mappedBy = "pago", cascade = {CascadeType.PERSIST})
     private Publicacion publicacion;
 
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.MERGE})
     @JoinColumn(name = "idCliente", nullable = false)
     private Cliente cliente;
 
@@ -50,12 +50,12 @@ public class Pago implements Serializable {
     @Enumerated(EnumType.STRING)
     private DivisionPago divisionPago;
 
-    @OneToOne(cascade = {CascadeType.MERGE})
+    @OneToOne(cascade = {CascadeType.MERGE,CascadeType.PERSIST})
     @JoinColumn(name = "idMetodoPago", referencedColumnName = "id", nullable = true)
     private MetodoPago metodoPago;
 
     @Column(name = "monto", nullable = false)
-    private Double montoTotal;
+    private Double monto;
 
     public Pago() {
     }
@@ -116,12 +116,12 @@ public class Pago implements Serializable {
         this.metodoPago = metodoPago;
     }
 
-    public Double getMontoTotal() {
-        return montoTotal;
+    public Double getMonto() {
+        return monto;
     }
 
-    public void setMontoTotal(Double montoTotal) {
-        this.montoTotal = montoTotal;
+    public void setMonto(Double montoTotal) {
+        this.monto = montoTotal;
     }
 
     @Override
