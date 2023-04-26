@@ -5,6 +5,7 @@
 package org.itson.repositories;
 
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 import org.itson.dominio.Cliente;
 
 /**
@@ -12,9 +13,16 @@ import org.itson.dominio.Cliente;
  * @author Toled
  */
 public class ClientesRepository extends RepositoryBase<Cliente> {
-    
+
     public ClientesRepository(EntityManager entityManager) {
         super(entityManager);
     }
-    
+
+    public Cliente obtenPorUsername(String username) {
+        TypedQuery<Cliente> query = entityManager.createNamedQuery("Cliente.findByUsername", Cliente.class);
+        query.setParameter("username", username);
+        return query.getSingleResult();
+
+    }
+
 }

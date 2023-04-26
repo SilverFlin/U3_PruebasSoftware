@@ -5,11 +5,9 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
-import javax.persistence.JoinColumn;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 
 /**
  *
@@ -18,6 +16,12 @@ import javax.persistence.OneToOne;
 @Entity
 //@Inheritance(strategy = InheritanceType.JOINED)
 @DiscriminatorValue("cliente")
+@NamedQueries({
+    @NamedQuery(
+            name = "Cliente.findByUsername",
+            query = "SELECT c FROM Cliente c WHERE c.username like :username"
+    )
+})
 public class Cliente extends Usuario {
 
     @Column(name = "nombres", nullable = true, length = 100)
@@ -37,7 +41,7 @@ public class Cliente extends Usuario {
     @Column(name = "direccion", nullable = true, length = 100)
     private String direccion;
 
-     @OneToMany(mappedBy = "cliente", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    @OneToMany(mappedBy = "cliente", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     private List<Pago> pagos;
 
     public Cliente() {
@@ -100,6 +104,11 @@ public class Cliente extends Usuario {
 
     public void setDireccion(String direccion) {
         this.direccion = direccion;
+    }
+
+    @Override
+    public String toString() {
+        return "Cliente{" + "nombres=" + nombres + ", apellidoPaterno=" + apellidoPaterno + ", apellidoMaterno=" + apellidoMaterno + ", email=" + email + ", telefono=" + telefono + ", direccion=" + direccion + ", pagos=" + pagos + '}';
     }
 
 }
