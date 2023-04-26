@@ -8,6 +8,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import org.itson.controladores.ControladorPublicacion;
+import org.itson.dominio.Administrador;
 import org.itson.dominio.Autor;
 import org.itson.dominio.Cliente;
 import org.itson.dominio.Pago;
@@ -346,7 +347,9 @@ public class FrmCotizarPublicacion extends javax.swing.JFrame {
             return;
         }
         if (respuesta == JOptionPane.OK_OPTION) {
-            this.procederAPago(costoProduccion);
+            if(this.validarCuentaLoggeada()){
+                this.procederAPago(costoProduccion);
+            }
         }
 
     }
@@ -549,7 +552,7 @@ public class FrmCotizarPublicacion extends javax.swing.JFrame {
     }
 
     private void procederAPago(double costoProduccion) {
-        // TODO Cambiar cliente
+        
         
         PagoDTO pagoDTO = new PagoDTO();
         pagoDTO.setMontoTotal(costoProduccion);
@@ -558,5 +561,22 @@ public class FrmCotizarPublicacion extends javax.swing.JFrame {
         pagoDTO.setPublicacion(this.crearPublicacionDeCampos());
         FrmRealizarPago frmRealizarPago = new FrmRealizarPago(this, pagoDTO);
         FormUtils.cargarForm(frmRealizarPago, this);
+    }
+
+    private boolean validarCuentaLoggeada() {
+        if(this.usuarioLoggeado == null){
+            Dialogs.mostrarMensajeError(rootPane, "No hay cuenta loggeada.");
+            this.cargarRegistroCliente();
+            return false;
+        }
+        if(this.usuarioLoggeado instanceof Administrador){
+            Dialogs.mostrarMensajeError(rootPane, "Administradores no pueden realizar pagos.");
+            return false;
+        }
+        return true;
+    }
+    private void cargarRegistroCliente() {
+        FrmRegistroCliente frmRegistroCliente = new FrmRegistroCliente(this);
+        FormUtils.cargarForm(frmRegistroCliente, this);
     }
 }

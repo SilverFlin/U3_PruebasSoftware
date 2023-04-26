@@ -277,7 +277,7 @@ public class FrmIniciarSesion extends javax.swing.JFrame {
 
     private void cargarCotizacion() {
         FrmCotizarPublicacion frmCotizarPublicacion
-                = new FrmCotizarPublicacion(this, usuarioLoggeado);
+                = new FrmCotizarPublicacion(this, null);
         FormUtils.cargarForm(frmCotizarPublicacion, this);
 
     }
