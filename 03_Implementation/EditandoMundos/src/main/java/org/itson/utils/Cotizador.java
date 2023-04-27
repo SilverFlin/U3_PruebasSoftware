@@ -20,7 +20,6 @@ public class Cotizador {
 
     private static final float AUMENTO_DENSIDAD_BASE = 1.10f;
     private static final float AUMENTO_DENSIDAD_DENSO = 1.15f;
-
     private Cotizador() {
         throw new IllegalStateException("Utility class");
     }

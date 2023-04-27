@@ -506,7 +506,7 @@ public class FrmCotizarPublicacion extends javax.swing.JFrame {
     private Autor buscarAutor(String nombres, String apellidoPaterno) {
         // TODO actualizar para cuando el usuario sea el autor de la publciacion
         UnitOfWork unitOfWork = new UnitOfWork();
-        List<Autor> autores = unitOfWork.autoresRepository().buscarPorNombreYApellido(nombres, apellidoPaterno);
+        List<Autor> autores = unitOfWork.autoresRepository().consultaNombreYApellido(nombres, apellidoPaterno);
         return autores.get(0);
     }
 

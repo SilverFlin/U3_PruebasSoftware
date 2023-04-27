@@ -27,7 +27,7 @@ public class ControladorAutor {
         new UnitOfWork().autoresRepository().eliminar(autor);
     }
 
-    public static void modificarAutor(Autor autor) {
-        new UnitOfWork().autoresRepository().actualizar(autor);
+    public static Autor modificarAutor(Autor autor) {
+        return new UnitOfWork().autoresRepository().actualizar(autor);
     }
 }
