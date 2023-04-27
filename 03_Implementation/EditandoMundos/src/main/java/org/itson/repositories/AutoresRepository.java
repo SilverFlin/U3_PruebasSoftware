@@ -19,7 +19,7 @@ public class AutoresRepository extends RepositoryBase<Autor> {
         super(entityManager);
     }
 
-    public List<Autor> buscarPorNombreYApellido(String nombres, String apellidoPaterno) {
+    public List<Autor> consultaNombreYApellido(String nombres, String apellidoPaterno) {
         TypedQuery<Autor> query = entityManager.createNamedQuery("autoresBuscarNombres", Autor.class);
         query.setParameter("nombres", "%" + nombres + "%");
         query.setParameter("apellidopaterno", "%" + apellidoPaterno + "%");

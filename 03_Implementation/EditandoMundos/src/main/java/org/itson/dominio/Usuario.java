@@ -17,7 +17,7 @@ import javax.persistence.NamedQuery;
  * @author Toled
  */
 @Entity
-@Inheritance(strategy = InheritanceType.JOINED)
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @DiscriminatorColumn(name = "tipo_usuario")
 @NamedQueries({
     @NamedQuery(

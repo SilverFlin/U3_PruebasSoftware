@@ -2,6 +2,7 @@ package org.itson.main;
 
 import org.itson.dominio.Administrador;
 import org.itson.dominio.Autor;
+import org.itson.dominio.Cliente;
 import org.itson.dominio.Nacionalidad;
 import org.itson.dominio.PublicacionDigital;
 import org.itson.dominio.PublicacionFisica;
@@ -82,7 +83,6 @@ public class Main {
             System.out.println("Admin prueba ya agregado");
         }
 
-        imprimirEntidades(administrador);
         return administrador;
     }
 
@@ -95,12 +95,38 @@ public class Main {
 
     private static void iniciarApp() {
         agregarAdminPrueba();
+        agregarClientePrueba();
         FrmIniciarSesion iniciarSesionForm = new FrmIniciarSesion();
         iniciarSesionForm.setVisible(true);
         Dialogs.mostrarMensajeExito(iniciarSesionForm, """
                                                        Admin Prueba:
                                                        usuario: admin
                                                        password: admin
-                                                       """);
+                                                       Cliente Prueba:
+                                                       usuario: cliente
+                                                       password: cliente""");
+    }
+
+    private static void agregarClientePrueba() {
+         UnitOfWork unitOfWork = new UnitOfWork();
+
+        Cliente cliente = new Cliente();
+        cliente.setNombres("Luis");
+        cliente.setApellidoPaterno("Toledo");
+        cliente.setApellidoMaterno("Russo");
+        cliente.setDireccion("Guelatao");
+        cliente.setEmail("toledo@russo.com");
+        cliente.setTelefono("123456789");
+        cliente.setUsername("cliente");
+
+        // TODO Esto se debe efectuar en otra parte
+        String passwordEncriptada = Encriptador.encriptarPassword("cliente");
+        cliente.setPassword(passwordEncriptada);
+        try {
+            unitOfWork.clientesRepository().agregar(cliente);
+        } catch (Exception e) {
+            System.out.println("Cliente prueba ya agregado");
+        }
+
     }
 }

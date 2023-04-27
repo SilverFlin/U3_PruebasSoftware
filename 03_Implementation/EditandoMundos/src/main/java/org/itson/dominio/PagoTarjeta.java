@@ -1,6 +1,6 @@
+package org.itson.dominio;
 
 import javax.persistence.Entity;
-import org.itson.dominio.MetodoPago;
 
 /**
  *

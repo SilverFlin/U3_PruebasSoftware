@@ -8,7 +8,10 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import org.itson.controladores.ControladorPublicacion;
+import org.itson.dominio.Administrador;
 import org.itson.dominio.Autor;
+import org.itson.dominio.Cliente;
+import org.itson.dominio.Pago;
 import org.itson.dominio.Publicacion;
 import org.itson.dominio.PublicacionDigital;
 import org.itson.dominio.PublicacionFisica;
@@ -336,9 +339,6 @@ public class FrmCotizarPublicacion extends javax.swing.JFrame {
         }
 
         this.colectarCampos();
-
-        Publicacion publicacion = this.crearPublicacionDeCampos();
-
         int costoProduccion = Cotizador.calcularCostoProduccion(this.noPaginasPub);
 
         int respuesta = this.dialogConfirmarGuardar(costoProduccion);
@@ -347,11 +347,9 @@ public class FrmCotizarPublicacion extends javax.swing.JFrame {
             return;
         }
         if (respuesta == JOptionPane.OK_OPTION) {
-            Publicacion publicacionGuardada = ControladorPublicacion.guardarPublicacion(publicacion, costoProduccion);
-
-            this.dialogPublicacionGuardada(publicacionGuardada);
-
-            this.regresar();
+            if(this.validarCuentaLoggeada()){
+                this.procederAPago(costoProduccion);
+            }
         }
 
     }
@@ -487,6 +485,7 @@ public class FrmCotizarPublicacion extends javax.swing.JFrame {
         publicacion.setAutor(this.autorPub);
         publicacion.setTitulo(this.tituloPub);
         publicacion.setNoPaginas(noPaginasPub);
+        
 
         if (publicacion instanceof PublicacionDigital publicacionDigital) {
             publicacionDigital.setSizeMegas(this.sizeMegasPub);
@@ -497,12 +496,17 @@ public class FrmCotizarPublicacion extends javax.swing.JFrame {
             publicacion = publicacionFisica;
         }
 
+        int costoProduccion = Cotizador.calcularCostoProduccion(this.noPaginasPub);
+        publicacion.setCostoProd(costoProduccion);
+        int costoVenta = Cotizador.calcularCostoVenta(publicacion);
+        publicacion.setCostoVenta(costoVenta);
         return publicacion;
     }
 
     private Autor buscarAutor(String nombres, String apellidoPaterno) {
+        // TODO actualizar para cuando el usuario sea el autor de la publciacion
         UnitOfWork unitOfWork = new UnitOfWork();
-        List<Autor> autores = unitOfWork.autoresRepository().buscarPorNombreYApellido(nombres, apellidoPaterno);
+        List<Autor> autores = unitOfWork.autoresRepository().consultaNombreYApellido(nombres, apellidoPaterno);
         return autores.get(0);
     }
 
@@ -545,5 +549,34 @@ public class FrmCotizarPublicacion extends javax.swing.JFrame {
     private void toggleComboBoxAutores() {
         boolean estadoActual = cBoxAutores.isEnabled();
         this.cBoxAutores.setEnabled(!estadoActual);
+    }
+
+    private void procederAPago(double costoProduccion) {
+        
+        
+        PagoDTO pagoDTO = new PagoDTO();
+        pagoDTO.setMontoTotal(costoProduccion);
+        pagoDTO.setCliente((Cliente) this.usuarioLoggeado);
+        
+        pagoDTO.setPublicacion(this.crearPublicacionDeCampos());
+        FrmRealizarPago frmRealizarPago = new FrmRealizarPago(this, pagoDTO);
+        FormUtils.cargarForm(frmRealizarPago, this);
+    }
+
+    private boolean validarCuentaLoggeada() {
+        if(this.usuarioLoggeado == null){
+            Dialogs.mostrarMensajeError(rootPane, "No hay cuenta loggeada.");
+            this.cargarRegistroCliente();
+            return false;
+        }
+        if(this.usuarioLoggeado instanceof Administrador){
+            Dialogs.mostrarMensajeError(rootPane, "Administradores no pueden realizar pagos.");
+            return false;
+        }
+        return true;
+    }
+    private void cargarRegistroCliente() {
+        FrmRegistroCliente frmRegistroCliente = new FrmRegistroCliente(this);
+        FormUtils.cargarForm(frmRegistroCliente, this);
     }
 }

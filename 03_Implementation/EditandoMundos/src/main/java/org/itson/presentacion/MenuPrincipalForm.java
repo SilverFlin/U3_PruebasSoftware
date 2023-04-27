@@ -3,6 +3,7 @@ package org.itson.presentacion;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.itson.dominio.Administrador;
+import org.itson.dominio.Cliente;
 import org.itson.dominio.Usuario;
 import org.itson.utils.FormUtils;
 
@@ -12,7 +13,6 @@ import org.itson.utils.FormUtils;
  */
 public class MenuPrincipalForm extends javax.swing.JFrame {
 
-    private Usuario usuarioLoggeado;
     /**
      * Logger de excepciones
      */
@@ -23,10 +23,12 @@ public class MenuPrincipalForm extends javax.swing.JFrame {
     private FrmAgregarAutor agregarAutorForm;
     private FrmAgregarUsuario agregarUsuarioForm;
     private FrmGestionarAutores gestionarAutoresForm;
+    private final Usuario usuarioLoggeado;
 
     public MenuPrincipalForm(Usuario usuarioLoggeado) {
         initComponents();
         ajustarEntornoSegunUsuario(usuarioLoggeado);
+        this.usuarioLoggeado = usuarioLoggeado;
         initFormsConectados();
 
     }

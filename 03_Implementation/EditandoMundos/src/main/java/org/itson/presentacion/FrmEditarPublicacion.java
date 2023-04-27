@@ -435,7 +435,7 @@ public class FrmEditarPublicacion extends JFrameActualizable {
 
     private Autor buscarAutor(String nombres, String apellidoPaterno) {
         UnitOfWork unitOfWork = new UnitOfWork();
-        List<Autor> autores = unitOfWork.autoresRepository().buscarPorNombreYApellido(nombres, apellidoPaterno);
+        List<Autor> autores = unitOfWork.autoresRepository().consultaNombreYApellido(nombres, apellidoPaterno);
         return autores.get(0);
     }
 
