@@ -31,7 +31,8 @@ public class Pago implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne(mappedBy = "pago", cascade = {CascadeType.PERSIST})
+    @OneToOne(cascade = {CascadeType.MERGE,CascadeType.PERSIST})
+    @JoinColumn(name = "idPublicacion", referencedColumnName = "id", nullable = true)
     private Publicacion publicacion;
 
     @ManyToOne(cascade = {CascadeType.MERGE})
@@ -50,7 +51,7 @@ public class Pago implements Serializable {
     @Enumerated(EnumType.STRING)
     private DivisionPago divisionPago;
 
-    @OneToOne(cascade = {CascadeType.MERGE,CascadeType.PERSIST})
+    @OneToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinColumn(name = "idMetodoPago", referencedColumnName = "id", nullable = true)
     private MetodoPago metodoPago;
 
