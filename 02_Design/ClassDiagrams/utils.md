@@ -3,6 +3,14 @@
 ```mermaid
 classDiagram
 
+class ConfiguracionPagiado{
+    +getOffset()
+    +getLimite()
+    -calcOffset()
+    +avanzarPag()
+    +retrocederPag()
+}
+
 class Cotizador{
     +calcularCostoVenta(Publicacion publicacion) int
     +calcularCostoProduccion(int numPaginas) int
@@ -31,5 +39,9 @@ class Validaciones{
 
 class ValidacionesForm {
     +isValidText(String texto) boolean
+    +isValidEmail(String texto) boolean
+    +ismismaPassword(String password, String confirmPassword) boolean
+    +isValidTelefono(String telefono) boolean
+
 }
 ```
