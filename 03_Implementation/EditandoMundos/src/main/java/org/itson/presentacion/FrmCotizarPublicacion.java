@@ -347,7 +347,7 @@ public class FrmCotizarPublicacion extends javax.swing.JFrame {
             return;
         }
         if (respuesta == JOptionPane.OK_OPTION) {
-            if(this.validarCuentaLoggeada()){
+            if (this.validarCuentaLoggeada()) {
                 this.procederAPago(costoProduccion);
             }
         }
@@ -397,6 +397,12 @@ public class FrmCotizarPublicacion extends javax.swing.JFrame {
                 Dialogs.mostrarMensajeError(rootPane, "Formato de página inicial inválido");
                 return false;
             }
+
+        }
+
+        if (cBoxIsAutor.isSelected() && !(this.usuarioLoggeado instanceof Autor)) {
+            Dialogs.mostrarMensajeError(rootPane, "Usted no está registrado como autor");
+            return false;
 
         }
         return true;
@@ -485,7 +491,6 @@ public class FrmCotizarPublicacion extends javax.swing.JFrame {
         publicacion.setAutor(this.autorPub);
         publicacion.setTitulo(this.tituloPub);
         publicacion.setNoPaginas(noPaginasPub);
-        
 
         if (publicacion instanceof PublicacionDigital publicacionDigital) {
             publicacionDigital.setSizeMegas(this.sizeMegasPub);
@@ -511,12 +516,17 @@ public class FrmCotizarPublicacion extends javax.swing.JFrame {
     }
 
     private void colectarCampos() {
-        String rawAutor = String.valueOf(cBoxAutores.getSelectedItem());
-        String[] nombresAutorArr = rawAutor.split("");
-        String nombresAutor = nombresAutorArr.length == 3 ? nombresAutorArr[0] + " " + nombresAutorArr[1] : nombresAutorArr[0];
-        String apellidoPaternoAutor = nombresAutorArr[nombresAutorArr.length - 1];
 
-        this.autorPub = buscarAutor(nombresAutor, apellidoPaternoAutor);
+        if (cBoxIsAutor.isSelected()) {
+            this.autorPub = (Autor) this.usuarioLoggeado;
+        } else {
+            String rawAutor = String.valueOf(cBoxAutores.getSelectedItem());
+            String[] nombresAutorArr = rawAutor.split("");
+            String nombresAutor = nombresAutorArr.length == 3 ? nombresAutorArr[0] + " " + nombresAutorArr[1] : nombresAutorArr[0];
+            String apellidoPaternoAutor = nombresAutorArr[nombresAutorArr.length - 1];
+            this.autorPub = buscarAutor(nombresAutor, apellidoPaternoAutor);
+        }
+
         this.tituloPub = this.txtTitulo.getText();
         this.noPaginasPub = Integer.valueOf(txtNoPaginas.getText());
 
@@ -552,29 +562,29 @@ public class FrmCotizarPublicacion extends javax.swing.JFrame {
     }
 
     private void procederAPago(double costoProduccion) {
-        
-        
+
         PagoDTO pagoDTO = new PagoDTO();
         pagoDTO.setMontoTotal(costoProduccion);
         pagoDTO.setCliente((Cliente) this.usuarioLoggeado);
-        
+
         pagoDTO.setPublicacion(this.crearPublicacionDeCampos());
         FrmRealizarPago frmRealizarPago = new FrmRealizarPago(this, pagoDTO);
         FormUtils.cargarForm(frmRealizarPago, this);
     }
 
     private boolean validarCuentaLoggeada() {
-        if(this.usuarioLoggeado == null){
+        if (this.usuarioLoggeado == null) {
             Dialogs.mostrarMensajeError(rootPane, "No hay cuenta loggeada.");
             this.cargarRegistroCliente();
             return false;
         }
-        if(this.usuarioLoggeado instanceof Administrador){
+        if (this.usuarioLoggeado instanceof Administrador) {
             Dialogs.mostrarMensajeError(rootPane, "Administradores no pueden realizar pagos.");
             return false;
         }
         return true;
     }
+
     private void cargarRegistroCliente() {
         FrmRegistroCliente frmRegistroCliente = new FrmRegistroCliente(this);
         FormUtils.cargarForm(frmRegistroCliente, this);
