@@ -3,7 +3,9 @@ package org.itson.repositories;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
+import org.itson.dominio.Cliente;
 import org.itson.dominio.Pago;
+import org.itson.utils.ConfiguracionPaginado;
 
 /**
  *
@@ -15,10 +17,11 @@ public class PagosRepository extends RepositoryBase<Pago> {
         super(entityManager);
     }
     
-    public List<Pago> consultaPaginado(int offset, int limit) {
+    public List<Pago> consultaPaginado(ConfiguracionPaginado configuracionPaginado, Cliente cliente) {
         TypedQuery<Pago> query = entityManager.createNamedQuery("consultarTodosPagos", Pago.class);
-        query.setFirstResult(offset);
-        query.setMaxResults(limit);
+        query.setFirstResult(configuracionPaginado.getOffset());
+        query.setMaxResults(configuracionPaginado.getLimite());
+        query.setParameter("cliente", cliente);
         return query.getResultList();
     }
 }

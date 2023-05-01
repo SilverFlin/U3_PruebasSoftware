@@ -29,7 +29,7 @@ import javax.persistence.TemporalType;
 @NamedQueries({
     @NamedQuery(
             name = "consultarTodosPagos",
-            query = "SELECT p FROM Pago p"
+            query = "SELECT p FROM Pago p WHERE p.cliente = :cliente"
     )
 })
 public class Pago implements Serializable {

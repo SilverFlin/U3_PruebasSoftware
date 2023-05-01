@@ -9,6 +9,7 @@ import javax.swing.JFrame;
 import javax.swing.table.DefaultTableModel;
 import org.itson.controladores.ControladorPagos;
 import org.itson.controladores.ControladorPublicacion;
+import org.itson.dominio.Cliente;
 import org.itson.dominio.EstadoPago;
 import org.itson.dominio.Pago;
 import org.itson.dominio.Publicacion;
@@ -45,9 +46,11 @@ public class FrmConsultarPagosPendientes extends JFrameActualizable {
         DefaultTableModel modeloTabla = (DefaultTableModel) this.tblPagosPendientes.getModel();
         modeloTabla.setRowCount(0);
         for (Pago pago : pagosPendientes) {
-            if(pago.getEstado() == EstadoPago.PAGADO){
+            if (pago.getEstado() == EstadoPago.PAGADO || !pago.getCliente().equals(this.clienteLoggeado)) {
                 continue;
             }
+            System.out.println(pago.getEstado());
+
             Publicacion publicacion = pago.getPublicacion();
             Object[] fila = {
                 publicacion.getTitulo(),
@@ -262,7 +265,7 @@ public class FrmConsultarPagosPendientes extends JFrameActualizable {
     // End of variables declaration//GEN-END:variables
 
     private List<Pago> conseguirListaPagosPendientes() {
-        return ControladorPagos.consultaPaginado(this.configPaginado);
+        return ControladorPagos.consultaPaginado(this.configPaginado, (Cliente) this.clienteLoggeado);
 
     }
 
@@ -284,7 +287,8 @@ public class FrmConsultarPagosPendientes extends JFrameActualizable {
         int eleccion = Dialogs.mostrarMensajeYesNoOption(this, "¿Seguro que desea realizar el pago?", "Confirmación");
         if (eleccion == Dialogs.OPCION_SI) {
             Pago pago = pagosPendientes.get(index);
-            ControladorPagos.pagar(pago);
+            Pago testPago = ControladorPagos.pagar(pago);
+            System.out.println(testPago.getEstado());
         }
     }
 
