@@ -106,6 +106,14 @@ public class Cliente extends Usuario {
         this.direccion = direccion;
     }
 
+    public List<Pago> getPagos() {
+        return pagos;
+    }
+
+    public void setPagos(List<Pago> pagos) {
+        this.pagos = pagos;
+    }
+
     @Override
     public String toString() {
         return "Cliente{" + "nombres=" + nombres + ", apellidoPaterno=" + apellidoPaterno + ", apellidoMaterno=" + apellidoMaterno + ", email=" + email + ", telefono=" + telefono + ", direccion=" + direccion + ", pagos=" + pagos + '}';

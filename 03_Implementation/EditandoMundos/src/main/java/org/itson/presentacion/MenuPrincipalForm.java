@@ -1,10 +1,16 @@
 package org.itson.presentacion;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.itson.dominio.Administrador;
 import org.itson.dominio.Cliente;
+import org.itson.dominio.DivisionPago;
+import org.itson.dominio.EstadoPago;
+import org.itson.dominio.Pago;
 import org.itson.dominio.Usuario;
+import org.itson.utils.Dialogs;
 import org.itson.utils.FormUtils;
 
 /**
@@ -30,7 +36,7 @@ public class MenuPrincipalForm extends javax.swing.JFrame {
         ajustarEntornoSegunUsuario(usuarioLoggeado);
         this.usuarioLoggeado = usuarioLoggeado;
         initFormsConectados();
-
+        this.verificarPagosPendientes();
     }
 
     @SuppressWarnings("unchecked")
@@ -168,12 +174,12 @@ public class MenuPrincipalForm extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCotizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCotizarActionPerformed
-        try{
+        try {
             this.cargarFormCotizacion();
-        }catch(Exception e){
+        } catch (Exception e) {
             LOG.log(Level.SEVERE, "Boton Cotizar Menu Principal");
         }
-        
+
     }//GEN-LAST:event_btnCotizarActionPerformed
 
 
@@ -208,8 +214,7 @@ public class MenuPrincipalForm extends javax.swing.JFrame {
     private javax.swing.JLabel txtBienvenida;
     // End of variables declaration//GEN-END:variables
 
-    
-    private void cargarFormGestionarPublicaciones(){
+    private void cargarFormGestionarPublicaciones() {
         FormUtils.cargarForm(this.gestionarPublicacionesForm, this);
     }
 
@@ -240,6 +245,29 @@ public class MenuPrincipalForm extends javax.swing.JFrame {
         this.cotizacionesForm = new FrmCotizarPublicacion(this, this.usuarioLoggeado);
         this.gestionarAutoresForm = new FrmGestionarAutores(this, this.usuarioLoggeado);
         this.agregarUsuarioForm = new FrmAgregarUsuario(this, this.usuarioLoggeado);
+    }
+
+    private void verificarPagosPendientes() {
+        Cliente cliente = (Cliente) this.usuarioLoggeado;
+        List<Pago> pagosCliente = cliente.getPagos();
+        List<Pago> pagosPendientes = new ArrayList<>();
+
+        for (Pago pago : pagosCliente) {
+            boolean isDosPagos = pago.getDivisionPago() == DivisionPago.DOS_PAGOS;
+            boolean isPagado = pago.getEstado() == EstadoPago.PAGADO;
+
+            if (isDosPagos && !isPagado) {
+                pagosPendientes.add(pago);
+            }
+
+        }
+        if (pagosPendientes.isEmpty()) {
+            return;
+        }
+
+        String msgPagosPendientes = "Usted tiene " + pagosPendientes.size() + " pago(s) pendiente(s)";
+        Dialogs.mostrarMensajeError(rootPane, msgPagosPendientes);
+
     }
 
 }

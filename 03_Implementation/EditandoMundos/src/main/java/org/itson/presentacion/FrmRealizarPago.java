@@ -179,7 +179,7 @@ public class FrmRealizarPago extends javax.swing.JFrame {
     private void proceder() {
         Pago pago = this.realizarPago();
         Pago pagoGuardado = this.persistirPago(pago);
-        if(pagoGuardado == null){
+        if (pagoGuardado == null) {
             Dialogs.mostrarMensajeError(rootPane, "Algo salió mal.");
             return;
         }
@@ -207,12 +207,10 @@ public class FrmRealizarPago extends javax.swing.JFrame {
 
         pago.setCliente(pagoDTO.getCliente());
 
-        DivisionPago divisionPago
-                = this.cboxDosPasos.isSelected()
-                ? DivisionPago.DOS_PAGOS : DivisionPago.PAGO_UNICO;
+        DivisionPago divisionPago = this.cboxDosPasos.isSelected() ? DivisionPago.DOS_PAGOS : DivisionPago.PAGO_UNICO;
         pago.setDivisionPago(divisionPago);
 
-        pago.setEstado(EstadoPago.PAGADO);
+        pago.setEstado(divisionPago == DivisionPago.PAGO_UNICO? EstadoPago.PAGADO:EstadoPago.PENDIENTE);
 
         pago.setFechaPago(new GregorianCalendar());
 
