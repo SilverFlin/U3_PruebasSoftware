@@ -23,12 +23,13 @@ public class MenuPrincipalForm extends javax.swing.JFrame {
      * Logger de excepciones
      */
     private static final Logger LOG = Logger.getLogger(MenuPrincipalForm.class.getName());
-    private FrmPublicaciones listaPublicacionesForm;
-    private FrmCotizarPublicacion cotizacionesForm;
-    private FrmGestionarPublicaciones gestionarPublicacionesForm;
-    private FrmAgregarAutor agregarAutorForm;
-    private FrmAgregarUsuario agregarUsuarioForm;
-    private FrmGestionarAutores gestionarAutoresForm;
+    private FrmPublicaciones frmListaPublicaciones;
+    private FrmCotizarPublicacion frmCotizaciones;
+    private FrmGestionarPublicaciones frmGestionarPublicaciones;
+    private FrmAgregarAutor frmAgregarAutor;
+    private FrmAgregarUsuario frmAgregarUsuario;
+    private FrmGestionarAutores frmGestionarAutores;
+    private FrmConsultarPagosPendientes frmConsultarPagosPendientes;
     private final Usuario usuarioLoggeado;
 
     public MenuPrincipalForm(Usuario usuarioLoggeado) {
@@ -51,6 +52,7 @@ public class MenuPrincipalForm extends javax.swing.JFrame {
         btnCotizar = new javax.swing.JButton();
         btnGestionarPublicaciones = new javax.swing.JButton();
         btnAgregarUsuario = new javax.swing.JButton();
+        btnPagosPendientes = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("BancoTransacciones");
@@ -130,7 +132,7 @@ public class MenuPrincipalForm extends javax.swing.JFrame {
                 btnCotizarActionPerformed(evt);
             }
         });
-        background3.add(btnCotizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 180, 180, 40));
+        background3.add(btnCotizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 180, 140, 40));
 
         btnGestionarPublicaciones.setBackground(new java.awt.Color(0, 102, 255));
         btnGestionarPublicaciones.setFont(new java.awt.Font("Nirmala UI Semilight", 1, 14)); // NOI18N
@@ -157,6 +159,19 @@ public class MenuPrincipalForm extends javax.swing.JFrame {
             }
         });
         background3.add(btnAgregarUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 300, 180, 40));
+
+        btnPagosPendientes.setBackground(new java.awt.Color(0, 102, 255));
+        btnPagosPendientes.setFont(new java.awt.Font("Nirmala UI Semilight", 1, 14)); // NOI18N
+        btnPagosPendientes.setForeground(new java.awt.Color(255, 255, 255));
+        btnPagosPendientes.setText("Pagos Pendientes");
+        btnPagosPendientes.setBorder(null);
+        btnPagosPendientes.setBorderPainted(false);
+        btnPagosPendientes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPagosPendientesActionPerformed(evt);
+            }
+        });
+        background3.add(btnPagosPendientes, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 180, 140, 40));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -202,6 +217,10 @@ public class MenuPrincipalForm extends javax.swing.JFrame {
         this.cargarCrearUsuarioForm();
     }//GEN-LAST:event_btnAgregarUsuarioActionPerformed
 
+    private void btnPagosPendientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPagosPendientesActionPerformed
+        this.cargarPagosPendientes();
+    }//GEN-LAST:event_btnPagosPendientesActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel background3;
@@ -210,24 +229,30 @@ public class MenuPrincipalForm extends javax.swing.JFrame {
     private javax.swing.JButton btnCotizar;
     private javax.swing.JButton btnGestionarAutores;
     private javax.swing.JButton btnGestionarPublicaciones;
+    private javax.swing.JButton btnPagosPendientes;
     private javax.swing.JPanel head3;
     private javax.swing.JLabel txtBienvenida;
     // End of variables declaration//GEN-END:variables
 
     private void cargarFormGestionarPublicaciones() {
-        FormUtils.cargarForm(this.gestionarPublicacionesForm, this);
+        FormUtils.cargarForm(this.frmGestionarPublicaciones, this);
     }
 
     private void cargarFormCotizacion() {
-        FormUtils.cargarForm(this.cotizacionesForm, this);
+        FormUtils.cargarForm(this.frmCotizaciones, this);
     }
 
     private void cargarFormGestionarAutores() {
-        FormUtils.cargarForm(this.gestionarAutoresForm, this);
+        FormUtils.cargarForm(this.frmGestionarAutores, this);
     }
 
     private void cargarCrearUsuarioForm() {
-        FormUtils.cargarForm(this.agregarUsuarioForm, this);
+        FormUtils.cargarForm(this.frmAgregarUsuario, this);
+    }
+
+    private void cargarPagosPendientes() {
+        this.frmConsultarPagosPendientes.actualizaFrame();
+        FormUtils.cargarForm(this.frmConsultarPagosPendientes, this);
     }
 
     private void cerrarSesion() {
@@ -241,10 +266,11 @@ public class MenuPrincipalForm extends javax.swing.JFrame {
     }
 
     private void initFormsConectados() {
-        this.gestionarPublicacionesForm = new FrmGestionarPublicaciones(this, this.usuarioLoggeado);
-        this.cotizacionesForm = new FrmCotizarPublicacion(this, this.usuarioLoggeado);
-        this.gestionarAutoresForm = new FrmGestionarAutores(this, this.usuarioLoggeado);
-        this.agregarUsuarioForm = new FrmAgregarUsuario(this, this.usuarioLoggeado);
+        this.frmGestionarPublicaciones = new FrmGestionarPublicaciones(this, this.usuarioLoggeado);
+        this.frmCotizaciones = new FrmCotizarPublicacion(this, this.usuarioLoggeado);
+        this.frmGestionarAutores = new FrmGestionarAutores(this, this.usuarioLoggeado);
+        this.frmAgregarUsuario = new FrmAgregarUsuario(this, this.usuarioLoggeado);
+        this.frmConsultarPagosPendientes = new FrmConsultarPagosPendientes(this, usuarioLoggeado);
     }
 
     private void verificarPagosPendientes() {
