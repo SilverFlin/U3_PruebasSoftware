@@ -11,6 +11,7 @@ import org.itson.dominio.Cliente;
 import org.itson.dominio.Nacionalidad;
 import org.itson.dominio.NombreCompleto;
 import org.itson.dominio.Usuario;
+import org.itson.repositories.ClientesRepository;
 import org.itson.utils.Dialogs;
 import static org.itson.utils.Dialogs.mostrarMensajeError;
 import org.itson.utils.FormUtils;
@@ -319,6 +320,10 @@ public class FrmRegistroCliente extends javax.swing.JFrame {
 
         this.clienteRegistrado = crearClienteDeCampos();
 
+        if (this.isCredencialesExistentes()) {
+            return;
+        }
+
         if (this.cBoxIsAutor.isSelected()) {
             this.cargarRegistroAutor();
         } else {
@@ -415,6 +420,25 @@ public class FrmRegistroCliente extends javax.swing.JFrame {
         } catch (Exception ex) {
             LOG.log(Level.SEVERE, "Error al persistir cliente.");
         }
+    }
+
+    private boolean isCredencialesExistentes() {
+
+        ClientesRepository clientesRepository = new UnitOfWork().clientesRepository();
+
+        if (clientesRepository.obtenPorEmail(this.txtEmail.getText()).isPresent()) {
+            Dialogs.mostrarMensajeError(rootPane, "Email existente");
+            return true;
+        }
+
+        if (clientesRepository.obtenPorUsername(this.txtUsuario.getText()).isPresent()) {
+            Dialogs.mostrarMensajeError(rootPane, "Usuario existente");
+            return true;
+        }
+
+        // Consultar Email + Dialog
+        // Consultar Usuario + Dialog
+        return false;
     }
 
 }

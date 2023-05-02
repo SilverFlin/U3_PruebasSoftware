@@ -4,7 +4,9 @@
  */
 package org.itson.repositories;
 
+import java.util.Optional;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 import org.itson.dominio.Cliente;
 
@@ -18,10 +20,30 @@ public class ClientesRepository extends RepositoryBase<Cliente> {
         super(entityManager);
     }
 
-    public Cliente obtenPorUsername(String username) {
+    public Optional<Cliente> obtenPorUsername(String username) {
         TypedQuery<Cliente> query = entityManager.createNamedQuery("Cliente.findByUsername", Cliente.class);
         query.setParameter("username", username);
-        return query.getSingleResult();
+        
+        Cliente cliente = null;
+        try {
+            cliente = query.getSingleResult();
+        } catch (NoResultException ex) {
+            // No hace falta nada aqui
+        }
+        return Optional.ofNullable(cliente);
+    }
+
+    public Optional<Cliente> obtenPorEmail(String email) {
+        TypedQuery<Cliente> query = entityManager.createNamedQuery("Cliente.findByEmail", Cliente.class);
+        query.setParameter("email", email);
+
+        Cliente cliente = null;
+        try {
+            cliente = query.getSingleResult();
+        } catch (NoResultException ex) {
+            // No hace falta nada aqui
+        }
+        return Optional.ofNullable(cliente);
 
     }
 

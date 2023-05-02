@@ -20,6 +20,10 @@ import javax.persistence.OneToMany;
     @NamedQuery(
             name = "Cliente.findByUsername",
             query = "SELECT c FROM Cliente c WHERE c.username like :username"
+    ),
+    @NamedQuery(
+            name = "Cliente.findByEmail",
+            query = "SELECT c FROM Cliente c WHERE c.email like :email"
     )
 })
 public class Cliente extends Usuario {
