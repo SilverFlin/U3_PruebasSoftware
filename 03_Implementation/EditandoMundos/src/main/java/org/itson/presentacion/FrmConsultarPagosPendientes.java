@@ -2,6 +2,7 @@ package org.itson.presentacion;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.logging.Logger;
@@ -41,15 +42,11 @@ public class FrmConsultarPagosPendientes extends JFrameActualizable {
 
     public final void cargarTablaPagos() {
 
-        this.pagosPendientes = this.conseguirListaPagosPendientes();
+        this.conseguirListaPagosPendientes();
 
         DefaultTableModel modeloTabla = (DefaultTableModel) this.tblPagosPendientes.getModel();
         modeloTabla.setRowCount(0);
         for (Pago pago : pagosPendientes) {
-            if (pago.getEstado() == EstadoPago.PAGADO || !pago.getCliente().equals(this.clienteLoggeado)) {
-                continue;
-            }
-            System.out.println(pago.getEstado());
 
             Publicacion publicacion = pago.getPublicacion();
             Object[] fila = {
@@ -264,9 +261,15 @@ public class FrmConsultarPagosPendientes extends JFrameActualizable {
     private javax.swing.JTable tblPagosPendientes;
     // End of variables declaration//GEN-END:variables
 
-    private List<Pago> conseguirListaPagosPendientes() {
-        return ControladorPagos.consultaPaginado(this.configPaginado, (Cliente) this.clienteLoggeado);
-
+    private void conseguirListaPagosPendientes() {
+        List<Pago> pagos = ControladorPagos.consultaPaginado(this.configPaginado, (Cliente) this.clienteLoggeado);
+        this.pagosPendientes = new ArrayList<>();
+        for (Pago pago : pagos) {
+            if (pago.getEstado() == EstadoPago.PAGADO || !pago.getCliente().equals(this.clienteLoggeado)) {
+                continue;
+            }
+            this.pagosPendientes.add(pago);
+        }
     }
 
     private String formatoFecha(final Calendar calendar) {
@@ -278,6 +281,7 @@ public class FrmConsultarPagosPendientes extends JFrameActualizable {
     }
 
     private void pagarElemento() {
+        this.conseguirListaPagosPendientes();
         int index = tblPagosPendientes.convertRowIndexToModel(tblPagosPendientes.getSelectedRow());
         if (index == -1) {
             Dialogs.mostrarMensajeError(this, "No ha seleccionado ningun elemento de la tabla");
@@ -288,7 +292,7 @@ public class FrmConsultarPagosPendientes extends JFrameActualizable {
         if (eleccion == Dialogs.OPCION_SI) {
             Pago pago = pagosPendientes.get(index);
             Pago testPago = ControladorPagos.pagar(pago);
-            System.out.println(testPago.getEstado());
+            System.out.println(testPago);
         }
     }
 

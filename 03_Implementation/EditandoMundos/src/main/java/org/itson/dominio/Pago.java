@@ -38,7 +38,7 @@ public class Pago implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne(cascade = {CascadeType.MERGE,CascadeType.PERSIST})
+    @OneToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinColumn(name = "idPublicacion", referencedColumnName = "id", nullable = true)
     private Publicacion publicacion;
 
@@ -154,7 +154,7 @@ public class Pago implements Serializable {
 
     @Override
     public String toString() {
-        return "org.itson.dominio.Pago[ id=" + id + " ]";
+        return "Pago{" + "id=" + id + ", publicacion=" + publicacion.getTitulo() + ", cliente=" + cliente.getNombres() + ", estado=" + estado + ", divisionPago=" + divisionPago + ", metodoPago=" + metodoPago + ", monto=" + monto + '}';
     }
 
 }
