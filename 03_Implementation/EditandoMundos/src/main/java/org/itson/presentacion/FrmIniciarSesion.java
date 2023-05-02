@@ -18,7 +18,7 @@ import static org.itson.utils.ValidacionesForms.isValidText;
 public class FrmIniciarSesion extends javax.swing.JFrame {
 
     private UnitOfWork unitOfWork;
-    private Cliente usuarioLoggeado;
+    private Usuario usuarioLoggeado;
 
     public FrmIniciarSesion() {
         initComponents();
@@ -246,14 +246,16 @@ public class FrmIniciarSesion extends javax.swing.JFrame {
     }
 
     private void intentarInicioSesion() {
-        ClientesRepository clientesRepository = unitOfWork.clientesRepository();
+        UsuariosRepository usuariosRepository = unitOfWork.usuariosRepository();
         String intentoPassword = new String(this.campoTextoContraseña.getPassword());
-        Cliente cliente = clientesRepository.obtenPorUsername(campoTextoUsuario.getText());
-        if (!Encriptador.verificarPasswordConHash(intentoPassword, cliente.getPassword())) {
+        Usuario usuario = usuariosRepository.obtenPorUsername(campoTextoUsuario.getText());
+
+        if (!Encriptador.verificarPasswordConHash(intentoPassword, usuario.getPassword())) {
             Dialogs.mostrarMensajeError(rootPane, "Credenciales inválidas");
             return;
         }
-        this.usuarioLoggeado = cliente;
+
+        this.usuarioLoggeado = usuario;
         this.cargarMenuPrincipal();
     }
 

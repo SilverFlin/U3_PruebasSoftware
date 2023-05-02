@@ -225,8 +225,6 @@ public class MenuPrincipalForm extends javax.swing.JFrame {
         FormUtils.cargarForm(this.frmGestionarAutores, this);
     }
 
-
-
     private void cargarPagosPendientes() {
         this.frmConsultarPagosPendientes.actualizaFrame();
         FormUtils.cargarForm(this.frmConsultarPagosPendientes, this);
@@ -250,6 +248,9 @@ public class MenuPrincipalForm extends javax.swing.JFrame {
     }
 
     private void verificarPagosPendientes() {
+        if(!(this.usuarioLoggeado instanceof Cliente)){
+            return;
+        }
         Cliente cliente = (Cliente) this.usuarioLoggeado;
         List<Pago> pagosCliente = cliente.getPagos();
         List<Pago> pagosPendientes = new ArrayList<>();

@@ -26,26 +26,31 @@ import org.itson.utils.FormUtils;
 public class FrmConsultarPagosPendientes extends JFrameActualizable {
 
     private static final Logger LOG = Logger.getLogger(FrmConsultarPagosPendientes.class.getName());
-    private Usuario clienteLoggeado;
+    private Usuario usuarioLoggeado;
     private ConfiguracionPaginado configPaginado;
     private final DateFormat formateador = new SimpleDateFormat("dd/MM/yyy");
     private final JFrame frmAnterior;
     private List<Pago> pagosPendientes;
 
-    public FrmConsultarPagosPendientes(JFrame frmAnterior, Usuario clienteLoggeado) {
+    public FrmConsultarPagosPendientes(JFrame frmAnterior, Usuario usuarioLoggeado) {
         initComponents();
         this.configPaginado = new ConfiguracionPaginado(this.tblPagosPendientes.getModel().getRowCount(), 0);
-        this.clienteLoggeado = clienteLoggeado;
+        this.usuarioLoggeado = usuarioLoggeado;
         this.frmAnterior = frmAnterior;
         cargarTablaPagos();
+
     }
 
     public final void cargarTablaPagos() {
-
-        this.conseguirListaPagosPendientes();
-
         DefaultTableModel modeloTabla = (DefaultTableModel) this.tblPagosPendientes.getModel();
         modeloTabla.setRowCount(0);
+        
+        if (!(this.usuarioLoggeado instanceof Cliente)) {
+            return;
+        }
+        
+        this.conseguirListaPagosPendientes();
+
         for (Pago pago : pagosPendientes) {
 
             Publicacion publicacion = pago.getPublicacion();
@@ -262,10 +267,10 @@ public class FrmConsultarPagosPendientes extends JFrameActualizable {
     // End of variables declaration//GEN-END:variables
 
     private void conseguirListaPagosPendientes() {
-        List<Pago> pagos = ControladorPagos.consultaPaginado(this.configPaginado, (Cliente) this.clienteLoggeado);
+        List<Pago> pagos = ControladorPagos.consultaPaginado(this.configPaginado, (Cliente) this.usuarioLoggeado);
         this.pagosPendientes = new ArrayList<>();
         for (Pago pago : pagos) {
-            if (pago.getEstado() == EstadoPago.PAGADO || !pago.getCliente().equals(this.clienteLoggeado)) {
+            if (pago.getEstado() == EstadoPago.PAGADO || !pago.getCliente().equals(this.usuarioLoggeado)) {
                 continue;
             }
             this.pagosPendientes.add(pago);
