@@ -46,9 +46,11 @@ public class ControladorUsuarioTest {
     public void testPersistirAdministrador() {
         System.out.println("persistirAdministrador");
         String pass = "333";
-        Administrador administrador = new Administrador(new Usuario("eeeee", pass));
+        Administrador administrador = new Administrador(new Usuario("asdsa", pass));
         Administrador result = ControladorUsuario.persistirAdministrador(administrador);
         assertNotEquals(pass, result.getPassword());
+        new UnitOfWork().administradoresRepository().eliminar(administrador);
+
     }
 
     /**
@@ -60,10 +62,12 @@ public class ControladorUsuarioTest {
 
         String pass = "333";
 
-        Cliente cliente = new Cliente(new Usuario("tttt", pass), new NombreCompleto("Aaa", "aaa", "aaa"), "eee@eee.com", "1231231233", "123213");
+        Cliente cliente = new Cliente(new Usuario("sdfsdf", pass), new NombreCompleto("Aaa", "aaa", "aaa"), "eee@eee.com", "1231231233", "123213");
         Autor autor = new Autor(cliente, 5, Nacionalidad.CANADIENSE);
 
         Autor result = ControladorUsuario.persistirAutor(autor);
         assertNotEquals(pass, result.getPassword());
+        new UnitOfWork().autoresRepository().eliminar(autor);
+
     }
 }
