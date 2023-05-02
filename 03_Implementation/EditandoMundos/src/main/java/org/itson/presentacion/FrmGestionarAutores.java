@@ -19,7 +19,6 @@ public class FrmGestionarAutores extends javax.swing.JFrame {
 
     private final JFrame frmAnterior;
     private FrmAutores autoresForm;
-    private FrmAgregarAutor agregarAutorForm;
     private FrmEliminarAutores eliminarAutoresForm;
     private FrmEditarAutores editarAutoresForm;
 
@@ -40,7 +39,6 @@ public class FrmGestionarAutores extends javax.swing.JFrame {
         btnCerrarSesion = new javax.swing.JButton();
         btnEditarAutor = new javax.swing.JButton();
         btnEliminarAutor = new javax.swing.JButton();
-        btnAgregarAutor = new javax.swing.JButton();
         btnConsultarAutores = new javax.swing.JButton();
         btnRegresar = new javax.swing.JButton();
 
@@ -124,19 +122,6 @@ public class FrmGestionarAutores extends javax.swing.JFrame {
         });
         background3.add(btnEliminarAutor, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 180, 180, 40));
 
-        btnAgregarAutor.setBackground(new java.awt.Color(0, 102, 255));
-        btnAgregarAutor.setFont(new java.awt.Font("Nirmala UI Semilight", 1, 14)); // NOI18N
-        btnAgregarAutor.setForeground(new java.awt.Color(255, 255, 255));
-        btnAgregarAutor.setText("Agregar");
-        btnAgregarAutor.setBorder(null);
-        btnAgregarAutor.setBorderPainted(false);
-        btnAgregarAutor.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAgregarAutorActionPerformed(evt);
-            }
-        });
-        background3.add(btnAgregarAutor, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 120, 180, 40));
-
         btnConsultarAutores.setBackground(new java.awt.Color(0, 102, 255));
         btnConsultarAutores.setFont(new java.awt.Font("Nirmala UI Semilight", 1, 14)); // NOI18N
         btnConsultarAutores.setForeground(new java.awt.Color(255, 255, 255));
@@ -194,10 +179,6 @@ public class FrmGestionarAutores extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEditarAutorActionPerformed
 
 
-    private void btnAgregarAutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarAutorActionPerformed
-        this.cargarAgregarAutorForm();
-    }//GEN-LAST:event_btnAgregarAutorActionPerformed
-
     private void btnConsultarAutoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarAutoresActionPerformed
         this.cargarConsularAutoresForm();
     }//GEN-LAST:event_btnConsultarAutoresActionPerformed
@@ -209,7 +190,6 @@ public class FrmGestionarAutores extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel background3;
-    private javax.swing.JButton btnAgregarAutor;
     private javax.swing.JButton btnCerrarSesion;
     private javax.swing.JButton btnConsultarAutores;
     private javax.swing.JButton btnEditarAutor;
@@ -219,36 +199,29 @@ public class FrmGestionarAutores extends javax.swing.JFrame {
     private javax.swing.JLabel txtBienvenida;
     // End of variables declaration//GEN-END:variables
 
-   
     private void cerrarSesion() {
         FormUtils.cerrarSesion(this);
     }
 
-
     private void regresar() {
         FormUtils.regresar(this.frmAnterior, this);
     }
-    
-    private void cargarConsularAutoresForm(){
+
+    private void cargarConsularAutoresForm() {
         FormUtils.cargarForm(this.autoresForm, this);
     }
 
-    private void cargarAgregarAutorForm(){
-        FormUtils.cargarForm(this.agregarAutorForm, this);
-    }
-    
     private void initFormsConectados() {
         autoresForm = new FrmAutores(this, this.usuarioLoggeado);
-        agregarAutorForm = new FrmAgregarAutor(this, this.usuarioLoggeado);
         eliminarAutoresForm = new FrmEliminarAutores(this, usuarioLoggeado);
         editarAutoresForm = new FrmEditarAutores(this, usuarioLoggeado);
     }
-    
-    private void cargarEliminarAutoresForm(){
+
+    private void cargarEliminarAutoresForm() {
         FormUtils.cargarForm(this.eliminarAutoresForm, this);
     }
-    
-    private void cargarEditarAutoresForm(){
+
+    private void cargarEditarAutoresForm() {
         FormUtils.cargarForm(this.editarAutoresForm, this);
     }
 

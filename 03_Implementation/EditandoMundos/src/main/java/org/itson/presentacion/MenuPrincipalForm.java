@@ -26,8 +26,6 @@ public class MenuPrincipalForm extends javax.swing.JFrame {
     private FrmPublicaciones frmListaPublicaciones;
     private FrmCotizarPublicacion frmCotizaciones;
     private FrmGestionarPublicaciones frmGestionarPublicaciones;
-    private FrmAgregarAutor frmAgregarAutor;
-    private FrmAgregarUsuario frmAgregarUsuario;
     private FrmGestionarAutores frmGestionarAutores;
     private FrmConsultarPagosPendientes frmConsultarPagosPendientes;
     private final Usuario usuarioLoggeado;
@@ -51,7 +49,6 @@ public class MenuPrincipalForm extends javax.swing.JFrame {
         btnGestionarAutores = new javax.swing.JButton();
         btnCotizar = new javax.swing.JButton();
         btnGestionarPublicaciones = new javax.swing.JButton();
-        btnAgregarUsuario = new javax.swing.JButton();
         btnPagosPendientes = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -116,7 +113,7 @@ public class MenuPrincipalForm extends javax.swing.JFrame {
                 btnGestionarAutoresActionPerformed(evt);
             }
         });
-        background3.add(btnGestionarAutores, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 240, 180, 40));
+        background3.add(btnGestionarAutores, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 300, 180, 40));
 
         btnCotizar.setBackground(new java.awt.Color(0, 102, 255));
         btnCotizar.setFont(new java.awt.Font("Nirmala UI Semilight", 1, 14)); // NOI18N
@@ -132,7 +129,7 @@ public class MenuPrincipalForm extends javax.swing.JFrame {
                 btnCotizarActionPerformed(evt);
             }
         });
-        background3.add(btnCotizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 180, 140, 40));
+        background3.add(btnCotizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 180, 180, 40));
 
         btnGestionarPublicaciones.setBackground(new java.awt.Color(0, 102, 255));
         btnGestionarPublicaciones.setFont(new java.awt.Font("Nirmala UI Semilight", 1, 14)); // NOI18N
@@ -147,19 +144,6 @@ public class MenuPrincipalForm extends javax.swing.JFrame {
         });
         background3.add(btnGestionarPublicaciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 120, 180, 40));
 
-        btnAgregarUsuario.setBackground(new java.awt.Color(0, 102, 255));
-        btnAgregarUsuario.setFont(new java.awt.Font("Nirmala UI Semilight", 1, 14)); // NOI18N
-        btnAgregarUsuario.setForeground(new java.awt.Color(255, 255, 255));
-        btnAgregarUsuario.setText("Agregar Usuario");
-        btnAgregarUsuario.setBorder(null);
-        btnAgregarUsuario.setBorderPainted(false);
-        btnAgregarUsuario.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAgregarUsuarioActionPerformed(evt);
-            }
-        });
-        background3.add(btnAgregarUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 300, 180, 40));
-
         btnPagosPendientes.setBackground(new java.awt.Color(0, 102, 255));
         btnPagosPendientes.setFont(new java.awt.Font("Nirmala UI Semilight", 1, 14)); // NOI18N
         btnPagosPendientes.setForeground(new java.awt.Color(255, 255, 255));
@@ -171,7 +155,7 @@ public class MenuPrincipalForm extends javax.swing.JFrame {
                 btnPagosPendientesActionPerformed(evt);
             }
         });
-        background3.add(btnPagosPendientes, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 180, 140, 40));
+        background3.add(btnPagosPendientes, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 240, 180, 40));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -213,10 +197,6 @@ public class MenuPrincipalForm extends javax.swing.JFrame {
         this.cargarFormGestionarPublicaciones();
     }//GEN-LAST:event_btnGestionarPublicacionesActionPerformed
 
-    private void btnAgregarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarUsuarioActionPerformed
-        this.cargarCrearUsuarioForm();
-    }//GEN-LAST:event_btnAgregarUsuarioActionPerformed
-
     private void btnPagosPendientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPagosPendientesActionPerformed
         this.cargarPagosPendientes();
     }//GEN-LAST:event_btnPagosPendientesActionPerformed
@@ -224,7 +204,6 @@ public class MenuPrincipalForm extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel background3;
-    private javax.swing.JButton btnAgregarUsuario;
     private javax.swing.JButton btnCerrarSesion;
     private javax.swing.JButton btnCotizar;
     private javax.swing.JButton btnGestionarAutores;
@@ -246,9 +225,7 @@ public class MenuPrincipalForm extends javax.swing.JFrame {
         FormUtils.cargarForm(this.frmGestionarAutores, this);
     }
 
-    private void cargarCrearUsuarioForm() {
-        FormUtils.cargarForm(this.frmAgregarUsuario, this);
-    }
+
 
     private void cargarPagosPendientes() {
         this.frmConsultarPagosPendientes.actualizaFrame();
@@ -260,16 +237,15 @@ public class MenuPrincipalForm extends javax.swing.JFrame {
     }
 
     private void ajustarEntornoSegunUsuario(Usuario usuarioLoggeado) {
-        if (!(usuarioLoggeado instanceof Administrador)) {
-            btnAgregarUsuario.setVisible(false);
-        }
+//        if (!(usuarioLoggeado instanceof Administrador)) {
+//            btnAgregarUsuario.setVisible(false);
+//        }
     }
 
     private void initFormsConectados() {
         this.frmGestionarPublicaciones = new FrmGestionarPublicaciones(this, this.usuarioLoggeado);
         this.frmCotizaciones = new FrmCotizarPublicacion(this, this.usuarioLoggeado);
         this.frmGestionarAutores = new FrmGestionarAutores(this, this.usuarioLoggeado);
-        this.frmAgregarUsuario = new FrmAgregarUsuario(this, this.usuarioLoggeado);
         this.frmConsultarPagosPendientes = new FrmConsultarPagosPendientes(this, usuarioLoggeado);
     }
 
