@@ -18,6 +18,8 @@ import org.itson.utils.Encriptador;
  */
 public class Main {
 
+    private static boolean isProduction = false;
+
     public static void main(String[] args) {
         iniciarApp();
     }
@@ -62,9 +64,16 @@ public class Main {
         autor.setEdad(5);
         autor.setNacionalidad(Nacionalidad.MEXICANA);
         autor.setNombres("Luis Angel");
+        autor.setUsername("autor");
+        autor.setPassword("autor");
 
         UnitOfWork unitOfWork = new UnitOfWork();
-        return unitOfWork.autoresRepository().agregar(autor);
+        try {
+            return unitOfWork.autoresRepository().agregar(autor);
+        } catch (Exception ex) {
+            return unitOfWork.autoresRepository().consultaNombreYApellido("Luis Angel", "Toledo").get(0);
+        }
+
     }
 
     public static Usuario agregarAdminPrueba() {
@@ -94,21 +103,21 @@ public class Main {
     }
 
     private static void iniciarApp() {
-        agregarAdminPrueba();
-        agregarClientePrueba();
+
         FrmIniciarSesion iniciarSesionForm = new FrmIniciarSesion();
         iniciarSesionForm.setVisible(true);
-        Dialogs.mostrarMensajeExito(iniciarSesionForm, """
-                                                       Admin Prueba:
-                                                       usuario: admin
-                                                       password: admin
-                                                       Cliente Prueba:
-                                                       usuario: cliente
-                                                       password: cliente""");
+
+        if (!isProduction) {
+            agregarAdminPrueba();
+            agregarClientePrueba();
+            agregarAutorYPublicaciones();
+            mostrarCredencialesPrueba(iniciarSesionForm);
+        }
+
     }
 
     private static void agregarClientePrueba() {
-         UnitOfWork unitOfWork = new UnitOfWork();
+        UnitOfWork unitOfWork = new UnitOfWork();
 
         Cliente cliente = new Cliente();
         cliente.setNombres("Luis");
@@ -128,5 +137,15 @@ public class Main {
             System.out.println("Cliente prueba ya agregado");
         }
 
+    }
+
+    private static void mostrarCredencialesPrueba(FrmIniciarSesion iniciarSesionForm) {
+        Dialogs.mostrarMensajeExito(iniciarSesionForm, """
+                                                       Admin Prueba:
+                                                       usuario: admin
+                                                       password: admin
+                                                       Cliente Prueba:
+                                                       usuario: cliente
+                                                       password: cliente""");
     }
 }
