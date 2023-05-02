@@ -41,8 +41,8 @@ public class ControladorPublicacion {
         return new UnitOfWork().publicacionesRepository().consultaPaginado(configuracionPaginado.getOffset(), configuracionPaginado.getLimite());
     }
     
-    public static void editarPublicacion(Publicacion publicacion){
-        new UnitOfWork().publicacionesRepository().actualizar(publicacion);
+    public static Publicacion editarPublicacion(Publicacion publicacion){
+        return new UnitOfWork().publicacionesRepository().actualizar(publicacion);
     }
     
     public static void eliminarPublicacion(Publicacion publicacion){
