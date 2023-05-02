@@ -63,7 +63,7 @@ public class Publicacion implements Serializable {
     @JoinColumn(name = "idAutor", nullable = false)//LLAVE FORÁNEA
     private Autor autor;
 
-    @OneToOne(mappedBy = "publicacion", cascade = {CascadeType.PERSIST,CascadeType.PERSIST})
+    @OneToOne(mappedBy = "publicacion", cascade = {CascadeType.PERSIST})
     private Pago pago;
 
     public Publicacion(Long id, String titulo, Integer costoProd, Integer costoVenta, Integer noPaginas, Autor autor) {
